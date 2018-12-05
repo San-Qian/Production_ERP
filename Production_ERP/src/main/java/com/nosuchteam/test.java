@@ -1,4 +1,4 @@
-package com.nosuchteam.mapper;
+package com.nosuchteam;
 
 public class test {
     public static void main(String[] args) {
