@@ -31,18 +31,17 @@ public class EmployeeController {
         return insert;
     }
     @RequestMapping("/find")
-    public String selectListAll(Model model){
+    public String selectListAll(){
 
         return "personnel_monitoring/employee_list";
     }
     @RequestMapping("/add_judge")
-    public String add_judge(Model model){
-
-        return "personnel_monitoring/employee_add";
+    @ResponseBody
+    public String add_judge(){
+        return null;
     }
     @RequestMapping("/add")
-    public String add(Model model){
-
+    public String add(){
         return "personnel_monitoring/employee_add";
     }
 }
