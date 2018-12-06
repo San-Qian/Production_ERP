@@ -1,6 +1,7 @@
 package com.nosuchteam.service.iml;
 
 import com.nosuchteam.bean.Employee;
+import com.nosuchteam.bean.VO.EmployeeVO;
 import com.nosuchteam.mapper.EmployeeMapper;
 import com.nosuchteam.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ public class EmployeeServiceiml implements EmployeeService {
     @Autowired
     EmployeeMapper mapper;
 
+
+
     @Override
     public boolean deleteByEmpid(String empId) {
         if(mapper.deleteByPrimaryKey(empId)>0){
@@ -24,11 +27,18 @@ public class EmployeeServiceiml implements EmployeeService {
     }
 
     @Override
-    public boolean insert(Employee record) {
+    public Map insert(Employee record) {
+        Map<String,Object> hashMap=new HashMap<>();
         if(mapper.insert(record)>0){
-            return true;
+            hashMap.put("status",200);
+            hashMap.put("msg","OK");
+            hashMap.put("data",null);
+        }else {
+            hashMap.put("status",200);
+            hashMap.put("msg","false");
+            hashMap.put("data",null);
         }
-        return false;
+        return hashMap;
     }
 
     @Override
@@ -65,7 +75,7 @@ public class EmployeeServiceiml implements EmployeeService {
         int IntPage = Integer.parseInt(page);
         int IntRows = Integer.parseInt(rows);
         int i = mapper.selectCount();
-        List<Employee> employees = mapper.selectEmployeesBypage(IntRows, (IntPage-1) * IntRows);
+        List<EmployeeVO> employees = mapper.selectEmployeesBypage(IntRows, (IntPage-1) * IntRows);
         Map<String,Object> map=new HashMap<>();
         map.put("total",i);
         map.put("rows",employees);

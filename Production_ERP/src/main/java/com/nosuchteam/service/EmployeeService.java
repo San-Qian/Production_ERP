@@ -8,7 +8,7 @@ import java.util.Map;
 public interface EmployeeService {
     boolean deleteByEmpid(String empId);
 
-    boolean insert(Employee record);
+    Map insert(Employee record);
 
     boolean insertSelective(Employee record);
 

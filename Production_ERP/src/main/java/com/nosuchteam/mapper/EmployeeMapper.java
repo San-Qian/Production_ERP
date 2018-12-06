@@ -1,6 +1,7 @@
 package com.nosuchteam.mapper;
 
 import com.nosuchteam.bean.Employee;
+import com.nosuchteam.bean.VO.EmployeeVO;
 
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,7 @@ public interface EmployeeMapper {
 
     int updateByPrimaryKey(Employee record);
 
-    List<Employee> selectEmployeesBypage(int limit, int offset);
+    List<EmployeeVO> selectEmployeesBypage(int limit, int offset);
 
     int selectCount();
 }

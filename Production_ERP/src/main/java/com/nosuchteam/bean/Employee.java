@@ -29,6 +29,10 @@ public class Employee {
 
     private Department department;
 
+    private String departmentId;
+
+    private String employeeParams;
+
     public String getEmpId() {
         return empId;
     }
@@ -125,11 +129,27 @@ public class Employee {
         this.educationForm = educationForm == null ? null : educationForm.trim();
     }
 
+    public String getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(String departmentId) {
+        this.departmentId = departmentId;
+    }
+
     public Department getDepartment() {
         return department;
     }
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    public String getEmployeeParams() {
+        return employeeParams;
+    }
+
+    public void setEmployeeParams(String employeeParams) {
+        this.employeeParams = employeeParams;
     }
 }
