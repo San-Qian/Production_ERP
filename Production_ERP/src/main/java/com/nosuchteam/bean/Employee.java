@@ -27,7 +27,7 @@ public class Employee {
 
     private String educationForm;
 
-    private String departmentId;
+    private Department department;
 
     public String getEmpId() {
         return empId;
@@ -125,11 +125,11 @@ public class Employee {
         this.educationForm = educationForm == null ? null : educationForm.trim();
     }
 
-    public String getDepartmentId() {
-        return departmentId;
+    public Department getDepartment() {
+        return department;
     }
 
-    public void setDepartmentId(String departmentId) {
-        this.departmentId = departmentId == null ? null : departmentId.trim();
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 }

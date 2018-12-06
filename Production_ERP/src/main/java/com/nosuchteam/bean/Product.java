@@ -1,105 +1,63 @@
 package com.nosuchteam.bean;
 
-import java.util.Date;
-
 public class Product {
-    private String pid;
+    private String productId;
 
-    private String pname;
+    private String productName;
 
-    private Double estoreprice;
+    private String productType;
 
-    private Double markprice;
+    private String image;
 
-    private Integer pnum;
+    private String note;
 
-    private Integer cid;
+    private Integer status;
 
-    private String imgurl;
-
-    private String vendor;
-
-    private Date releasetime;
-
-    private String desc;
-
-    public String getPid() {
-        return pid;
+    public String getProductId() {
+        return productId;
     }
 
-    public void setPid(String pid) {
-        this.pid = pid == null ? null : pid.trim();
+    public void setProductId(String productId) {
+        this.productId = productId == null ? null : productId.trim();
     }
 
-    public String getPname() {
-        return pname;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setPname(String pname) {
-        this.pname = pname == null ? null : pname.trim();
+    public void setProductName(String productName) {
+        this.productName = productName == null ? null : productName.trim();
     }
 
-    public Double getEstoreprice() {
-        return estoreprice;
+    public String getProductType() {
+        return productType;
     }
 
-    public void setEstoreprice(Double estoreprice) {
-        this.estoreprice = estoreprice;
+    public void setProductType(String productType) {
+        this.productType = productType == null ? null : productType.trim();
     }
 
-    public Double getMarkprice() {
-        return markprice;
+    public String getImage() {
+        return image;
     }
 
-    public void setMarkprice(Double markprice) {
-        this.markprice = markprice;
+    public void setImage(String image) {
+        this.image = image == null ? null : image.trim();
     }
 
-    public Integer getPnum() {
-        return pnum;
+    public String getNote() {
+        return note;
     }
 
-    public void setPnum(Integer pnum) {
-        this.pnum = pnum;
+    public void setNote(String note) {
+        this.note = note == null ? null : note.trim();
     }
 
-    public Integer getCid() {
-        return cid;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setCid(Integer cid) {
-        this.cid = cid;
-    }
-
-    public String getImgurl() {
-        return imgurl;
-    }
-
-    public void setImgurl(String imgurl) {
-        this.imgurl = imgurl == null ? null : imgurl.trim();
-    }
-
-    public String getVendor() {
-        return vendor;
-    }
-
-    public void setVendor(String vendor) {
-        this.vendor = vendor == null ? null : vendor.trim();
-    }
-
-    public Date getReleasetime() {
-        return releasetime;
-    }
-
-    public void setReleasetime(Date releasetime) {
-        this.releasetime = releasetime;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc == null ? null : desc.trim();
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }
