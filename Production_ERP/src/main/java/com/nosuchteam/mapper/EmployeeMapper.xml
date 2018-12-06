@@ -14,7 +14,8 @@
     <result column="major" jdbcType="VARCHAR" property="major" />
     <result column="graduate_school" jdbcType="VARCHAR" property="graduateSchool" />
     <result column="education_form" jdbcType="VARCHAR" property="educationForm" />
-    <result column="department_id" jdbcType="VARCHAR" property="departmentId" />
+    <association select="com.nosuchteam.mapper.DepartmentMapper.selectByPrimaryKey"
+                 column="department_id"  property="department" />
   </resultMap>
   <sql id="Base_Column_List">
     emp_id, emp_name, sex, id_code, birthday, join_date, status, education, degree, major, 
@@ -185,4 +186,12 @@
       department_id = #{departmentId,jdbcType=VARCHAR}
     where emp_id = #{empId,jdbcType=VARCHAR}
   </update>
+  <select id="selectEmployeesBypage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from employee limit #{param1} offset #{param2}
+  </select>
+  <select id="selectCount" resultType="_int">
+    select count(*) from employee
+  </select>
 </mapper>
