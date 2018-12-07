@@ -1,5 +1,7 @@
 package com.nosuchteam.bean;
 
+import org.springframework.web.bind.annotation.RequestParam;
+
 public class Custom {
     private String customId;
 
@@ -20,6 +22,22 @@ public class Custom {
     private Integer status;
 
     private String note;
+
+    @Override
+    public String toString() {
+        return "Custom{" +
+                "customId='" + customId + '\'' +
+                ", customName='" + customName + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", address='" + address + '\'' +
+                ", fax='" + fax + '\'' +
+                ", email='" + email + '\'' +
+                ", ownerName='" + ownerName + '\'' +
+                ", ownerTel='" + ownerTel + '\'' +
+                ", status=" + status +
+                ", note='" + note + '\'' +
+                '}';
+    }
 
     public String getCustomId() {
         return customId;
