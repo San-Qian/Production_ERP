@@ -14,38 +14,70 @@
         http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 
-
     <context:component-scan base-package="com.nosuchteam"></context:component-scan>
-    <mvc:annotation-driven ></mvc:annotation-driven>
+    <mvc:annotation-driven validator="validator"></mvc:annotation-driven>
 
     <mvc:default-servlet-handler></mvc:default-servlet-handler>
 
 
-
-    <!--datasource-->
-    <bean id="datasource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-        <property name="user" value="root"></property>
-        <property name="password" value="root"></property>
-        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/multi_table_db?serverTimezone=GMT"/>
-        <property name="driverClass" value="com.mysql.cj.jdbc.Driver"></property>
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
     </bean>
 
-
+    <!--sqlSessionFactroyBean-->
     <bean id="sqlSessionFactory"  class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="datasource"></property>
+        <property name="dataSource" ref="basicDataSource"></property>
         <property name="configLocation" value="classpath:mybatis.xml"></property>
     </bean>
 
-    <!--扫描mybatis的xml映射文件-->
+    <!--直接通过包名来注入mapper接口-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
-        <property name="basePackage" value="com.cskaoyan.dao"></property>
+        <property name="basePackage" value="com.nosuchteam.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
 
+    <!--datasource-->
+    <!--<bean id="basicDatasource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="user" value="root"></property>
+        <property name="password" value="qwer1234"></property>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/production_erp_db?serverTimezone=GMT"/>
+        <property name="driverClass" value="com.mysql.cj.jdbc.Driver"></property>
+    </bean>-->
+    <bean id="basicDataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+        <property name="password" value="qwer1234"></property>
+        <property name="username" value="root"></property>
+        <property name="url" value="jdbc:mysql://localhost:3306/production_erp_db?serverTimezone=GMT"></property>
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
+    </bean>
+
+
+    <!--给地址加上前缀和后缀-->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+
+    <!--扫描mybatis的xml映射文件-->
+
+    <!--事务-->
     <tx:annotation-driven transaction-manager="txManager" ></tx:annotation-driven>
-
     <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="datasource"></property>
+        <property name="dataSource" ref="basicDataSource"></property>
     </bean>
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/js/**"></mvc:exclude-mapping>
+            <mvc:exclude-mapping path="/css/**"></mvc:exclude-mapping>
+            <mvc:exclude-mapping path="/image/**"></mvc:exclude-mapping>
+            <!--<mvc:exclude-mapping path="/WEB-INF/js/**"></mvc:exclude-mapping>-->
+            <bean class="com.nosuchteam.interceptor.AuthorizedInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <mvc:resources location="WEB-INF/js/"  mapping="/js/**"/>
+    <mvc:resources location="WEB-INF/css/"  mapping="/css/**"/>
+    <mvc:resources location="WEB-INF/image/"  mapping="/image/**"/>
 
 </beans>
