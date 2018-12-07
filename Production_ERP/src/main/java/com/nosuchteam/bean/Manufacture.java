@@ -3,6 +3,8 @@ package com.nosuchteam.bean;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Future;
+import javax.validation.constraints.Past;
 import java.util.Date;
 
 public class Manufacture {
@@ -16,9 +18,11 @@ public class Manufacture {
 
     private Integer launchQuantity;
 
+    @Past
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date beginDate;
 
+    @Future
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endDate;
 

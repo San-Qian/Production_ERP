@@ -1,8 +1,9 @@
 package com.nosuchteam.bean;
 
-import org.springframework.web.bind.annotation.RequestParam;
+import org.hibernate.validator.constraints.Email;
 
 public class Custom {
+
     private String customId;
 
     private String customName;
@@ -13,6 +14,7 @@ public class Custom {
 
     private String fax;
 
+    @Email
     private String email;
 
     private String ownerName;

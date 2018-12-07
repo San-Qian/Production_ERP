@@ -1,8 +1,10 @@
 package com.nosuchteam.bean;
 
+import javax.validation.constraints.Min;
+
 public class Work {
     private String workId;
-
+    @Min(0)
     private String processNumber;
 
     private Product product;

@@ -1,5 +1,8 @@
 package com.nosuchteam.bean;
 
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
+
 public class Task {
     private String taskId;
 

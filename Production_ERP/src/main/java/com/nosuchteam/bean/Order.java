@@ -2,6 +2,8 @@ package com.nosuchteam.bean;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Future;
+import javax.validation.constraints.Past;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -14,9 +16,11 @@ public class Order {
     private Product product;
     private String productId;
 
+    @Past
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date orderDate;
 
+    @Future
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date requestDate;
 
