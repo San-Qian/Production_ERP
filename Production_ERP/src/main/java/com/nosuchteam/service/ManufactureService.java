@@ -1,8 +1,7 @@
 package com.nosuchteam.service;
 
 import com.nosuchteam.bean.Manufacture;
-import com.nosuchteam.util.commons.Page;
-import org.springframework.transaction.annotation.Transactional;
+import com.nosuchteam.util.commons.PageInfo;
 
 /**
  * @Author: Evan
@@ -12,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface ManufactureService {
     void save(Manufacture manufacture) throws Exception;
 
-    Page selectByPage(Manufacture manufacture, Integer page, Integer rows);
+    PageInfo selectByPage(Manufacture manufacture, Integer page, Integer rows);
 
     void update(Manufacture manufacture) throws Exception;
 

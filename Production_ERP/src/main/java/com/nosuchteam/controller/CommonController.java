@@ -1,12 +1,10 @@
 package com.nosuchteam.controller;
 
 import com.nosuchteam.util.commons.Data;
-import com.nosuchteam.util.commons.Page;
 import com.nosuchteam.util.commons.UploadHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,9 +16,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
 
 @Controller
 public class CommonController {
@@ -35,12 +30,21 @@ public class CommonController {
         return "forward:/" + getData + "/list?getData=List";
     }
 
-    @RequestMapping("/{target}/get/{id}")
-    public String get(@PathVariable String target,@PathVariable String id) {
-        String byId = target == "manufacture" ? "manufactureSn" : target + "Id";
-        return "forward:/" + target + "/search_" + target + "_by_" + byId + "?getData=Object&searchValue=" + id;
+
+    @RequestMapping("/{module}/get/{id}")
+    public String get(@PathVariable String module,@PathVariable String id) {
+        String byId = module == "manufacture" ? "manufactureSn" : module + "Id";
+        return "forward:/" + module + "/search_" + module + "_by_" + byId + "?getData=Object&searchValue=" + id;
     }
 
+    /**上传文件操作
+     *
+     * @param operation  获取客户请求对文件的操作
+     * @param fileName   操作的文件名
+     * @param file       上传的文件
+     * @param request
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/file/{operation}")
     public Object uploadFile(@PathVariable String operation, String fileName,
@@ -49,7 +53,8 @@ public class CommonController {
             String uploadPath = request.getServletContext().getRealPath("/WEB-INF");
             //判断是否删除操作
             return "delete".equals(operation) ?
-                    UploadHandler.delete(new File(uploadPath, fileName)) : UploadHandler.save("pic",uploadPath,file);
+                    UploadHandler.delete(new File(uploadPath, fileName)) :
+                    UploadHandler.save("pic",uploadPath,file);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -63,7 +68,8 @@ public class CommonController {
         try {
             String uploadPath = request.getServletContext().getRealPath("/WEB-INF");
             return "delete".equals(operation) ?
-                    UploadHandler.delete(new File(uploadPath, picName)) : UploadHandler.save("pic",uploadPath,uploadFile);
+                    UploadHandler.delete(new File(uploadPath, picName)) :
+                    UploadHandler.save("pic",uploadPath,uploadFile);
         } catch (Exception e) {
             e.printStackTrace();
         }

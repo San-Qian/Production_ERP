@@ -3,7 +3,7 @@ package com.nosuchteam.controller;
 import com.nosuchteam.bean.Product;
 import com.nosuchteam.service.ProductService;
 import com.nosuchteam.util.commons.Data;
-import com.nosuchteam.util.commons.Page;
+import com.nosuchteam.util.commons.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @Author: Evan
@@ -62,7 +61,7 @@ public class ProductController {
                    break;
            }
         }
-        Page pager = productService.selectByPage(product, page, rows);
+        PageInfo pager = productService.selectByPage(product, page, rows);
         getData = getData == null ? "" : getData;
         switch (getData) {
             case "List":

@@ -1,11 +1,17 @@
 package com.nosuchteam.bean;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Future;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 public class Manufacture {
+    @Pattern(regexp = "[0-9a-zA-Z]+", message = "请输入数字或英文字母的组合")
+    @Length(min = 3,max = 8,message = "请输入3-8位合法编号")
     private String manufactureSn;
 
     private Order cOrder;
@@ -16,9 +22,11 @@ public class Manufacture {
 
     private Integer launchQuantity;
 
+    @Past
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date beginDate;
 
+    @Future
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endDate;
 

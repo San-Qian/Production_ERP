@@ -1,7 +1,7 @@
 package com.nosuchteam.service;
 
 import com.nosuchteam.bean.Work;
-import com.nosuchteam.util.commons.Page;
+import com.nosuchteam.util.commons.PageInfo;
 
 /**
  * @Author: Evan
@@ -11,7 +11,7 @@ import com.nosuchteam.util.commons.Page;
 public interface WorkService {
     void save(Work work) throws Exception;
 
-    Page selectByPage(Work work, Integer page, Integer rows);
+    PageInfo selectByPage(Work work, Integer page, Integer rows);
 
     void update(Work work) throws Exception;
 

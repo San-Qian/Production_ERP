@@ -1,6 +1,12 @@
 package com.nosuchteam.bean;
 
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.Pattern;
+
 public class Product {
+    @Pattern(regexp = "[0-9a-zA-Z]+", message = "请输入数字或英文字母的组合")
+    @Length(min = 3,max = 8,message = "请输入3-8位合法编号")
     private String productId;
 
     private String productName;

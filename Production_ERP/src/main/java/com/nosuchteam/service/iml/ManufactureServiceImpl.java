@@ -3,7 +3,7 @@ package com.nosuchteam.service.impl;
 import com.nosuchteam.bean.Manufacture;
 import com.nosuchteam.mapper.ManufactureMapper;
 import com.nosuchteam.service.ManufactureService;
-import com.nosuchteam.util.commons.Page;
+import com.nosuchteam.util.commons.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -35,7 +35,7 @@ public class ManufactureServiceImpl implements ManufactureService {
 
     @Transactional(readOnly = true)
     @Override
-    public Page selectByPage(Manufacture manufacture, Integer page, Integer rows) {
+    public PageInfo selectByPage(Manufacture manufacture, Integer page, Integer rows) {
         HashMap<String, Object> params = new HashMap<>();
 
         if(page == null || page < 1){
@@ -57,7 +57,7 @@ public class ManufactureServiceImpl implements ManufactureService {
         params.put("limit",rows);
         params.put("offset",offset);
 
-        return new Page(total,manufactureMapper.select(params));
+        return new PageInfo(total,manufactureMapper.select(params));
     }
 
     @Override

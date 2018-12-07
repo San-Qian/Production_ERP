@@ -13,12 +13,11 @@ import java.util.Date;
  */
 public class UploadHandler {
 
-    public static Object delete(File deleteFile){
+    public static Object delete(File deleteFile) {
         if (deleteFile.exists()) {
             deleteFile.delete();
-            return new Data("success");
         }
-        return new Data("");
+        return new Data("success");
     }
 
     public static Object save(String uploadType, String uploadPath, MultipartFile uploadFile) throws IOException {

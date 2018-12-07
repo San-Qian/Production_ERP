@@ -7,14 +7,14 @@ import java.util.List;
  * @Date: 2018/12/5 17:40
  * @Description:
  */
-public class Page {
+public class PageInfo {
     private int total;
     private List rows;
 
-    public Page() {
+    public PageInfo() {
     }
 
-    public Page(int total, List rows) {
+    public PageInfo(int total, List rows) {
         this.total = total;
         this.rows = rows;
     }

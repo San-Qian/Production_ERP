@@ -3,7 +3,7 @@ package com.nosuchteam.service.impl;
 import com.nosuchteam.bean.Task;
 import com.nosuchteam.mapper.TaskMapper;
 import com.nosuchteam.service.TaskService;
-import com.nosuchteam.util.commons.Page;
+import com.nosuchteam.util.commons.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -34,7 +34,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Transactional(readOnly = true)
     @Override
-    public Page selectByPage(Task task, Integer page, Integer rows) {
+    public PageInfo selectByPage(Task task, Integer page, Integer rows) {
         HashMap<String, Object> params = new HashMap<>();
 
         if(page == null || page < 1){
@@ -53,7 +53,7 @@ public class TaskServiceImpl implements TaskService {
         params.put("limit",rows);
         params.put("offset",offset);
 
-        return new Page(total,taskMapper.select(params));
+        return new PageInfo(total,taskMapper.select(params));
     }
 
     @Override

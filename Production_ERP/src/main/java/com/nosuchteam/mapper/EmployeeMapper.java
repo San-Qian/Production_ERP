@@ -22,4 +22,12 @@ public interface EmployeeMapper {
     List<EmployeeVO> selectEmployeesBypage(int limit, int offset);
 
     int selectCount();
+
+    List<EmployeeVO> selectAllEmployee();
+
+    List<EmployeeVO>  searchEmployeeByName(String searchValue);
+    List<EmployeeVO>  searchEmployeeById(String searchValue);
+    List<EmployeeVO>  searchEmployeeByDepartmentName(String searchValue);
+
+
 }

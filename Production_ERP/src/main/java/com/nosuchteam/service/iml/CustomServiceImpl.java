@@ -3,7 +3,7 @@ package com.nosuchteam.service.impl;
 import com.nosuchteam.bean.Custom;
 import com.nosuchteam.mapper.CustomMapper;
 import com.nosuchteam.service.CustomService;
-import com.nosuchteam.util.commons.Page;
+import com.nosuchteam.util.commons.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -11,8 +11,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @Author: Evan
@@ -36,7 +34,7 @@ public class CustomServiceImpl implements CustomService {
 
     @Transactional(readOnly = true)
     @Override
-    public Page selectByPage(Custom custom,Integer page, Integer rows) {
+    public PageInfo selectByPage(Custom custom, Integer page, Integer rows) {
         HashMap<String, Object> params = new HashMap<>();
 
         if(page == null || page < 1){
@@ -55,7 +53,7 @@ public class CustomServiceImpl implements CustomService {
         params.put("limit",rows);
         params.put("offset",offset);
 
-        return new Page(total,customMapper.select(params));
+        return new PageInfo(total,customMapper.select(params));
     }
 
     @Override

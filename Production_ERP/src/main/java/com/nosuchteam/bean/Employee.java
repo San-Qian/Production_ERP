@@ -1,5 +1,7 @@
 package com.nosuchteam.bean;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Employee {
@@ -10,9 +12,9 @@ public class Employee {
     private String sex;
 
     private String idCode;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date joinDate;
 
     private String status;
@@ -27,7 +29,8 @@ public class Employee {
 
     private String educationForm;
 
-    private Department department;
+    private String departmentId;
+
 
     public String getEmpId() {
         return empId;
@@ -125,11 +128,13 @@ public class Employee {
         this.educationForm = educationForm == null ? null : educationForm.trim();
     }
 
-    public Department getDepartment() {
-        return department;
+    public String getDepartmentId() {
+        return departmentId;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setDepartmentId(String departmentId) {
+        this.departmentId = departmentId;
     }
+
+
 }

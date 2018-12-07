@@ -1,5 +1,7 @@
 package com.nosuchteam.service.iml;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.nosuchteam.bean.Employee;
 import com.nosuchteam.bean.VO.EmployeeVO;
 import com.nosuchteam.mapper.EmployeeMapper;
@@ -19,26 +21,21 @@ public class EmployeeServiceiml implements EmployeeService {
 
 
     @Override
-    public boolean deleteByEmpid(String empId) {
-        if(mapper.deleteByPrimaryKey(empId)>0){
-            return true;
+    public boolean deleteByEmpid(String[] ids) {
+        for (int i = 0; i <ids.length ; i++) {
+            if(mapper.deleteByPrimaryKey(ids[i])!=1){
+                return false;
+            }
         }
-        return false;
+        return true;
     }
 
     @Override
-    public Map insert(Employee record) {
-        Map<String,Object> hashMap=new HashMap<>();
+    public boolean insert(Employee record) {
         if(mapper.insert(record)>0){
-            hashMap.put("status",200);
-            hashMap.put("msg","OK");
-            hashMap.put("data",null);
-        }else {
-            hashMap.put("status",200);
-            hashMap.put("msg","false");
-            hashMap.put("data",null);
+            return true;
         }
-        return hashMap;
+        return false;
     }
 
     @Override
@@ -74,11 +71,48 @@ public class EmployeeServiceiml implements EmployeeService {
     public Map<String,Object> selectEmployeeByPage(String page, String rows) {
         int IntPage = Integer.parseInt(page);
         int IntRows = Integer.parseInt(rows);
-        int i = mapper.selectCount();
-        List<EmployeeVO> employees = mapper.selectEmployeesBypage(IntRows, (IntPage-1) * IntRows);
+        PageHelper.startPage(IntPage,IntRows);
+        List<EmployeeVO> employees = mapper.selectAllEmployee();
+        PageInfo<EmployeeVO> pageInfo=new PageInfo<>(employees);
         Map<String,Object> map=new HashMap<>();
-        map.put("total",i);
-        map.put("rows",employees);
+        map.put("total",pageInfo.getTotal());
+        map.put("rows",pageInfo.getList());
+        return map;
+    }
+
+    @Override
+    public Map searchEmployeeByName(String searchValue, String page, String rows) {
+        PageHelper.startPage(Integer.parseInt(page),Integer.parseInt(rows));
+        searchValue="%"+searchValue+"%";
+        List<EmployeeVO> employees=mapper.searchEmployeeByName(searchValue);
+        PageInfo<EmployeeVO> pageInfo=new PageInfo<>(employees);
+        Map<String,Object> map=new HashMap<>();
+        map.put("total",pageInfo.getTotal());
+        map.put("rows",pageInfo.getList());
+        return map;
+    }
+
+    @Override
+    public Map searchEmployeeById(String searchValue, String page, String rows) {
+        PageHelper.startPage(Integer.parseInt(page), Integer.parseInt(rows));
+        searchValue = "%" + searchValue + "%";
+        List<EmployeeVO> employees = mapper.searchEmployeeById(searchValue);
+        PageInfo<EmployeeVO> pageInfo = new PageInfo<>(employees);
+        Map<String, Object> map = new HashMap<>();
+        map.put("total", pageInfo.getTotal());
+        map.put("rows", pageInfo.getList());
+        return map;
+    }
+
+    @Override
+    public Map searchEmployeeByDepartmentName(String searchValue, String page, String rows) {
+        PageHelper.startPage(Integer.parseInt(page),Integer.parseInt(rows));
+        searchValue="%"+searchValue+"%";
+        List<EmployeeVO> employees=mapper.searchEmployeeByDepartmentName(searchValue);
+        PageInfo<EmployeeVO> pageInfo=new PageInfo<>(employees);
+        Map<String,Object> map=new HashMap<>();
+        map.put("total",pageInfo.getTotal());
+        map.put("rows",pageInfo.getList());
         return map;
     }
 }

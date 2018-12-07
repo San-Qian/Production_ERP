@@ -1,7 +1,7 @@
 package com.nosuchteam.service;
 
 import com.nosuchteam.bean.Task;
-import com.nosuchteam.util.commons.Page;
+import com.nosuchteam.util.commons.PageInfo;
 
 /**
  * @Author: Evan
@@ -11,7 +11,7 @@ import com.nosuchteam.util.commons.Page;
 public interface TaskService {
     void save(Task task) throws Exception;
 
-    Page selectByPage(Task task, Integer page, Integer rows);
+    PageInfo selectByPage(Task task, Integer page, Integer rows);
 
     void update(Task task) throws Exception;
 
