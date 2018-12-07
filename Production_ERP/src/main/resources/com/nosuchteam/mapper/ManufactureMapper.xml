@@ -1,37 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nosuchteam.mapper.ManufactureMapper">
-  <resultMap id="BaseResultMap" type="com.nosuchteam.bean.Manufacture">
+  <resultMap id="BaseResultMap" type="Manufacture">
     <id column="manufacture_sn" jdbcType="VARCHAR" property="manufactureSn" />
-    <result column="order_id" jdbcType="VARCHAR" property="orderId" />
-    <result column="technology_id" jdbcType="VARCHAR" property="technologyId" />
+    <id column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <id column="technology_id" jdbcType="VARCHAR" property="technologyId" />
     <result column="launch_quantity" jdbcType="INTEGER" property="launchQuantity" />
     <result column="begin_date" jdbcType="TIMESTAMP" property="beginDate" />
     <result column="end_date" jdbcType="TIMESTAMP" property="endDate" />
+    <association property="cOrder" column="order_id" select="com.nosuchteam.mapper.OrderMapper.selectByPrimaryKey" />
+    <association property="technology" column="technology_id" select="com.nosuchteam.mapper.TechnologyMapper.selectByPrimaryKey" />
   </resultMap>
   <sql id="Base_Column_List">
-    manufacture_sn, order_id, technology_id, launch_quantity, begin_date, end_date
+    `manufacture_sn`, `order_id`, `technology_id`, `launch_quantity`, `begin_date`, `end_date`
+  </sql>
+  <sql id="association_Column_List">
+    m.`manufacture_sn`, m.`order_id`, m.`technology_id`, m.`launch_quantity`, m.`begin_date`, m.`end_date`,
+
+    o.`custom_id`, o.`product_id`, o.`order_date`, o.`request_date`, o.`note`, o.`quantity`, o.`unit_price`,
+    o.`unit`, o.`image`, o.`file`, o.`status`,
+
+    t.`technology_name`,t.`price`,t.`vital_process_period`,t.`standard_capacity`
+    ,t.`overtime_standard_capacity`,t.`overtime_overfulfil_capacity`,t.`double_capacity`,t.`overfulfil_capacity`
+  </sql>
+  <sql id="tableName">
+    `manufacture`
+  </sql>
+  <sql id="associationTab" >
+    `manufacture` AS m
+    LEFT JOIN c_order AS o
+    ON m.`order_id`=o.`order_id`
+    LEFT JOIN technology AS t
+    ON m.`technology_id`=t.`technology_id`
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
-    <include refid="Base_Column_List" />
-    from manufacture
+    <include refid="association_Column_List" />
+    from <include refid="associationTab"/>
     where manufacture_sn = #{manufactureSn,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from manufacture
+    delete from <include refid="tableName"/>
     where manufacture_sn = #{manufactureSn,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.nosuchteam.bean.Manufacture">
-    insert into manufacture (manufacture_sn, order_id, technology_id, 
-      launch_quantity, begin_date, end_date
-      )
-    values (#{manufactureSn,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{technologyId,jdbcType=VARCHAR}, 
+  <insert id="insert" parameterType="Manufacture">
+    insert into <include refid="tableName"/> (<include refid="Base_Column_List" />)
+    values (#{manufactureSn,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{technologyId,jdbcType=VARCHAR},
       #{launchQuantity,jdbcType=INTEGER}, #{beginDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.nosuchteam.bean.Manufacture">
-    insert into manufacture
+  <insert id="insertSelective" parameterType="Manufacture">
+    insert into <include refid="tableName"/>
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="manufactureSn != null">
         manufacture_sn,
@@ -73,8 +92,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.nosuchteam.bean.Manufacture">
-    update manufacture
+  <update id="updateByPrimaryKeySelective" parameterType="Manufacture">
+    update <include refid="tableName" />
     <set>
       <if test="orderId != null">
         order_id = #{orderId,jdbcType=VARCHAR},
@@ -94,8 +113,8 @@
     </set>
     where manufacture_sn = #{manufactureSn,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.nosuchteam.bean.Manufacture">
-    update manufacture
+  <update id="updateByPrimaryKey" parameterType="Manufacture">
+    update <include refid="tableName" />
     set order_id = #{orderId,jdbcType=VARCHAR},
       technology_id = #{technologyId,jdbcType=VARCHAR},
       launch_quantity = #{launchQuantity,jdbcType=INTEGER},
@@ -103,4 +122,33 @@
       end_date = #{endDate,jdbcType=TIMESTAMP}
     where manufacture_sn = #{manufactureSn,jdbcType=VARCHAR}
   </update>
+  <sql id="conditions">
+    <where>
+      <if test="orderId != '%null%' &amp; orderId != '%%' &amp; orderId != '' &amp; orderId != null">
+        m.`order_id` LIKE #{orderId}
+      </if>
+      <if test="technologyId != '%null%' &amp; technologyId != '%%' &amp; technologyId != '' &amp; technologyId != null">
+        AND m.technology_id LIKE #{technologyId}
+      </if>
+      <if test="manufactureSn != '%null%' &amp; manufactureSn != '%%' &amp; manufactureSn != '' &amp; manufactureSn != null">
+        AND m.manufacture_sn LIKE #{manufactureSn}
+      </if>
+    </where>
+  </sql>
+  <select id="select" resultMap="BaseResultMap">
+    SELECT <include refid="association_Column_List" />
+    FROM <include refid="associationTab" />
+    <include refid="conditions" />
+    <if test="limit != null &amp; limit >= 1">
+      LIMIT #{limit}
+    </if>
+    <if test="offset != null &amp; offset >= 0">
+      OFFSET #{offset}
+    </if>
+  </select>
+  <select id="count" resultType="_int">
+    SELECT COUNT(*)
+    FROM <include refid="associationTab" />
+    <include refid="conditions" />
+  </select>
 </mapper>

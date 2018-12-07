@@ -17,13 +17,25 @@
     from material
     where material_id = #{materialId,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+
+  <select id="selectByMaterialId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from material
+    where material_id LIKE #{materialId,jdbcType=VARCHAR}
+  </select>
+    <select id="selectByType" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/> FROM material
+        WHERE material_type = #{materialType,jdbcType=VARCHAR}
+    </select>
+  <delete id="deleteById" parameterType="java.lang.String">
     delete from material
     where material_id = #{materialId,jdbcType=VARCHAR}
   </delete>
+
+
   <insert id="insert" parameterType="com.nosuchteam.bean.Material">
-    insert into material (material_id, material_type, status, 
-      remaining, note)
+    insert into material (material_id, material_type, status, remaining, note)
     values (#{materialId,jdbcType=VARCHAR}, #{materialType,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
       #{remaining,jdbcType=INTEGER}, #{note,jdbcType=VARCHAR})
   </insert>
@@ -90,4 +102,7 @@
       note = #{note,jdbcType=VARCHAR}
     where material_id = #{materialId,jdbcType=VARCHAR}
   </update>
+  <select id="findAllMaterial" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> FROM material
+  </select>
 </mapper>

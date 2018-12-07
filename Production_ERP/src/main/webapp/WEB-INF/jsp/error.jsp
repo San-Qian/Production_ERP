@@ -1,42 +1,12 @@
-<%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <title>提示</title>
-    <script>
-        function redirectTo() {
-            switch ('${requestScope.level}') {
-                case '0':
-                    window.location.href = "${pageContext.request.contextPath}/${requestScope.url}";
-                    break;
-                case '1':
-                    window.parent.location.href = "${pageContext.request.contextPath}/${requestScope.url}";
-                    break;
-                case '2':
-                    window.parent.parent.location.href = "${pageContext.request.contextPath}/${requestScope.url}";
-                    break;
-                default:
-                    if (window.parent.parent == null) {
-                        if (window.parent == null) {
-                            window.location.href = "${pageContext.request.contextPath}/${requestScope.url}"
-                        } else {
-                            window.parent.location.href = "${pageContext.request.contextPath}/${requestScope.url}"
-                        }
-                    } else {
-                        window.parent.parent.location.href = "${pageContext.request.contextPath}/${requestScope.url}"
-                    }
-            }
-        }
-
-        setTimeout("redirectTo()", ${requestScope.time})
-    </script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>错误信息</title>
 </head>
-<body align="center">
-<div style="font-size: large">
-    <div style="margin:0 auto; width:700px; height:306px;">
-        <div style="font-size: xx-large;padding-top: 150px">${requestScope.message}</div>
-        <input type="image" src="${pageContext.request.contextPath}/images/${requestScope.messageImg}"
-               style="padding-top: 50px;"/>
-    </div>
-</div>
+<body>
+<span style="font-size:18px; font-weight:bold">${message}</span>
 </body>
 </html>

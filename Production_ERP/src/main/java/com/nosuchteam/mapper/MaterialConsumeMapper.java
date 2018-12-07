@@ -2,6 +2,8 @@ package com.nosuchteam.mapper;
 
 import com.nosuchteam.bean.MaterialConsume;
 
+import java.util.List;
+
 public interface MaterialConsumeMapper {
     int deleteByPrimaryKey(String consumeId);
 
@@ -14,4 +16,12 @@ public interface MaterialConsumeMapper {
     int updateByPrimaryKeySelective(MaterialConsume record);
 
     int updateByPrimaryKey(MaterialConsume record);
+
+    List<MaterialConsume> findAllMaterialConsume();
+
+    List<MaterialConsume> selectByConsumeId(String searchValue);
+
+    List<MaterialConsume> selectByWorkId(String searchValue);
+
+    List<MaterialConsume> selectByMaterialId(String searchValue);
 }

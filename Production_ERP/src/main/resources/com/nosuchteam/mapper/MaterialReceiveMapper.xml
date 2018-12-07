@@ -19,14 +19,28 @@
     from material_receive
     where receive_id = #{receiveId,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectByReceiveId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    from material_receive
+    WHERE receive_id LIKE #{receiveId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByMaterialId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    from material_receive
+    WHERE material_id LIKE #{materialId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="findAllMaterialReceive" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> FROM material_receive
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from material_receive
-    where receive_id = #{receiveId,jdbcType=VARCHAR}
+    where material_id = #{receiveId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.nosuchteam.bean.MaterialReceive">
-    insert into material_receive (receive_id, material_id, amount, 
-      receive_date, sender, receiver, 
-      note)
+    insert into material_receive (receive_id, material_id, amount, receive_date, sender, receiver, note)
     values (#{receiveId,jdbcType=VARCHAR}, #{materialId,jdbcType=VARCHAR}, #{amount,jdbcType=INTEGER}, 
       #{receiveDate,jdbcType=TIMESTAMP}, #{sender,jdbcType=VARCHAR}, #{receiver,jdbcType=VARCHAR}, 
       #{note,jdbcType=VARCHAR})

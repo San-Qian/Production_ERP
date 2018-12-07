@@ -26,14 +26,14 @@
 <div  id="toolbar_materialConsume" style=" height: 22px; padding: 3px 11px; background: #fafafa;">  
 	
 	<c:forEach items="${sessionScope.sysPermissionList}" var="per" >
-		<c:if test="${per=='materialConsume:add' }" >
+		<c:if test="${per=='materialConsume:add'}" >
 		    <div style="float: left;">  
 		        <a href="#" class="easyui-linkbutton" plain="true" icon="icon-add" onclick="materialConsume_add()">
 					新增
 				</a>
 		    </div>  
 		</c:if>
-		<c:if test="${per=='materialConsume:edit' }" >
+		<c:if test="${per=='materialConsume:edit'}" >
 		    <div style="float: left;">  
 		        <a href="#" class="easyui-linkbutton" plain="true" icon="icon-edit" onclick="materialConsume_edit()">
 					编辑

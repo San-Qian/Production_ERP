@@ -1,6 +1,9 @@
 package com.nosuchteam.bean;
 
+import org.hibernate.validator.constraints.Email;
+
 public class Custom {
+
     private String customId;
 
     private String customName;
@@ -11,6 +14,7 @@ public class Custom {
 
     private String fax;
 
+    @Email
     private String email;
 
     private String ownerName;
@@ -20,6 +24,22 @@ public class Custom {
     private Integer status;
 
     private String note;
+
+    @Override
+    public String toString() {
+        return "Custom{" +
+                "customId='" + customId + '\'' +
+                ", customName='" + customName + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", address='" + address + '\'' +
+                ", fax='" + fax + '\'' +
+                ", email='" + email + '\'' +
+                ", ownerName='" + ownerName + '\'' +
+                ", ownerTel='" + ownerTel + '\'' +
+                ", status=" + status +
+                ", note='" + note + '\'' +
+                '}';
+    }
 
     public String getCustomId() {
         return customId;
