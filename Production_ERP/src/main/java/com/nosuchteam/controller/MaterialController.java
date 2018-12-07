@@ -1,6 +1,7 @@
 package com.nosuchteam.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import com.nosuchteam.bean.Material;
 import com.nosuchteam.service.MaterialService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,12 +43,13 @@ public class MaterialController {
     //显示所有Material
     @ResponseBody
     @RequestMapping("/list")
-    public Map<String, Object> list() {
-        List<Material> materials = materialService.findAllMaterial();
+    public Map<String, Object> list(Integer page,Integer rows) {
+        PageInfo<Material> materials = materialService.findAllMaterial(page, rows);
 
         Map<String, Object> info = new HashMap<>();
-        info.put("total", materials.size());
-        info.put("rows", materials);
+
+        info.put("total", materials.getTotal());
+        info.put("rows", materials.getList());
 
         return info;
 
@@ -93,7 +95,7 @@ public class MaterialController {
         }
     }
 
-    //edit。jsp
+    //edit.jsp
     @ResponseBody
     @RequestMapping("/edit_judge")
     public HashMap<String,Object> edit() {
@@ -105,6 +107,23 @@ public class MaterialController {
     @RequestMapping("/edit")
     public String editWindow() {
         return "meterial_monitoring/material_edit";
+    }
+
+    //修改备注
+    @ResponseBody
+    @RequestMapping("/update_note")
+    public Map<String, Object> update(String materialId, String note) {
+
+        Map<String, Object> info = new HashMap<>();
+
+        boolean ret = materialService.updateNote(materialId, note);
+
+        if (ret) {
+            info.put("status", 200);
+            info.put("msg", "OK");
+        }
+        return info;
+
     }
 
     //修改
@@ -169,12 +188,11 @@ public class MaterialController {
     @RequestMapping(value="/{formName}")
     public Map<String, Object> search(@PathVariable String formName, String searchValue) {
         Map<String, Object> info = new HashMap<>();
+        //物料编号
         if (formName.endsWith("materialId")){
 
-            Material material = materialService.serachById(searchValue);
-            List<Material> materials = new ArrayList<>();
-            materials.add(material);
-            info.put("total", 1);
+            List<Material> materials = materialService.serachMaterialsById(searchValue);
+            info.put("total", materials.size());
             info.put("rows", materials);
             return info;
         }

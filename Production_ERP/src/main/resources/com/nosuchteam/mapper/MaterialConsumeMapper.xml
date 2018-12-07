@@ -78,6 +78,10 @@
     where consume_id = #{consumeId,jdbcType=VARCHAR}
   </delete>
 
+    <update id="updateNote">
+        update material_consume set note=#{param2} where consume_id =#{param1}
+    </update>
+
     <insert id="insert" parameterType="com.nosuchteam.bean.MaterialConsume">
     insert into
     material_consume (consume_id, work_id, material_id, consume_amount, consume_date, sender, receiver, note)

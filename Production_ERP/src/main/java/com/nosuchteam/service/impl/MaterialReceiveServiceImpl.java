@@ -34,17 +34,36 @@ public class MaterialReceiveServiceImpl implements MaterialReceiveService {
     @Override
     public boolean insert(MaterialReceive materialReceive) {
         int insert = receiveMapper.insert(materialReceive);
+        if (insert == 1) {
+            materialMapper.increaseRemanining(materialReceive.getMaterialId(), materialReceive.getAmount());
+        }
         return insert == 1;
     }
 
     @Override
     public boolean update(MaterialReceive materialReceive) {
+        //拿到之前的amount
+        MaterialReceive receive = receiveMapper.selectByPrimaryKey(materialReceive.getReceiveId());
+        Integer amount = receive.getAmount();
+        int finalNum = materialReceive.getAmount() - amount;
+        materialMapper.updateRemaining(materialReceive.getMaterialId(), finalNum);
+
         int update = receiveMapper.updateByPrimaryKeySelective(materialReceive);
+
         return update == 1;
     }
 
     @Override
     public boolean delectById(String id) {
+        //删除之前拿到amount
+        MaterialReceive receive = receiveMapper.selectByPrimaryKey(id);
+        Integer amount = receive.getAmount();
+        String materialId = receive.getMaterialId();
+        materialMapper.decreaseRemanining(materialId,amount);
+//        //拿到剩余数量
+//        String materialId = receive.getMaterialId();
+//        Material material = materialMapper.selectByPrimaryKey(materialId);
+//        material.getRemaining();
         int delete = receiveMapper.deleteByPrimaryKey(id);
         return delete == 1;
     }
@@ -62,5 +81,11 @@ public class MaterialReceiveServiceImpl implements MaterialReceiveService {
         List<MaterialReceive> receives = receiveMapper.selectByMaterialId(searchValue);
         return receives;
 
+    }
+
+    @Override
+    public boolean updateNote(String receiveId, String note) {
+        int update = receiveMapper.updateNote(receiveId, note);
+        return update == 1;
     }
 }

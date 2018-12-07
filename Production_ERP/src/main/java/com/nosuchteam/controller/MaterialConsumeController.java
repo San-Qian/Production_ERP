@@ -105,6 +105,23 @@ public class MaterialConsumeController {
         return "meterial_monitoring/materialConsume_edit";
     }
 
+    //修改备注
+    @ResponseBody
+    @RequestMapping("/update_note")
+    public Map<String, Object> update(String consumeId, String note) {
+
+        Map<String, Object> info = new HashMap<>();
+
+        boolean ret = consumeService.updateNote(consumeId, note);
+
+        if (ret) {
+            info.put("status", 200);
+            info.put("msg", "OK");
+        }
+        return info;
+
+    }
+
     //修改
     @ResponseBody
     @RequestMapping("/update_all")

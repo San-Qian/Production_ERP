@@ -1,5 +1,7 @@
 package com.nosuchteam.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.nosuchteam.bean.Material;
 import com.nosuchteam.mapper.MaterialMapper;
 import com.nosuchteam.service.MaterialService;
@@ -20,6 +22,14 @@ public class MaterialServiceImpl implements MaterialService {
     public List<Material> findAllMaterial() {
         List<Material> materials = materialMapper.findAllMaterial();
         return materials;
+    }
+
+    @Override
+    public PageInfo<Material> findAllMaterial(Integer page,Integer rows) {
+        PageHelper.startPage(page,rows);
+        List<Material> materials = materialMapper.findAllMaterial();
+        PageInfo<Material> pageInfo = new PageInfo<>(materials);
+        return pageInfo;
     }
 
     @Override
@@ -48,8 +58,22 @@ public class MaterialServiceImpl implements MaterialService {
 
     @Override
     public List<Material> searchByType(String searchValue) {
+        searchValue = "%" + searchValue + "%";
         List<Material> materials = materialMapper.selectByType(searchValue);
         return materials;
+    }
+
+    @Override
+    public List<Material> serachMaterialsById(String searchValue) {
+        searchValue = "%" + searchValue + "%";
+        List<Material> materials = materialMapper.selectByMaterialId(searchValue);
+        return materials;
+    }
+
+    @Override
+    public boolean updateNote(String materialId, String note) {
+        int update = materialMapper.updateNote(materialId,note);
+        return update==1;
     }
 
 

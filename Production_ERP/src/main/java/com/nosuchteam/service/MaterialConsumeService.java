@@ -20,4 +20,6 @@ public interface MaterialConsumeService {
     List<MaterialConsume> serachByWorkId(String searchValue);
 
     List<MaterialConsume> serachByMaterialId(String searchValue);
+
+    boolean updateNote(String consumeId, String note);
 }

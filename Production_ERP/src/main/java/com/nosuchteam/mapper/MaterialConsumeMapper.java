@@ -24,4 +24,6 @@ public interface MaterialConsumeMapper {
     List<MaterialConsume> selectByWorkId(String searchValue);
 
     List<MaterialConsume> selectByMaterialId(String searchValue);
+
+    int updateNote(String consumeId, String note);
 }

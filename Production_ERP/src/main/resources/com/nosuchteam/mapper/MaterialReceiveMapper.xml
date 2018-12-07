@@ -35,16 +35,23 @@
   <select id="findAllMaterialReceive" resultMap="BaseResultMap">
     SELECT <include refid="Base_Column_List"/> FROM material_receive
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from material_receive
     where material_id = #{receiveId,jdbcType=VARCHAR}
   </delete>
+
+  <update id="updateNote" >
+    update material_receive set note=#{param2} where receive_id =#{param1}
+  </update>
+
   <insert id="insert" parameterType="com.nosuchteam.bean.MaterialReceive">
     insert into material_receive (receive_id, material_id, amount, receive_date, sender, receiver, note)
     values (#{receiveId,jdbcType=VARCHAR}, #{materialId,jdbcType=VARCHAR}, #{amount,jdbcType=INTEGER}, 
       #{receiveDate,jdbcType=TIMESTAMP}, #{sender,jdbcType=VARCHAR}, #{receiver,jdbcType=VARCHAR}, 
       #{note,jdbcType=VARCHAR})
   </insert>
+
   <insert id="insertSelective" parameterType="com.nosuchteam.bean.MaterialReceive">
     insert into material_receive
     <trim prefix="(" suffix=")" suffixOverrides=",">

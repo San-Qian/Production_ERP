@@ -46,7 +46,7 @@ public class MaterialReceiveController {
         List<MaterialReceive> materialReceives = receiveService.findAllMaterialReceive();
 
         for (MaterialReceive mr : materialReceives) {
-            Material material =receiveService.getMaterialById(mr.getMaterialId());
+            Material material = receiveService.getMaterialById(mr.getMaterialId());
             mr.setMaterial(material);
         }
 
@@ -59,9 +59,9 @@ public class MaterialReceiveController {
 
     @ResponseBody
     @RequestMapping("/add_judge")
-    public HashMap<String,Object> add() {
-        HashMap<String,Object> ret = new HashMap<>();
-        ret.put("msg",null);
+    public HashMap<String, Object> add() {
+        HashMap<String, Object> ret = new HashMap<>();
+        ret.put("msg", null);
         return null;
     }
 
@@ -97,15 +97,32 @@ public class MaterialReceiveController {
 
     @ResponseBody
     @RequestMapping("/edit_judge")
-    public HashMap<String,Object> edit() {
-        HashMap<String,Object> ret = new HashMap<>();
-        ret.put("msg",null);
+    public HashMap<String, Object> edit() {
+        HashMap<String, Object> ret = new HashMap<>();
+        ret.put("msg", null);
         return null;
     }
 
     @RequestMapping("/edit")
     public String editWindow() {
         return "meterial_monitoring/materialReceive_edit";
+    }
+
+    //修改备注
+    @ResponseBody
+    @RequestMapping("/update_note")
+    public Map<String, Object> update(String receiveId, String note) {
+
+        Map<String, Object> info = new HashMap<>();
+
+        boolean ret = receiveService.updateNote(receiveId, note);
+
+        if (ret) {
+            info.put("status", 200);
+            info.put("msg", "OK");
+        }
+        return info;
+
     }
 
     //修改
@@ -125,6 +142,7 @@ public class MaterialReceiveController {
             }
             return info;
         } else {
+            //需要对剩余数量同时进行修改
             boolean ret = receiveService.update(materialReceive);
             if (ret) {
                 info.put("status", 200);
@@ -158,7 +176,7 @@ public class MaterialReceiveController {
         if (length == times) {
             Map<String, Object> info = new HashMap<>();
             info.put("status", 200);
-            info.put("msg","OK");
+            info.put("msg", "OK");
             return info;
         }
         return null;
@@ -166,17 +184,17 @@ public class MaterialReceiveController {
 
     //搜索
     @ResponseBody
-    @RequestMapping(value="/{formName}")
+    @RequestMapping(value = "/{formName}")
     public Map<String, Object> search(@PathVariable String formName, String searchValue) {
         Map<String, Object> info = new HashMap<>();
 
         //物料收入编号
-        if (formName.contains("receiveId")){
+        if (formName.contains("receiveId")) {
             List<MaterialReceive> receives = receiveService.searchByReceiveId(searchValue);
             //需要往materialReceives中插入material
             //修改为连接查询
             for (MaterialReceive receive : receives) {
-                Material material =receiveService.getMaterialById(receive.getMaterialId());
+                Material material = receiveService.getMaterialById(receive.getMaterialId());
                 receive.setMaterial(material);
             }
             info.put("total", receives.size());
@@ -186,12 +204,12 @@ public class MaterialReceiveController {
         }
 
         //物料编号
-        if (formName.contains("materialId")){
+        if (formName.contains("materialId")) {
             List<MaterialReceive> receives = receiveService.serachByMaterialId(searchValue);
             //需要往materialReceives中插入material
             //修改为连接查询
             for (MaterialReceive receive : receives) {
-                Material material =receiveService.getMaterialById(receive.getMaterialId());
+                Material material = receiveService.getMaterialById(receive.getMaterialId());
                 receive.setMaterial(material);
             }
             info.put("total", receives.size());

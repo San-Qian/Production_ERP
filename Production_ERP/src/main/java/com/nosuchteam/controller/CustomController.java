@@ -43,13 +43,17 @@ public class CustomController {
     @RequestMapping(path = {"/list", "/search_custom_by_customId", "/search_custom_by_customName"})
     public Object list(Custom custom, Integer page, HttpServletRequest request, String getData,
                        String searchValue, Integer rows) throws Exception {
+
         String requestURI = request.getRequestURI();
+
         if (searchValue != null && !searchValue.isEmpty()) {
             String methodName = "set" + (requestURI.endsWith("customId") ? "CustomId" : "CustomName");
             Method method = Custom.class.getMethod(methodName, String.class);
             method.invoke(custom, searchValue);
         }
+
         Page pager = customService.selectByPage(custom, page, rows);
+
         getData = getData == null ? "" : getData;
         switch (getData) {
             case "List":

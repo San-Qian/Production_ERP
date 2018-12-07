@@ -1,5 +1,6 @@
 package com.nosuchteam.service;
 
+import com.github.pagehelper.PageInfo;
 import com.nosuchteam.bean.Material;
 
 import java.util.List;
@@ -18,4 +19,9 @@ public interface MaterialService {
     List<Material> searchByType(String searchValue);
 
 
+    List<Material> serachMaterialsById(String searchValue);
+
+    boolean updateNote(String receiveId, String note);
+
+    PageInfo<Material> findAllMaterial(Integer page, Integer rows);
 }
