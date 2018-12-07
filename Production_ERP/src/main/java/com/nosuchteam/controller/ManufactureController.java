@@ -42,13 +42,13 @@ public class ManufactureController {
 
     @ResponseBody
     @RequestMapping(path = {"/list", "/search_manufacture_by_manufactureSn"
-            ,"/search_manufacture_by_manufactureOrderId"
+            , "/search_manufacture_by_manufactureOrderId"
             , "/search_manufacture_by_manufactureTechnologyName"})
-    public Object list(Manufacture manufacture, Integer page, HttpServletRequest request,String getData,
-                     String searchValue, Integer rows) throws Exception {
+    public Object list(Manufacture manufacture, Integer page, HttpServletRequest request, String getData,
+                       String searchValue, Integer rows) throws Exception {
         String requestURI = request.getRequestURI();
         if (searchValue != null && !searchValue.isEmpty()) {
-            switch (requestURI.substring(requestURI.lastIndexOf("manufacture") + "manufacture".length())){
+            switch (requestURI.substring(requestURI.lastIndexOf("manufacture") + "manufacture".length())) {
                 case "Sn":
                     manufacture.setManufactureSn(searchValue);
                     break;
@@ -83,9 +83,9 @@ public class ManufactureController {
             try {
                 manufactureService.save(manufacture);
                 return new Data(200, "OK", null);
-            }  catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
-                return new Data(500, "error", null);
+                return new Data(500, "操作失败", null);
             }
         }
         //....
@@ -104,7 +104,7 @@ public class ManufactureController {
                 return new Data(200, "OK", null);
             } catch (Exception e) {
                 e.printStackTrace();
-                return new Data(500, "error", null);
+                return new Data(500, "操作失败", null);
             }
         }
         //....
@@ -120,14 +120,14 @@ public class ManufactureController {
                 return new Data(200, "OK", null);
             } catch (Exception e) {
                 e.printStackTrace();
-                return new Data(500, "error", null);
+                return new Data(500, "操作失败", null);
             }
         }
         //....
         return check(request.getSession());
     }
 
-    private Data check(HttpSession session){
+    private Data check(HttpSession session) {
         /*if (session == null || session.getAttribute("user") == null){
             return new Data(500, "请先登录", null);
         }*/

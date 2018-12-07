@@ -2,6 +2,7 @@ package com.nosuchteam.controller;
 
 import com.nosuchteam.util.commons.Data;
 import com.nosuchteam.util.commons.Page;
+import com.nosuchteam.util.commons.UploadHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,7 +49,7 @@ public class CommonController {
             String uploadPath = request.getServletContext().getRealPath("/WEB-INF");
             //判断是否删除操作
             return "delete".equals(operation) ?
-                    delete(new File(uploadPath, fileName)) : save("pic",uploadPath,file);
+                    UploadHandler.delete(new File(uploadPath, fileName)) : UploadHandler.save("pic",uploadPath,file);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -62,7 +63,7 @@ public class CommonController {
         try {
             String uploadPath = request.getServletContext().getRealPath("/WEB-INF");
             return "delete".equals(operation) ?
-                    delete(new File(uploadPath, picName)) : save("pic",uploadPath,uploadFile);
+                    UploadHandler.delete(new File(uploadPath, picName)) : UploadHandler.save("pic",uploadPath,uploadFile);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -92,21 +93,5 @@ public class CommonController {
         os.close();
     }
 
-    private Object delete(File deleteFile){
-        if (deleteFile.exists()) {
-            deleteFile.delete();
-            return new Data("success");
-        }
-        return new Data("");
-    }
-    private Object save(String uploadType, String uploadPath, MultipartFile uploadFile) throws IOException {
-        File destDir = new File(uploadPath, "resources/" + uploadType);
-        if (!destDir.exists()) {
-            destDir.mkdirs();
-        }
-        String uploadName = new Date().toString().hashCode() + "-" + uploadFile.getOriginalFilename();
-        uploadFile.transferTo(new File(destDir, uploadName));
-        return new Data(0, "resources/" + uploadType + "/" + uploadName);
-    }
 
 }

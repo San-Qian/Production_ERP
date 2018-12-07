@@ -71,7 +71,7 @@ public class CustomController {
                 return new Data(200, "OK", null);
             } catch (Exception e) {
                 e.printStackTrace();
-                return new Data(500, "error", null);
+                return new Data(500, "操作失败", null);
             }
         }
         //....
@@ -90,7 +90,7 @@ public class CustomController {
                 return new Data(200, "OK", null);
             }  catch (Exception e) {
                 e.printStackTrace();
-                return new Data(500, "error", null);
+                return new Data(500, "操作失败", null);
             }
         }
         //....
@@ -106,7 +106,7 @@ public class CustomController {
                 return new Data(200, "OK", null);
             } catch (Exception e) {
                 e.printStackTrace();
-                return new Data(500, "error", null);
+                return new Data(500, "操作失败", null);
             }
         }
         //....
