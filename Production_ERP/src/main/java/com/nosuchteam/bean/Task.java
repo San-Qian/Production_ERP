@@ -1,9 +1,14 @@
 package com.nosuchteam.bean;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
 
 public class Task {
+    @Pattern(regexp = "[0-9a-zA-Z]+")
+    @Length(min = 3,max = 8)
     private String taskId;
 
     private Manufacture manufacture;
@@ -12,8 +17,10 @@ public class Task {
     private Work work;
     private String workId;
 
+    @Min(0)
     private Integer taskQuantity;
 
+    @Min(0)
     private Long workingHours;
 
     @Override

@@ -7,14 +7,19 @@ import com.nosuchteam.util.commons.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/custom")
@@ -63,8 +68,11 @@ public class CustomController {
 
     @ResponseBody
     @RequestMapping({"/add_judge", "/insert"})
-    public Data add(Custom custom, HttpServletRequest request) {
+    public Data add(@Valid Custom custom, BindingResult bindingResult, HttpServletRequest request) {
         if (request.getRequestURI().endsWith("insert")) {
+            if(bindingResult.hasErrors()){
+                return new Data(500,bindingResult.getAllErrors().get(0).getDefaultMessage(),null) ;
+            }
             try {
                 customService.save(custom);
                 return new Data(200, "OK", null);
@@ -81,9 +89,7 @@ public class CustomController {
     @RequestMapping(path = {"/edit_judge", "/update_all", "/update_note"})
     public Data edit(Custom custom, HttpServletRequest request) {
         String requestURI = request.getRequestURI();
-        if (requestURI.endsWith("update_all")
-                || requestURI.endsWith("update_note")
-                && custom.getCustomId() != null) {
+        if (!requestURI.endsWith("judge")) {
             try {
                 customService.updateSelective(custom);
                 return new Data(200, "OK", null);

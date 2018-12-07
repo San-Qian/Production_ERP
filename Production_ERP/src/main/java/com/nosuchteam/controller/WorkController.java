@@ -43,15 +43,16 @@ public class WorkController {
     }
 
     @ResponseBody
-    @RequestMapping(path = {"/list", "/search_work_by_workId"
+    @RequestMapping(path = {"/list"
+            , "/search_work_by_workId"
             , "/search_work_by_workProduct"
-            ,"search_work_by_workProcess"
-            ,"search_work_by_workDevice"})
-    public Object list(Work work, Integer page, HttpServletRequest request,String getData,
-                     String searchValue, Integer rows) throws Exception {
+            , "/search_work_by_workProcess"
+            , "/search_work_by_workDevice"})
+    public Object list(Work work, Integer page, HttpServletRequest request, String getData,
+                       String searchValue, Integer rows) throws Exception {
         String requestURI = request.getRequestURI();
         if (searchValue != null && !searchValue.isEmpty()) {
-            switch (requestURI.substring(requestURI.lastIndexOf("work") + "work".length())){
+            switch (requestURI.substring(requestURI.lastIndexOf("work") + "work".length())) {
                 case "Id":
                     work.setWorkId(searchValue);
                     break;
@@ -89,7 +90,7 @@ public class WorkController {
             try {
                 workService.save(work);
                 return new Data(200, "OK", null);
-            }catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 return new Data(500, "操作失败", null);
             }
@@ -107,7 +108,7 @@ public class WorkController {
             try {
                 workService.update(work);
                 return new Data(200, "OK", null);
-            }  catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 return new Data(500, "操作失败", null);
             }
@@ -132,7 +133,7 @@ public class WorkController {
         return check(request.getSession());
     }
 
-    private Data check(HttpSession session){
+    private Data check(HttpSession session) {
         /*if (session == null || session.getAttribute("user") == null){
             return new Data(500, "请先登录", null);
         }*/
