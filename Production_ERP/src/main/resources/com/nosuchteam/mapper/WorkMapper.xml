@@ -1,37 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nosuchteam.mapper.WorkMapper">
-  <resultMap id="BaseResultMap" type="com.nosuchteam.bean.Work">
+  <resultMap id="BaseResultMap" type="Work">
     <id column="work_id" jdbcType="VARCHAR" property="workId" />
+    <id column="product_id" jdbcType="VARCHAR" property="productId" />
+    <id column="device_id" jdbcType="VARCHAR" property="deviceId" />
+    <id column="process_id" jdbcType="VARCHAR" property="processId" />
     <result column="process_number" jdbcType="VARCHAR" property="processNumber" />
-    <result column="product_id" jdbcType="VARCHAR" property="productId" />
-    <result column="process_id" jdbcType="VARCHAR" property="processId" />
-    <result column="device_id" jdbcType="VARCHAR" property="deviceId" />
     <result column="rating" jdbcType="INTEGER" property="rating" />
+    <association property="product" column="product_id" select="com.nosuchteam.mapper.ProductMapper.selectByPrimaryKey" />
+    <association property="device" column="device_id" select="com.nosuchteam.mapper.DeviceMapper.selectByPrimaryKey" />
+    <association property="process" column="process_id" select="com.nosuchteam.mapper.ProcessMapper.selectByPrimaryKey" />
   </resultMap>
+
+  <!---sql片段-->
   <sql id="Base_Column_List">
-    work_id, process_number, product_id, process_id, device_id, rating
+    `work_id`, `process_number`, `product_id`, `process_id`, `device_id`, `rating`
   </sql>
+  <sql id="association_Column_List">
+    w.`work_id`, w.`process_number`, w.`product_id`, w.`process_id`, w.`device_id`, w.`rating`
+    , p.`product_name`, p.`product_type`, p.`image`, p.`note`, p.`status`
+    , d.`device_name`, d.`device_type_id`, d.`device_status_id`, d.`device_status`, d.`device_purchase_date`
+    , d.`device_purchase_price`, d.`device_manufacture_date`,d.`device_service_life`, d.`device_keeper_id`, d.`note`
+  </sql>
+  <sql id="tableName">
+    `work`
+  </sql>
+  <sql id="associationTab">
+    <include refid="tableName" /> AS w
+    JOIN `product` AS p
+    ON p.`product_id`=w.`product_id`
+    JOIN `device` AS d
+    On d.`device_id`=w.`device_id`
+  </sql>
+
+  <!--方法实现-->
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
-    <include refid="Base_Column_List" />
-    from work
+    <include refid="association_Column_List" />
+    from <include refid="associationTab" />
     where work_id = #{workId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from work
+    delete from <include refid="tableName" />
     where work_id = #{workId,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.nosuchteam.bean.Work">
-    insert into work (work_id, process_number, product_id, 
-      process_id, device_id, rating
-      )
-    values (#{workId,jdbcType=VARCHAR}, #{processNumber,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}, 
-      #{processId,jdbcType=VARCHAR}, #{deviceId,jdbcType=VARCHAR}, #{rating,jdbcType=INTEGER}
+  <insert id="insert" parameterType="Work">
+    insert into <include refid="tableName" /> (<include refid="Base_Column_List" />)
+    values (#{workId,jdbcType=VARCHAR}, #{processNumber,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR},
+      #{processId,jdbcType=VARCHAR}, #{device.deviceId,jdbcType=VARCHAR}, #{rating,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.nosuchteam.bean.Work">
-    insert into work
+  <insert id="insertSelective" parameterType="Work">
+    insert into <include refid="tableName" />
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="workId != null">
         work_id,
@@ -73,8 +94,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.nosuchteam.bean.Work">
-    update work
+  <update id="updateByPrimaryKeySelective" parameterType="Work">
+    update <include refid="tableName" />
     <set>
       <if test="processNumber != null">
         process_number = #{processNumber,jdbcType=VARCHAR},
@@ -94,8 +115,8 @@
     </set>
     where work_id = #{workId,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.nosuchteam.bean.Work">
-    update work
+  <update id="updateByPrimaryKey" parameterType="Work">
+    update <include refid="tableName" />
     set process_number = #{processNumber,jdbcType=VARCHAR},
       product_id = #{productId,jdbcType=VARCHAR},
       process_id = #{processId,jdbcType=VARCHAR},
@@ -103,4 +124,37 @@
       rating = #{rating,jdbcType=INTEGER}
     where work_id = #{workId,jdbcType=VARCHAR}
   </update>
+  <sql id="conditions">
+    <where>
+      <if test="workId != '%null%' &amp; workId != '%%' &amp; workId != '' &amp; workId != null">
+        work_id LIKE #{workId}
+      </if>
+      <if test="productName != '%null%' &amp; productName != '%%' &amp; productName != '' &amp; productName != null">
+        AND product_name LIKE #{productName}
+      </if>
+      <if test="deviceName != '%null%' &amp; deviceName != '%%' &amp; deviceName != '' &amp; deviceName != null">
+        AND device_name LIKE #{deviceName}
+      </if>
+      <if test="processId != '%null%' &amp; processId != '%%' &amp; processId != '' &amp; processId != null">
+        AND process_id LIKE #{processId}
+      </if>
+    </where>
+  </sql>
+  <select id="select" resultMap="BaseResultMap">
+    SELECT
+    <include refid="association_Column_List" />
+    FROM <include refid="associationTab" />
+    <include refid="conditions" />
+    <if test="limit != null &amp; limit >= 1">
+      LIMIT #{limit}
+    </if>
+    <if test="offset != null &amp; offset >= 0">
+      OFFSET #{offset}
+    </if>
+  </select>
+  <select id="count" resultType="_int">
+    SELECT COUNT(*)
+    FROM <include refid="associationTab" />
+    <include refid="conditions" />
+  </select>
 </mapper>

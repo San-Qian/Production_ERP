@@ -10,7 +10,7 @@
     department_id, department_name, note
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from department
     where department_id = #{departmentId,jdbcType=VARCHAR}
@@ -68,4 +68,8 @@
       note = #{note,jdbcType=VARCHAR}
     where department_id = #{departmentId,jdbcType=VARCHAR}
   </update>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from department
+  </select>
 </mapper>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nosuchteam.mapper.CustomMapper">
-  <resultMap id="BaseResultMap" type="com.nosuchteam.bean.Custom">
+  <resultMap id="BaseResultMap" type="Custom">
     <id column="custom_id" jdbcType="VARCHAR" property="customId" />
     <result column="custom_name" jdbcType="VARCHAR" property="customName" />
     <result column="full_name" jdbcType="VARCHAR" property="fullName" />
@@ -14,31 +14,33 @@
     <result column="note" jdbcType="VARCHAR" property="note" />
   </resultMap>
   <sql id="Base_Column_List">
-    custom_id, custom_name, full_name, address, fax, email, owner_name, owner_tel, status, 
-    note
+    `custom_id`, `custom_name`, `full_name`, `address`, `fax`, `email`, `owner_name`, `owner_tel`, `status`,
+    `note`
+  </sql>
+  <sql id="tableName">
+    `custom`
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from custom
+    from <include refid="tableName" />
     where custom_id = #{customId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from custom
+    delete from <include refid="tableName" />
     where custom_id = #{customId,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.nosuchteam.bean.Custom">
-    insert into custom (custom_id, custom_name, full_name, 
-      address, fax, email, 
-      owner_name, owner_tel, status, 
-      note)
+  <insert id="insert" parameterType="Custom">
+    insert
+    into <include refid="tableName" />
+    (<include refid="Base_Column_List"/>)
     values (#{customId,jdbcType=VARCHAR}, #{customName,jdbcType=VARCHAR}, #{fullName,jdbcType=VARCHAR}, 
       #{address,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
       #{ownerName,jdbcType=VARCHAR}, #{ownerTel,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
       #{note,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.nosuchteam.bean.Custom">
-    insert into custom
+  <insert id="insertSelective" parameterType="custom">
+    insert into <include refid="tableName" />
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="customId != null">
         custom_id,
@@ -104,8 +106,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.nosuchteam.bean.Custom">
-    update custom
+  <update id="updateByPrimaryKeySelective" parameterType="custom">
+    update <include refid="tableName" />
     <set>
       <if test="customName != null">
         custom_name = #{customName,jdbcType=VARCHAR},
@@ -137,8 +139,8 @@
     </set>
     where custom_id = #{customId,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.nosuchteam.bean.Custom">
-    update custom
+  <update id="updateByPrimaryKey" parameterType="custom">
+    update <include refid="tableName" />
     set custom_name = #{customName,jdbcType=VARCHAR},
       full_name = #{fullName,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
@@ -150,4 +152,30 @@
       note = #{note,jdbcType=VARCHAR}
     where custom_id = #{customId,jdbcType=VARCHAR}
   </update>
+  <sql id="conditions">
+    <where>
+      <if test="customId != '%null%' &amp; customId != '%%' &amp; customId != '' &amp; customId != null ">
+        custom_id LIKE #{customId}
+      </if>
+      <if test="customName != '%null%' &amp; customName != '%%' &amp; customName != '' &amp; customName != null ">
+        AND custom_name LIKE #{customName}
+      </if>
+    </where>
+  </sql>
+  <select id="select" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM <include refid="tableName" />
+   <include refid="conditions" />
+    <if test="limit != null &amp; limit >= 1">
+       LIMIT #{limit}
+    </if>
+    <if test="offset != null &amp; offset >= 0">
+       OFFSET #{offset}
+    </if>
+  </select>
+  <select id="count" resultType="_int">
+    SELECT COUNT(*)
+    FROM <include refid="tableName" />
+    <include refid="conditions" />
+  </select>
 </mapper>

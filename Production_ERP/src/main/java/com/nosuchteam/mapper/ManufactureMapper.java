@@ -2,16 +2,28 @@ package com.nosuchteam.mapper;
 
 import com.nosuchteam.bean.Manufacture;
 
+import java.util.List;
+import java.util.Map;
+
+/**
+ * @Author: Evan
+ * @Date: 2018/12/5 22:31
+ * @Description:
+ */
 public interface ManufactureMapper {
-    int deleteByPrimaryKey(String manufactureSn);
+    int deleteByPrimaryKey(String manufactureId);
 
-    int insert(Manufacture record);
+    int insert(Manufacture manufacture);
 
-    int insertSelective(Manufacture record);
+    int insertSelective(Manufacture manufacture);
 
-    Manufacture selectByPrimaryKey(String manufactureSn);
+    Manufacture selectByPrimaryKey(String manufactureId);
 
-    int updateByPrimaryKeySelective(Manufacture record);
+    int updateByPrimaryKeySelective(Manufacture manufacture);
 
-    int updateByPrimaryKey(Manufacture record);
+    int updateByPrimaryKey(Manufacture manufacture);
+
+    int count(Map<String, Object> params);
+
+    List<Manufacture> select(Map<String, Object> params);
 }
