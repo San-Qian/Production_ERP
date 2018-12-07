@@ -3,7 +3,7 @@ package com.nosuchteam.service.impl;
 import com.nosuchteam.bean.Work;
 import com.nosuchteam.mapper.WorkMapper;
 import com.nosuchteam.service.WorkService;
-import com.nosuchteam.util.commons.Page;
+import com.nosuchteam.util.commons.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -34,7 +34,7 @@ public class WorkServiceImpl implements WorkService {
 
     @Transactional(readOnly = true)
     @Override
-    public Page selectByPage(Work work, Integer page, Integer rows) {
+    public PageInfo selectByPage(Work work, Integer page, Integer rows) {
         HashMap<String, Object> params = new HashMap<>();
 
         if(page == null || page < 1){
@@ -58,7 +58,7 @@ public class WorkServiceImpl implements WorkService {
         params.put("limit",rows);
         params.put("offset",offset);
 
-        return new Page(total,workMapper.select(params));
+        return new PageInfo(total,workMapper.select(params));
     }
 
     @Override

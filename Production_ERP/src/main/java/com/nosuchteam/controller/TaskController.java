@@ -3,7 +3,7 @@ package com.nosuchteam.controller;
 import com.nosuchteam.bean.Task;
 import com.nosuchteam.service.TaskService;
 import com.nosuchteam.util.commons.Data;
-import com.nosuchteam.util.commons.Page;
+import com.nosuchteam.util.commons.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -61,7 +61,7 @@ public class TaskController {
                     break;
             }
         }
-        Page pager = taskService.selectByPage(task, page, rows);
+        PageInfo pager = taskService.selectByPage(task, page, rows);
         getData = getData == null ? "" : getData;
         switch (getData) {
             case "List":

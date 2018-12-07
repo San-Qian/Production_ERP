@@ -3,16 +3,14 @@ package com.nosuchteam.service.impl;
 import com.nosuchteam.bean.Order;
 import com.nosuchteam.mapper.OrderMapper;
 import com.nosuchteam.service.OrderService;
-import com.nosuchteam.util.commons.Page;
+import com.nosuchteam.util.commons.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
-import java.util.UUID;
 
 /**
  * @Author: Evan
@@ -35,7 +33,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Transactional(readOnly = true)
     @Override
-    public Page selectByPage(Order order, Integer page, Integer rows) {
+    public PageInfo selectByPage(Order order, Integer page, Integer rows) {
         HashMap<String, Object> params = new HashMap<>();
 
         if(page == null || page < 1){
@@ -57,7 +55,7 @@ public class OrderServiceImpl implements OrderService {
         params.put("limit",rows);
         params.put("offset",offset);
 
-        return new Page(total,orderMapper.select(params));
+        return new PageInfo(total,orderMapper.select(params));
     }
 
     @Override

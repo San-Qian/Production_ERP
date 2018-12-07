@@ -5,20 +5,17 @@ import com.nosuchteam.bean.Order;
 import com.nosuchteam.bean.Technology;
 import com.nosuchteam.service.ManufactureService;
 import com.nosuchteam.util.commons.Data;
-import com.nosuchteam.util.commons.Page;
+import com.nosuchteam.util.commons.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequestMapping("/manufacture")
@@ -41,7 +38,8 @@ public class ManufactureController {
     }
 
     @ResponseBody
-    @RequestMapping(path = {"/list", "/search_manufacture_by_manufactureSn"
+    @RequestMapping(path = {"/list"
+            , "/search_manufacture_by_manufactureSn"
             , "/search_manufacture_by_manufactureOrderId"
             , "/search_manufacture_by_manufactureTechnologyName"})
     public Object list(Manufacture manufacture, Integer page, HttpServletRequest request, String getData,
@@ -64,7 +62,7 @@ public class ManufactureController {
                     break;
             }
         }
-        Page pager = manufactureService.selectByPage(manufacture, page, rows);
+        PageInfo pager = manufactureService.selectByPage(manufacture, page, rows);
         getData = getData == null ? "" : getData;
         switch (getData) {
             case "List":

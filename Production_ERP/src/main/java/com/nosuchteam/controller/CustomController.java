@@ -3,7 +3,7 @@ package com.nosuchteam.controller;
 import com.nosuchteam.bean.Custom;
 import com.nosuchteam.service.CustomService;
 import com.nosuchteam.util.commons.Data;
-import com.nosuchteam.util.commons.Page;
+import com.nosuchteam.util.commons.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -15,9 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/custom")
@@ -40,7 +37,9 @@ public class CustomController {
     }
 
     @ResponseBody
-    @RequestMapping(path = {"/list", "/search_custom_by_customId", "/search_custom_by_customName"})
+    @RequestMapping(path = {"/list"
+            , "/search_custom_by_customId"
+            , "/search_custom_by_customName"})
     public Object list(Custom custom, Integer page, HttpServletRequest request, String getData,
                        String searchValue, Integer rows) throws Exception {
         String requestURI = request.getRequestURI();
@@ -49,7 +48,7 @@ public class CustomController {
             Method method = Custom.class.getMethod(methodName, String.class);
             method.invoke(custom, searchValue);
         }
-        Page pager = customService.selectByPage(custom, page, rows);
+        PageInfo pager = customService.selectByPage(custom, page, rows);
         getData = getData == null ? "" : getData;
         switch (getData) {
             case "List":

@@ -1,7 +1,7 @@
 package com.nosuchteam.service;
 
 import com.nosuchteam.bean.Order;
-import com.nosuchteam.util.commons.Page;
+import com.nosuchteam.util.commons.PageInfo;
 
 /**
  * @Author: Evan
@@ -11,7 +11,7 @@ import com.nosuchteam.util.commons.Page;
 public interface OrderService {
     void save(Order order) throws Exception;
 
-    Page selectByPage(Order order, Integer page, Integer rows);
+    PageInfo selectByPage(Order order, Integer page, Integer rows);
 
     void updateSelective(Order order) throws Exception;
 

@@ -1,9 +1,7 @@
 package com.nosuchteam.service;
 
 import com.nosuchteam.bean.Custom;
-import com.nosuchteam.util.commons.Page;
-
-import java.util.List;
+import com.nosuchteam.util.commons.PageInfo;
 
 /**
  * @Author: Evan
@@ -13,7 +11,7 @@ import java.util.List;
 public interface CustomService {
     void save(Custom custom) throws Exception;
 
-    Page selectByPage(Custom custom, Integer page, Integer rows);
+    PageInfo selectByPage(Custom custom, Integer page, Integer rows);
 
     void updateSelective(Custom custom) throws Exception;
 

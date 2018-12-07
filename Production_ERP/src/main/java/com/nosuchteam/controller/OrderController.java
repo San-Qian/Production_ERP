@@ -5,7 +5,7 @@ import com.nosuchteam.bean.Order;
 import com.nosuchteam.bean.Product;
 import com.nosuchteam.service.OrderService;
 import com.nosuchteam.util.commons.Data;
-import com.nosuchteam.util.commons.Page;
+import com.nosuchteam.util.commons.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -64,7 +64,7 @@ public class OrderController {
                     break;
             }
         }
-        Page pager = orderService.selectByPage(order, page, rows);
+        PageInfo pager = orderService.selectByPage(order, page, rows);
         getData = getData == null ? "" : getData;
         switch (getData) {
             case "List":

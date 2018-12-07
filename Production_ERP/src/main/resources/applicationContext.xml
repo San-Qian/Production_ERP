@@ -26,6 +26,7 @@
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
+
     <!--拦截器-->
     <mvc:interceptors>
         <mvc:interceptor>
@@ -44,12 +45,11 @@
     <mvc:resources mapping="/js/**" location="/WEB-INF/js/"></mvc:resources>
 
     <!--datasource-->
-    <bean id="datasource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-        <property name="user" value="root"></property>
+    <bean id="datasource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="username" value="root"></property>
         <property name="password" value="123456"></property>
-        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/production_erp_db?serverTimezone=GMT"/>
-        <property name="driverClass" value="com.mysql.cj.jdbc.Driver"></property>
-    </bean>
+        <property name="url" value="jdbc:mysql://localhost:3306/production_erp_db?serverTimezone=GMT"/>
+     </bean>
 
     <!--SqlSession工厂-->
     <bean id="sqlSessionFactory"  class="org.mybatis.spring.SqlSessionFactoryBean">
