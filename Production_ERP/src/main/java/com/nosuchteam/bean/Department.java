@@ -7,6 +7,15 @@ public class Department {
 
     private String note;
 
+    @Override
+    public String toString() {
+        return "{" +
+                "\"departmentId\"=\"" + departmentId + '\"' +
+                ",\"departmentName\"=\"" + departmentName + '\"' +
+                ", \"note\"=\"" + note + '\"' +
+                '}';
+    }
+
     public String getDepartmentId() {
         return departmentId;
     }
