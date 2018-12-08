@@ -3,18 +3,24 @@ package com.nosuchteam.controller;
 import com.nosuchteam.bean.Custom;
 import com.nosuchteam.bean.Order;
 import com.nosuchteam.bean.Product;
+import com.nosuchteam.service.CustomService;
 import com.nosuchteam.service.OrderService;
 import com.nosuchteam.util.commons.Data;
 import com.nosuchteam.util.commons.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.ArrayList;
+
 /**
  * @Author: Evan
  * @Date: 2018/12/5 14:57
@@ -26,6 +32,9 @@ public class OrderController {
     @Autowired
     @Qualifier("orderService")
     OrderService orderService;
+    @Autowired
+    @Qualifier("customService")
+    CustomService customService;
 
     @RequestMapping("/{name}")
     public String forward(@PathVariable String name, HttpSession session) {
@@ -42,13 +51,13 @@ public class OrderController {
 
     @ResponseBody
     @RequestMapping(path = {"/list", "/search_order_by_orderId"
-            , "/search_order_by_orderCustom","/search_order_by_orderProduct"})
-    public Object list(Order order, Integer page, HttpServletRequest request,String getData,
-                     String searchValue, Integer rows) throws Exception {
+            , "/search_order_by_orderCustom", "/search_order_by_orderProduct"})
+    public Object list(Order order, Integer page, HttpServletRequest request, String getData,
+                       String searchValue, Integer rows) throws Exception {
         String requestURI = request.getRequestURI();
 
         if (searchValue != null && !searchValue.isEmpty()) {
-            switch (requestURI.substring(requestURI.lastIndexOf("order") + "order".length())){
+            switch (requestURI.substring(requestURI.lastIndexOf("order") + "order".length())) {
                 case "Id":
                     order.setOrderId(searchValue);
                     break;
@@ -78,60 +87,53 @@ public class OrderController {
 
 
     @ResponseBody
-    @RequestMapping({"/add_judge", "/insert"})
-    public Data add(Order order, HttpServletRequest request) {
-        if (request.getRequestURI().endsWith("insert")) {
-            try {
-                orderService.save(order);
-                return new Data(200, "OK", null);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return new Data(500, "操作失败", null);
+    @RequestMapping({"/insert"})
+    public Data add(@Valid Order order, BindingResult bindingResult) {
+        try {
+            if (bindingResult.hasErrors()) {
+                return new Data(500, bindingResult.getAllErrors().get(0).getDefaultMessage(), null);
             }
+            orderService.save(order);
+            return new Data(200, "OK", null);
+        } catch (DuplicateKeyException de) {
+            de.printStackTrace();
+            return new Data(500, "该编号已存在", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Data(500, "操作失败", null);
         }
-        //....
-        return check(request.getSession());
     }
 
     @ResponseBody
-    @RequestMapping(path = {"/edit_judge", "/update_all", "/update_note"})
-    public Data edit(Order order, HttpServletRequest request) {
-        String requestURI = request.getRequestURI();
-        if (requestURI.endsWith("update_all")
-                || requestURI.endsWith("update_note")
-                && order.getOrderId() != null) {
-            try {
-                orderService.updateSelective(order);
-                return new Data(200, "OK", null);
-            }  catch (Exception e) {
-                e.printStackTrace();
-                return new Data(500, "操作失败", null);
+    @RequestMapping(path = {"/update_all", "/update_note"})
+    public Data edit(@Valid Order order, BindingResult bindingResult, HttpServletRequest request) {
+        try {
+            if(bindingResult.hasErrors()){
+                if(bindingResult.hasFieldErrors("orderId") || request.getRequestURI().endsWith("/update_all")){
+                    return new Data(500, bindingResult.getAllErrors().get(0).getDefaultMessage(), null);
+                }
             }
+            orderService.updateSelective(order);
+            return new Data(200, "OK", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Data(500, "操作失败", null);
         }
-        //....
-        return check(request.getSession());
+
     }
 
     @ResponseBody
-    @RequestMapping({"/delete", "/delete_judge", "/delete_batch"})
+    @RequestMapping({"/delete", "/delete_batch"})
     public Data delete(String[] ids, HttpServletRequest request) {
-        if (request.getRequestURI().endsWith("delete_batch") && ids != null && ids.length != 0) {
-            try {
-                orderService.delete(ids);
-                return new Data(200, "OK", null);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return new Data(500, "操作失败", null);
-            }
+
+        try {
+            orderService.delete(ids);
+            return new Data(200, "OK", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Data(500, "操作失败", null);
         }
-        //....
-        return check(request.getSession());
+
     }
 
-    private Data check(HttpSession session){
-        /*if (session == null || session.getAttribute("user") == null){
-            return new Data(500, "请先登录", null);
-        }*/
-        return null;
-    }
 }

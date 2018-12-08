@@ -8,13 +8,17 @@ import com.nosuchteam.util.commons.Data;
 import com.nosuchteam.util.commons.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 
 @Controller
@@ -75,61 +79,49 @@ public class ManufactureController {
     }
 
     @ResponseBody
-    @RequestMapping({"/add_judge", "/insert"})
-    public Data add(Manufacture manufacture, HttpServletRequest request) {
-        if (request.getRequestURI().endsWith("insert")) {
-            try {
-                manufactureService.save(manufacture);
-                return new Data(200, "OK", null);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return new Data(500, "操作失败", null);
+    @RequestMapping({"/insert"})
+    public Data add(@Valid Manufacture manufacture, BindingResult bindingResult) {
+        try {
+            if (bindingResult.hasErrors()) {
+                return new Data(500, bindingResult.getAllErrors().get(0).getDefaultMessage(), null);
             }
+            manufactureService.save(manufacture);
+            return new Data(200, "OK", null);
+        } catch (DuplicateKeyException de) {
+            de.printStackTrace();
+            return new Data(500, "该编号已存在", null);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        //....
-        return check(request.getSession());
+        return new Data(500, "操作失败", null);
     }
 
     @ResponseBody
-    @RequestMapping(path = {"/edit_judge", "/update_all", "/update_note"})
-    public Data edit(Manufacture manufacture, HttpServletRequest request) {
-        String requestURI = request.getRequestURI();
-        if (requestURI.endsWith("update_all")
-                || requestURI.endsWith("update_note")
-                && manufacture.getManufactureSn() != null) {
-            try {
-                manufactureService.update(manufacture);
-                return new Data(200, "OK", null);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return new Data(500, "操作失败", null);
+    @RequestMapping(path = {"/update_all", "/update_note"})
+    public Data edit(@Valid Manufacture manufacture, BindingResult bindingResult, HttpServletRequest request) {
+        try {
+            if(bindingResult.hasErrors()){
+                if(bindingResult.hasFieldErrors("manufactureSn") || request.getRequestURI().endsWith("/update_all")){
+                    return new Data(500, bindingResult.getAllErrors().get(0).getDefaultMessage(), null);
+                }
             }
+            manufactureService.update(manufacture);
+            return new Data(200, "OK", null);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        //....
-        return check(request.getSession());
+        return new Data(500, "操作失败", null);
     }
 
     @ResponseBody
-    @RequestMapping({"/delete", "/delete_judge", "/delete_batch"})
-    public Data delete(String[] ids, HttpServletRequest request) {
-        if (request.getRequestURI().endsWith("delete_batch") && ids != null && ids.length != 0) {
-            try {
-                manufactureService.delete(ids);
-                return new Data(200, "OK", null);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return new Data(500, "操作失败", null);
-            }
+    @RequestMapping({"/delete", "/delete_batch"})
+    public Data delete(@NotNull String[] ids) {
+        try {
+            manufactureService.delete(ids);
+            return new Data(200, "OK", null);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        //....
-        return check(request.getSession());
+        return new Data(500, "操作失败", null);
     }
-
-    private Data check(HttpSession session) {
-        /*if (session == null || session.getAttribute("user") == null){
-            return new Data(500, "请先登录", null);
-        }*/
-        return null;
-    }
-
 }

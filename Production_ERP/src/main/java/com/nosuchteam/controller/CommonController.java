@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,18 +29,27 @@ public class CommonController {
         return "forward:/" + getData + "/list?getData=List";
     }
 
+    @ResponseBody
+    @RequestMapping({"/{judge}/add_judge", "/{judge}/edit_judge", "/{judge}/delete_judge"})
+    public Object judge(@PathVariable String judge) {
+        /*if (session.getAttribute("user") == null){
+            return new Data(500, "请先登录", null);
+        }*/
+        return null;
+    }
 
     @RequestMapping("/{module}/get/{id}")
-    public String get(@PathVariable String module,@PathVariable String id) {
+    public String get(@PathVariable String module, @PathVariable String id) {
         String byId = module == "manufacture" ? "manufactureSn" : module + "Id";
         return "forward:/" + module + "/search_" + module + "_by_" + byId + "?getData=Object&searchValue=" + id;
     }
 
-    /**上传文件操作
+    /**
+     * 上传文件操作
      *
-     * @param operation  获取客户请求对文件的操作
-     * @param fileName   操作的文件名
-     * @param file       上传的文件
+     * @param operation 获取客户请求对文件的操作
+     * @param fileName  操作的文件名
+     * @param file      上传的文件
      * @param request
      * @return
      */
@@ -54,7 +62,7 @@ public class CommonController {
             //判断是否删除操作
             return "delete".equals(operation) ?
                     UploadHandler.delete(new File(uploadPath, fileName)) :
-                    UploadHandler.save("pic",uploadPath,file);
+                    UploadHandler.save("pic", uploadPath, file);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -69,7 +77,7 @@ public class CommonController {
             String uploadPath = request.getServletContext().getRealPath("/WEB-INF");
             return "delete".equals(operation) ?
                     UploadHandler.delete(new File(uploadPath, picName)) :
-                    UploadHandler.save("pic",uploadPath,uploadFile);
+                    UploadHandler.save("pic", uploadPath, uploadFile);
         } catch (Exception e) {
             e.printStackTrace();
         }

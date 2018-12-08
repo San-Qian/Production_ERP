@@ -9,7 +9,7 @@ public class Custom {
     @Pattern(regexp = "[0-9a-zA-Z]+", message = "请输入数字或英文字母的组合")
     @Length(min = 3,max = 8,message = "请输入3-8位合法编号")
     private String customId;
-    @NotNull
+    @NotNull(message = "请输入客户名称")
     private String customName;
     private String fullName;
 
@@ -23,8 +23,8 @@ public class Custom {
     private String ownerName;
     @Pattern(regexp = "[+]?(\\d){1,3}[ ]?([-]?((\\d)|[ ]){1,12})+",message = "请输入正确的手机号码")
     private String ownerTel;
-    @Min(1)
-    @Max(2)
+    @Min(value = 1,message = "状态异常")
+    @Max(value = 2,message = "状态异常")
     private Integer status;
 
     private String note;

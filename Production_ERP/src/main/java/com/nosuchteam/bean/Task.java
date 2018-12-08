@@ -17,10 +17,10 @@ public class Task {
     private Work work;
     private String workId;
 
-    @Min(0)
+    @Min(value = 0,message = "请输入正确的派工数量")
     private Integer taskQuantity;
 
-    @Min(0)
+    @Min(value = 0,message = "请输入正确的派工工时")
     private Long workingHours;
 
     @Override

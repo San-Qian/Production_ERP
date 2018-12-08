@@ -6,6 +6,7 @@ import com.nosuchteam.util.commons.Data;
 import com.nosuchteam.util.commons.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.lang.reflect.Method;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -67,45 +69,46 @@ public class CustomController {
 
 
     @ResponseBody
-    @RequestMapping({"/add_judge", "/insert"})
-    public Data add(@Valid Custom custom, BindingResult bindingResult, HttpServletRequest request) {
-        if (request.getRequestURI().endsWith("insert")) {
-            if(bindingResult.hasErrors()){
-                return new Data(500,bindingResult.getAllErrors().get(0).getDefaultMessage(),null) ;
-            }
+    @RequestMapping({"/insert"})
+    public Data add(@Valid Custom custom, BindingResult bindingResult) {
             try {
+                if(bindingResult.hasErrors()){
+                    return new Data(500,bindingResult.getAllErrors().get(0).getDefaultMessage(),null) ;
+                }
                 customService.save(custom);
+
                 return new Data(200, "OK", null);
+
+            }catch (DuplicateKeyException de){
+                de.printStackTrace();
+                return new Data(500, "该编号已存在", null);
             } catch (Exception e) {
                 e.printStackTrace();
                 return new Data(500, "操作失败", null);
             }
-        }
-        //....
-        return check(request.getSession());
     }
 
     @ResponseBody
-    @RequestMapping(path = {"/edit_judge", "/update_all", "/update_note"})
-    public Data edit(Custom custom, HttpServletRequest request) {
-        String requestURI = request.getRequestURI();
-        if (!requestURI.endsWith("judge")) {
+    @RequestMapping(path = { "/update_all", "/update_note"})
+    public Data edit(@Valid Custom custom, BindingResult bindingResult, HttpServletRequest request) {
             try {
+                if(bindingResult.hasErrors()){
+                    if(bindingResult.hasFieldErrors("customId") || request.getRequestURI().endsWith("/update_all")){
+                        return new Data(500, bindingResult.getAllErrors().get(0).getDefaultMessage(), null);
+                    }
+                }
                 customService.updateSelective(custom);
                 return new Data(200, "OK", null);
             }  catch (Exception e) {
                 e.printStackTrace();
                 return new Data(500, "操作失败", null);
             }
-        }
-        //....
-        return check(request.getSession());
     }
 
     @ResponseBody
-    @RequestMapping({"/delete", "/delete_judge", "/delete_batch"})
+    @RequestMapping({"/delete","/delete_batch"})
     public Data delete(String[] ids, HttpServletRequest request) {
-        if (request.getRequestURI().endsWith("delete_batch") && ids != null && ids.length != 0) {
+
             try {
                 customService.delete(ids);
                 return new Data(200, "OK", null);
@@ -113,15 +116,20 @@ public class CustomController {
                 e.printStackTrace();
                 return new Data(500, "操作失败", null);
             }
-        }
-        //....
-        return check(request.getSession());
     }
 
-    private Data check(HttpSession session) {
-        /*if (session == null || session.getAttribute("user") == null){
-            return new Data(500, "请先登录", null);
-        }*/
+    @ResponseBody
+    @RequestMapping({"/check"})
+    public Object checkStatus(String customId){
+        try{
+            Custom custom = customService.selectById(customId);
+            if(custom.getStatus() == 2){
+                return new Data(400, "警告！客户“" + custom.getCustomName() + "”为无效客户",null);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return null;
     }
+
 }

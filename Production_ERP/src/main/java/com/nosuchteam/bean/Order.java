@@ -29,17 +29,20 @@ public class Order {
 
     private String note;
 
-    @Min(0)
+    @Min(value = 0,message = "请输入正确的订购数量")
     private Integer quantity;
 
     private BigDecimal unitPrice;
-    @Pattern(regexp = "^[\u4e00-\u9fa5_a-zA-Z0-9]+$")
+
+    @Pattern(regexp = "[\u4e00-\u9fa5a-zA-Z]+",message = "请输入正确的单位")
     private String unit;
 
     private String image;
 
     private String file;
 
+    @Min(value = 1,message = "状态异常")
+    @Max(value = 4,message = "状态异常")
     private Integer status;
 
 
