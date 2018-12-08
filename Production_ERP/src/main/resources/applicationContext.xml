@@ -18,34 +18,44 @@
     <context:component-scan base-package="com.nosuchteam"></context:component-scan>
     <mvc:annotation-driven ></mvc:annotation-driven>
 
-    <mvc:default-servlet-handler></mvc:default-servlet-handler>
+    <!--<mvc:default-servlet-handler></mvc:default-servlet-handler>-->
 
 
 
     <!--datasource-->
-    <bean id="datasource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-        <property name="user" value="root"></property>
-        <property name="password" value="root"></property>
-        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/multi_table_db?serverTimezone=GMT"/>
-        <property name="driverClass" value="com.mysql.cj.jdbc.Driver"></property>
+    <bean id="myDatasource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="username" value="root"></property>
+        <property name="password" value="iteemo"></property>
+        <property name="url" value="jdbc:mysql://localhost:3306/production_erp_db?serverTimezone=GMT"/>
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
     </bean>
 
 
     <bean id="sqlSessionFactory"  class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="datasource"></property>
+        <property name="dataSource" ref="myDatasource"></property>
         <property name="configLocation" value="classpath:mybatis.xml"></property>
     </bean>
 
     <!--扫描mybatis的xml映射文件-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
-        <property name="basePackage" value="com.cskaoyan.dao"></property>
+        <property name="basePackage" value="com.nosuchteam.mapper"></property>
     </bean>
 
     <tx:annotation-driven transaction-manager="txManager" ></tx:annotation-driven>
 
     <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="datasource"></property>
+        <property name="dataSource" ref="myDatasource"></property>
     </bean>
+
+    <mvc:resources mapping="/css/**" location="/WEB-INF/css/"/>
+    <mvc:resources mapping="/js/**" location="/WEB-INF/js/"/>
+    <mvc:resources mapping="/image/**" location="/WEB-INF/image/"/>
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
 
 </beans>
