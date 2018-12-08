@@ -1,5 +1,6 @@
 package com.nosuchteam.service;
 
+import com.github.pagehelper.PageInfo;
 import com.nosuchteam.bean.Material;
 import com.nosuchteam.bean.MaterialConsume;
 import com.nosuchteam.bean.MaterialReceive;
@@ -7,7 +8,7 @@ import com.nosuchteam.bean.MaterialReceive;
 import java.util.List;
 
 public interface MaterialConsumeService {
-    List<MaterialConsume> findAllMaterialConsume();
+    PageInfo<MaterialConsume> findAllMaterialConsume(Integer page, Integer rows);
 
     boolean insert(MaterialConsume materialConsume);
 
@@ -15,11 +16,11 @@ public interface MaterialConsumeService {
 
     boolean delectById(String id);
 
-    List<MaterialConsume> searchConsumeId(String searchValue);
+    PageInfo<MaterialConsume> searchConsumeId(String searchValue, Integer page, Integer rows);
 
-    List<MaterialConsume> serachByWorkId(String searchValue);
+    PageInfo<MaterialConsume> serachByWorkId(String searchValue, Integer page, Integer rows);
 
-    List<MaterialConsume> serachByMaterialId(String searchValue);
+    PageInfo<MaterialConsume> serachByMaterialId(String searchValue, Integer page, Integer rows);
 
     boolean updateNote(String consumeId, String note);
 }

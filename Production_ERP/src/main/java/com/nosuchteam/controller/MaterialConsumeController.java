@@ -1,6 +1,7 @@
 package com.nosuchteam.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import com.nosuchteam.bean.Material;
 import com.nosuchteam.bean.MaterialConsume;
 import com.nosuchteam.bean.MaterialReceive;
@@ -42,13 +43,13 @@ public class MaterialConsumeController {
     //显示所有MaterialConsume
     @ResponseBody
     @RequestMapping("/list")
-    public Map<String, Object> list() {
+    public Map<String, Object> list(Integer page,Integer rows) {
         //需要连表查询，得到work表和material表的信息
-        List<MaterialConsume> materialConsumes = consumeService.findAllMaterialConsume();
+        PageInfo<MaterialConsume> pageInfo = consumeService.findAllMaterialConsume(page,rows);
 
         Map<String, Object> info = new HashMap<>();
-        info.put("total", materialConsumes.size());
-        info.put("rows", materialConsumes);
+        info.put("total", pageInfo.getTotal());
+        info.put("rows", pageInfo.getList());
 
         return info;
 
@@ -181,34 +182,34 @@ public class MaterialConsumeController {
     //搜索
     @ResponseBody
     @RequestMapping(value="/{formName}")
-    public Map<String, Object> search(@PathVariable String formName, String searchValue) {
+    public Map<String, Object> search(@PathVariable String formName, String searchValue,Integer page,Integer rows) {
         Map<String, Object> info = new HashMap<>();
 
         //物料消耗编号
         if (formName.contains("consumeId")){
-            List<MaterialConsume> consumes = consumeService.searchConsumeId(searchValue);
+            PageInfo<MaterialConsume> pageInfo= consumeService.searchConsumeId(searchValue, page, rows);
 
-            info.put("total", consumes.size());
-            info.put("rows", consumes);
+            info.put("total", pageInfo.getTotal());
+            info.put("rows", pageInfo.getList());
             return info;
 
         }
 
         //作业编号
         if (formName.contains("workId")){
-            List<MaterialConsume> consumes = consumeService.serachByWorkId(searchValue);
+            PageInfo<MaterialConsume> pageInfo = consumeService.serachByWorkId(searchValue, page, rows);
 
-            info.put("total", consumes.size());
-            info.put("rows", consumes);
+            info.put("total", pageInfo.getTotal());
+            info.put("rows", pageInfo.getList());
             return info;
         }
 
         //物料编号
         if (formName.contains("materialId")){
-            List<MaterialConsume> consumes = consumeService.serachByMaterialId(searchValue);
+            PageInfo<MaterialConsume> pageInfo = consumeService.serachByMaterialId(searchValue, page, rows);
 
-            info.put("total", consumes.size());
-            info.put("rows", consumes);
+            info.put("total", pageInfo.getTotal());
+            info.put("rows", pageInfo.getList());
             return info;
         }
         return null;

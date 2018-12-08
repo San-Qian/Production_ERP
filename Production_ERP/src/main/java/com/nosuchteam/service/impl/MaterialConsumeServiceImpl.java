@@ -1,5 +1,8 @@
 package com.nosuchteam.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.nosuchteam.bean.Material;
 import com.nosuchteam.bean.MaterialConsume;
 import com.nosuchteam.bean.MaterialReceive;
 import com.nosuchteam.mapper.MaterialConsumeMapper;
@@ -20,9 +23,11 @@ public class MaterialConsumeServiceImpl implements MaterialConsumeService {
     MaterialMapper materialMapper;
 
     @Override
-    public List<MaterialConsume> findAllMaterialConsume() {
+    public PageInfo<MaterialConsume> findAllMaterialConsume(Integer page, Integer rows) {
+        PageHelper.startPage(page,rows);
         List<MaterialConsume> consumes = consumeMapper.findAllMaterialConsume();
-        return consumes;
+        PageInfo<MaterialConsume> pageInfo = new PageInfo<>(consumes);
+        return pageInfo;
     }
 
     @Override
@@ -60,24 +65,30 @@ public class MaterialConsumeServiceImpl implements MaterialConsumeService {
     }
 
     @Override
-    public List<MaterialConsume> searchConsumeId(String searchValue) {
+    public PageInfo<MaterialConsume> searchConsumeId(String searchValue,Integer page,Integer rows) {
         searchValue = "%" + searchValue + "%";
+        PageHelper.startPage(page,rows);
         List<MaterialConsume> materialConsumes = consumeMapper.selectByConsumeId(searchValue);
-        return materialConsumes;
+        PageInfo<MaterialConsume> pageInfo = new PageInfo<>(materialConsumes);
+        return pageInfo;
     }
 
     @Override
-    public List<MaterialConsume> serachByWorkId(String searchValue) {
+    public PageInfo<MaterialConsume> serachByWorkId(String searchValue,Integer page,Integer rows) {
         searchValue = "%" + searchValue + "%";
+        PageHelper.startPage(page,rows);
         List<MaterialConsume> materialConsumes = consumeMapper.selectByWorkId(searchValue);
-        return materialConsumes;
+        PageInfo<MaterialConsume> pageInfo = new PageInfo<>(materialConsumes);
+        return pageInfo;
     }
 
     @Override
-    public List<MaterialConsume> serachByMaterialId(String searchValue) {
+    public PageInfo<MaterialConsume> serachByMaterialId(String searchValue,Integer page,Integer rows) {
         searchValue = "%" + searchValue + "%";
+        PageHelper.startPage(page,rows);
         List<MaterialConsume> materialConsumes = consumeMapper.selectByMaterialId(searchValue);
-        return materialConsumes;
+        PageInfo<MaterialConsume> pageInfo = new PageInfo<>(materialConsumes);
+        return pageInfo;
     }
 
     @Override

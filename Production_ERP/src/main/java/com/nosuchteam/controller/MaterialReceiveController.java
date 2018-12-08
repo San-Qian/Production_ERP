@@ -1,5 +1,6 @@
 package com.nosuchteam.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.nosuchteam.bean.Material;
 import com.nosuchteam.bean.MaterialReceive;
 import com.nosuchteam.service.MaterialReceiveService;
@@ -40,19 +41,12 @@ public class MaterialReceiveController {
     //显示所有MaterialReceive订单
     @ResponseBody
     @RequestMapping("/list")
-    public Map<String, Object> list() {
-        //需要往materialReceives中插入material
-        //修改为连接查询
-        List<MaterialReceive> materialReceives = receiveService.findAllMaterialReceive();
-
-        for (MaterialReceive mr : materialReceives) {
-            Material material = receiveService.getMaterialById(mr.getMaterialId());
-            mr.setMaterial(material);
-        }
+    public Map<String, Object> list(Integer page,Integer rows) {
+        PageInfo<MaterialReceive> pageInfo = receiveService.findAllMaterialReceive(page,rows);
 
         Map<String, Object> info = new HashMap<>();
-        info.put("total", materialReceives.size());
-        info.put("rows", materialReceives);
+        info.put("total", pageInfo.getTotal());
+        info.put("rows", pageInfo.getList());
 
         return info;
     }
@@ -185,35 +179,25 @@ public class MaterialReceiveController {
     //搜索
     @ResponseBody
     @RequestMapping(value = "/{formName}")
-    public Map<String, Object> search(@PathVariable String formName, String searchValue) {
+    public Map<String, Object> search(@PathVariable String formName, String searchValue,Integer page,Integer rows) {
         Map<String, Object> info = new HashMap<>();
 
         //物料收入编号
         if (formName.contains("receiveId")) {
-            List<MaterialReceive> receives = receiveService.searchByReceiveId(searchValue);
-            //需要往materialReceives中插入material
-            //修改为连接查询
-            for (MaterialReceive receive : receives) {
-                Material material = receiveService.getMaterialById(receive.getMaterialId());
-                receive.setMaterial(material);
-            }
-            info.put("total", receives.size());
-            info.put("rows", receives);
+            PageInfo<MaterialReceive> pageInfo = receiveService.searchByReceiveId(searchValue,page,rows);
+
+            info.put("total", pageInfo.getTotal());
+            info.put("rows", pageInfo.getList());
             return info;
 
         }
 
         //物料编号
         if (formName.contains("materialId")) {
-            List<MaterialReceive> receives = receiveService.serachByMaterialId(searchValue);
-            //需要往materialReceives中插入material
-            //修改为连接查询
-            for (MaterialReceive receive : receives) {
-                Material material = receiveService.getMaterialById(receive.getMaterialId());
-                receive.setMaterial(material);
-            }
-            info.put("total", receives.size());
-            info.put("rows", receives);
+            PageInfo<MaterialReceive> pageInfo = receiveService.serachByMaterialId(searchValue,page,rows);
+
+            info.put("total", pageInfo.getTotal());
+            info.put("rows", pageInfo.getList());
             return info;
         }
         return null;

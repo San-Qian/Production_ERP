@@ -1,5 +1,7 @@
 package com.nosuchteam.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.nosuchteam.bean.Material;
 import com.nosuchteam.bean.MaterialReceive;
 import com.nosuchteam.mapper.MaterialMapper;
@@ -20,9 +22,11 @@ public class MaterialReceiveServiceImpl implements MaterialReceiveService {
     MaterialMapper materialMapper;
 
     @Override
-    public List<MaterialReceive> findAllMaterialReceive() {
+    public PageInfo<MaterialReceive> findAllMaterialReceive(Integer page,Integer rows) {
+        PageHelper.startPage(page,rows);
         List<MaterialReceive> materialReceives = receiveMapper.findAllMaterialReceive();
-        return materialReceives;
+        PageInfo<MaterialReceive> pageInfo = new PageInfo<>(materialReceives);
+        return pageInfo;
     }
 
     @Override
@@ -69,17 +73,21 @@ public class MaterialReceiveServiceImpl implements MaterialReceiveService {
     }
 
     @Override
-    public List<MaterialReceive> searchByReceiveId(String searchValue) {
+    public PageInfo<MaterialReceive> searchByReceiveId(String searchValue,Integer page,Integer rows) {
         searchValue = "%" + searchValue + "%";
+        PageHelper.startPage(page,rows);
         List<MaterialReceive> receives = receiveMapper.selectByReceiveId(searchValue);
-        return receives;
+        PageInfo<MaterialReceive> pageInfo = new PageInfo<>(receives);
+        return pageInfo;
     }
 
     @Override
-    public List<MaterialReceive> serachByMaterialId(String searchValue) {
+    public PageInfo<MaterialReceive> serachByMaterialId(String searchValue,Integer page,Integer rows) {
         searchValue = "%" + searchValue + "%";
+        PageHelper.startPage(page,rows);
         List<MaterialReceive> receives = receiveMapper.selectByMaterialId(searchValue);
-        return receives;
+        PageInfo<MaterialReceive> pageInfo = new PageInfo<>(receives);
+        return pageInfo;
 
     }
 

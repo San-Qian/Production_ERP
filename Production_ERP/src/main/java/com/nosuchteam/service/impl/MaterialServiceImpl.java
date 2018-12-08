@@ -57,17 +57,21 @@ public class MaterialServiceImpl implements MaterialService {
     }
 
     @Override
-    public List<Material> searchByType(String searchValue) {
+    public PageInfo<Material> searchByType(String searchValue,Integer page,Integer rows) {
         searchValue = "%" + searchValue + "%";
+        PageHelper.startPage(page,rows);
         List<Material> materials = materialMapper.selectByType(searchValue);
-        return materials;
+        PageInfo<Material> pageInfo = new PageInfo<>(materials);
+        return pageInfo;
     }
 
     @Override
-    public List<Material> serachMaterialsById(String searchValue) {
+    public PageInfo<Material> serachMaterialsById(String searchValue,Integer page,Integer rows) {
         searchValue = "%" + searchValue + "%";
+        PageHelper.startPage(page,rows);
         List<Material> materials = materialMapper.selectByMaterialId(searchValue);
-        return materials;
+        PageInfo<Material> pageInfo = new PageInfo<>(materials);
+        return pageInfo;
     }
 
     @Override

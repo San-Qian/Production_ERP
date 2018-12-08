@@ -29,12 +29,12 @@
         <result column="sender" jdbcType="VARCHAR" property="sender"/>
         <result column="receiver" jdbcType="VARCHAR" property="receiver"/>
         <result column="note" jdbcType="VARCHAR" property="note"/>
-        <association property="work" javaType="com.nosuchteam.bean.Work">
-            <result column="work_id" property="workId"/>
-        </association>
-        <association property="material" javaType="com.nosuchteam.bean.Material">
-            <result column="material_id" property="materialId"></result>
-        </association>
+            <association property="work" javaType="com.nosuchteam.bean.Work">
+                <result column="work_id" property="workId"/>
+            </association>
+            <association property="material" javaType="com.nosuchteam.bean.Material">
+                <result column="material_id" property="materialId"></result>
+            </association>
     </resultMap>
 
     <select id="findAllMaterialConsume" parameterType="java.lang.String" resultMap="Map1">

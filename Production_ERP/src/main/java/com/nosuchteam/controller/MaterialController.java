@@ -186,21 +186,21 @@ public class MaterialController {
     //搜索
     @ResponseBody
     @RequestMapping(value="/{formName}")
-    public Map<String, Object> search(@PathVariable String formName, String searchValue) {
+    public Map<String, Object> search(@PathVariable String formName, String searchValue,Integer page,Integer rows) {
         Map<String, Object> info = new HashMap<>();
         //物料编号
         if (formName.endsWith("materialId")){
 
-            List<Material> materials = materialService.serachMaterialsById(searchValue);
-            info.put("total", materials.size());
-            info.put("rows", materials);
+            PageInfo<Material> pageInfo = materialService.serachMaterialsById(searchValue, page, rows);
+            info.put("total", pageInfo.getTotal());
+            info.put("rows", pageInfo.getList());
             return info;
         }
 
         if (formName.contains("materialType")){
-            List<Material> materials = materialService.searchByType(searchValue);
-            info.put("total", materials.size());
-            info.put("rows", materials);
+            PageInfo<Material> pageInfo = materialService.searchByType(searchValue, page, rows);
+            info.put("total", pageInfo.getTotal());
+            info.put("rows",pageInfo.getList());
             return info;
 
         }
