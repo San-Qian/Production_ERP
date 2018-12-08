@@ -4,10 +4,34 @@
     <resultMap id="BaseResultMap" type="com.nosuchteam.bean.TechnologyRequirement">
         <id column="technology_requirement_id" jdbcType="VARCHAR" property="technologyRequirementId"/>
         <result column="technology_id" jdbcType="VARCHAR" property="technologyId"/>
+        <result column="technology_name" jdbcType="VARCHAR" property="technologyName"/>
         <result column="requirement" jdbcType="VARCHAR" property="requirement"/>
         <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
         <result column="revise_time" jdbcType="TIMESTAMP" property="reviseTime"/>
     </resultMap>
+
+    <resultMap id="DoubleResultMap" type="com.nosuchteam.bean.TechnologyRequirement">
+        <id column="technology_requirement_id" jdbcType="VARCHAR" property="technologyRequirementId"/>
+        <result column="technology_id" jdbcType="VARCHAR" property="technologyId"/>
+        <result column="technology_name" jdbcType="VARCHAR" property="technologyName"/>
+        <result column="requirement" jdbcType="VARCHAR" property="requirement"/>
+        <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
+        <result column="revise_time" jdbcType="TIMESTAMP" property="reviseTime"/>
+        <association property="technology" javaType="technology">
+            <result column="technology_id" jdbcType="VARCHAR" property="technologyId"/>
+            <result column="technology_name" jdbcType="VARCHAR" property="technologyName"/>
+            <result column="price" jdbcType="DECIMAL" property="price"/>
+            <result column="vital_process_period" jdbcType="VARCHAR" property="vitalProcessPeriod"/>
+            <result column="standard_capacity" jdbcType="INTEGER" property="standardCapacity"/>
+            <result column="overtime_standard_capacity" jdbcType="INTEGER" property="overtimeStandardCapacity"/>
+            <result column="overtime_overfulfil_capacity" jdbcType="INTEGER" property="overtimeOverfulfilCapacity"/>
+            <result column="double_capacity" jdbcType="INTEGER" property="doubleCapacity"/>
+            <result column="overfulfil_capacity" jdbcType="INTEGER" property="overfulfilCapacity"/>
+        </association>
+    </resultMap>
+
+
+
     <sql id="Base_Column_List">
         technology_requirement_id,
         technology_id,
@@ -15,17 +39,71 @@
         add_time,
         revise_time
     </sql>
+
+    <sql id="TechnologyRequirement_Column_List">
+        tr.technology_requirement_id,
+        tr.technology_id,
+        tr.requirement,
+        tr.add_time,
+        tr.revise_time
+    </sql>
+
+    <sql id="Technology_Column_List">
+        t.technology_id,
+        t.technology_name,
+        t.price,
+        t.vital_process_period,
+        t.standard_capacity,
+        t.overtime_standard_capacity,
+        t.overtime_overfulfil_capacity,
+        t.double_capacity,
+        t.overfulfil_capacity
+    </sql>
+
+
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from technology_requirement
         where technology_requirement_id = #{technologyRequirementId,jdbcType=VARCHAR}
     </select>
+
+
+    <select id="select" resultMap="DoubleResultMap">
+        select
+        <include refid="TechnologyRequirement_Column_List"/>,
+        <include refid="Technology_Column_List"/>
+        from technology_requirement tr
+        left join technology t
+        on tr.technology_id = t.technology_id
+    </select>
+
+    <select id="selectByAmbiguousPrimaryKey" parameterType="java.lang.String" resultMap="DoubleResultMap">
+        select
+        <include refid="TechnologyRequirement_Column_List"/>,
+        <include refid="Technology_Column_List"/>
+        from technology_requirement tr
+        left join technology t
+        on tr.technology_id = t.technology_id
+        where tr.technology_requirement_id like #{technologyRequirementId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByAmbiguousName" parameterType="java.lang.String" resultMap="DoubleResultMap">
+        select
+        <include refid="TechnologyRequirement_Column_List"/>,
+        <include refid="Technology_Column_List"/>
+        from technology_requirement tr
+        left join technology t
+        on tr.technology_id = t.technology_id
+        where t.technology_name like #{technologyName,jdbcType=VARCHAR}
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
         delete
         from technology_requirement
         where technology_requirement_id = #{technologyRequirementId,jdbcType=VARCHAR}
     </delete>
+
     <insert id="insert" parameterType="com.nosuchteam.bean.TechnologyRequirement">
         insert into technology_requirement (technology_requirement_id, technology_id,
                                             requirement, add_time, revise_time)

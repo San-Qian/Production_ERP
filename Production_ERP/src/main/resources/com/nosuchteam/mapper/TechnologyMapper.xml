@@ -29,6 +29,28 @@
         from technology
         where technology_id = #{technologyId,jdbcType=VARCHAR}
     </select>
+
+
+    <select id="selectByAmbiguousPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from technology
+        where technology_id like #{technologyId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByAmbiguousName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from technology
+        where technology_name like #{technologyName,jdbcType=VARCHAR}
+    </select>
+
+    <select id="select" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from technology
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
         delete
         from technology

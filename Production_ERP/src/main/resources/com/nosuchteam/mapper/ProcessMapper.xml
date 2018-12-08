@@ -19,6 +19,31 @@
         from process
         where process_id = #{processId,jdbcType=VARCHAR}
     </select>
+
+    <select id="select" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from process
+    </select>
+    
+    <select id="selectByAmbiguousPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from process
+        where process_id like #{processId}
+    </select>
+
+
+    <select id="selectByAmbiguousForeignKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from process
+        where technology_plan_id like #{technologyPlanId}
+    </select>
+
+
+
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
         delete
         from process
