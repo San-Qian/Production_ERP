@@ -31,19 +31,6 @@ public class ProductController {
     @Qualifier("productService")
     ProductService productService;
 
-    @RequestMapping("/{name}")
-    public String forward(@PathVariable String name, HttpSession session) {
-        if ("find".equals(name)) {
-            ArrayList<String> sysPermissionList = new ArrayList<>();
-            sysPermissionList.add("product:add");
-            sysPermissionList.add("product:edit");
-            sysPermissionList.add("product:delete");
-            session.setAttribute("sysPermissionList", sysPermissionList);
-            return "plan_scheduling/product_list";
-        }
-        return "plan_scheduling/product_" + name;
-    }
-
     @ResponseBody
     @RequestMapping(path = {"/list"
             , "/search_product_by_productId"

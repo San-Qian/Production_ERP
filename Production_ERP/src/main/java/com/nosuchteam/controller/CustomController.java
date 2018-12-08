@@ -30,19 +30,6 @@ public class CustomController {
     @Qualifier("customService")
     CustomService customService;
 
-    @RequestMapping("/{name}")
-    public String forward(@PathVariable String name, HttpSession session) {
-        if ("find".equals(name)) {
-            ArrayList<String> sysPermissionList = new ArrayList<>();
-            sysPermissionList.add("custom:add");
-            sysPermissionList.add("custom:edit");
-            sysPermissionList.add("custom:delete");
-            session.setAttribute("sysPermissionList", sysPermissionList);
-            name = "list";
-        }
-        return "plan_scheduling/custom_" + name;
-    }
-
     @ResponseBody
     @RequestMapping(path = {"/list"
             , "/search_custom_by_customId"
@@ -71,62 +58,62 @@ public class CustomController {
     @ResponseBody
     @RequestMapping({"/insert"})
     public Data add(@Valid Custom custom, BindingResult bindingResult) {
-            try {
-                if(bindingResult.hasErrors()){
-                    return new Data(500,bindingResult.getAllErrors().get(0).getDefaultMessage(),null) ;
-                }
-                customService.save(custom);
-
-                return new Data(200, "OK", null);
-
-            }catch (DuplicateKeyException de){
-                de.printStackTrace();
-                return new Data(500, "该编号已存在", null);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return new Data(500, "操作失败", null);
+        try {
+            if (bindingResult.hasErrors()) {
+                return new Data(500, bindingResult.getAllErrors().get(0).getDefaultMessage(), null);
             }
+            customService.save(custom);
+
+            return new Data(200, "OK", null);
+
+        } catch (DuplicateKeyException de) {
+            de.printStackTrace();
+            return new Data(500, "该编号已存在", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Data(500, "操作失败", null);
+        }
     }
 
     @ResponseBody
-    @RequestMapping(path = { "/update_all", "/update_note"})
+    @RequestMapping(path = {"/update_all", "/update_note"})
     public Data edit(@Valid Custom custom, BindingResult bindingResult, HttpServletRequest request) {
-            try {
-                if(bindingResult.hasErrors()){
-                    if(bindingResult.hasFieldErrors("customId") || request.getRequestURI().endsWith("/update_all")){
-                        return new Data(500, bindingResult.getAllErrors().get(0).getDefaultMessage(), null);
-                    }
+        try {
+            if (bindingResult.hasErrors()) {
+                if (bindingResult.hasFieldErrors("customId") || request.getRequestURI().endsWith("/update_all")) {
+                    return new Data(500, bindingResult.getAllErrors().get(0).getDefaultMessage(), null);
                 }
-                customService.updateSelective(custom);
-                return new Data(200, "OK", null);
-            }  catch (Exception e) {
-                e.printStackTrace();
-                return new Data(500, "操作失败", null);
             }
+            customService.updateSelective(custom);
+            return new Data(200, "OK", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Data(500, "操作失败", null);
+        }
     }
 
     @ResponseBody
-    @RequestMapping({"/delete","/delete_batch"})
+    @RequestMapping({"/delete", "/delete_batch"})
     public Data delete(String[] ids, HttpServletRequest request) {
 
-            try {
-                customService.delete(ids);
-                return new Data(200, "OK", null);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return new Data(500, "操作失败", null);
-            }
+        try {
+            customService.delete(ids);
+            return new Data(200, "OK", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Data(500, "操作失败", null);
+        }
     }
 
     @ResponseBody
     @RequestMapping({"/check"})
-    public Object checkStatus(String customId){
-        try{
+    public Object checkStatus(String customId) {
+        try {
             Custom custom = customService.selectById(customId);
-            if(custom.getStatus() == 2){
-                return new Data(400, "警告！客户“" + custom.getCustomName() + "”为无效客户",null);
+            if (custom.getStatus() == 2) {
+                return new Data(400, "警告！客户“" + custom.getCustomName() + "”为无效客户", null);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

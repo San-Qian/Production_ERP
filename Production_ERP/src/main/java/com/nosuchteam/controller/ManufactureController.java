@@ -28,19 +28,6 @@ public class ManufactureController {
     @Qualifier("manufactureService")
     ManufactureService manufactureService;
 
-    @RequestMapping("/{name}")
-    public String forward(@PathVariable String name, HttpSession session) {
-        if ("find".equals(name)) {
-            ArrayList<String> sysPermissionList = new ArrayList<>();
-            sysPermissionList.add("manufacture:add");
-            sysPermissionList.add("manufacture:edit");
-            sysPermissionList.add("manufacture:delete");
-            session.setAttribute("sysPermissionList", sysPermissionList);
-            return "plan_scheduling/manufacture_list";
-        }
-        return "plan_scheduling/manufacture_" + name;
-    }
-
     @ResponseBody
     @RequestMapping(path = {"/list"
             , "/search_manufacture_by_manufactureSn"

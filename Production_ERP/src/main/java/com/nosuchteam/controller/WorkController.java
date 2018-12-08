@@ -34,19 +34,6 @@ public class WorkController {
     @Qualifier("workService")
     WorkService workService;
 
-    @RequestMapping("/{name}")
-    public String forward(@PathVariable String name, HttpSession session) {
-        if ("find".equals(name)) {
-            ArrayList<String> sysPermissionList = new ArrayList<>();
-            sysPermissionList.add("work:add");
-            sysPermissionList.add("work:edit");
-            sysPermissionList.add("work:delete");
-            session.setAttribute("sysPermissionList", sysPermissionList);
-            return "plan_scheduling/work_list";
-        }
-        return "plan_scheduling/work_" + name;
-    }
-
     @ResponseBody
     @RequestMapping(path = {"/list"
             , "/search_work_by_workId"
@@ -97,7 +84,7 @@ public class WorkController {
             }
             workService.save(work);
             return new Data(200, "OK", null);
-        } catch (DuplicateKeyException de){
+        } catch (DuplicateKeyException de) {
             de.printStackTrace();
             return new Data(500, "该编号已存在", null);
         } catch (Exception e) {
@@ -108,10 +95,10 @@ public class WorkController {
 
     @ResponseBody
     @RequestMapping(path = {"/update_all", "/update_note"})
-    public Data edit(@Valid Work work,BindingResult bindingResult, HttpServletRequest request) {
+    public Data edit(@Valid Work work, BindingResult bindingResult, HttpServletRequest request) {
         try {
-            if(bindingResult.hasErrors()){
-                if(bindingResult.hasFieldErrors("wordId") || request.getRequestURI().endsWith("/update_all")){
+            if (bindingResult.hasErrors()) {
+                if (bindingResult.hasFieldErrors("wordId") || request.getRequestURI().endsWith("/update_all")) {
                     return new Data(500, bindingResult.getAllErrors().get(0).getDefaultMessage(), null);
                 }
             }

@@ -30,19 +30,6 @@ public class TaskController {
     @Qualifier("taskService")
     TaskService taskService;
 
-    @RequestMapping("/{name}")
-    public String forward(@PathVariable String name, HttpSession session) {
-        if ("find".equals(name)) {
-            ArrayList<String> sysPermissionList = new ArrayList<>();
-            sysPermissionList.add("task:add");
-            sysPermissionList.add("task:edit");
-            sysPermissionList.add("task:delete");
-            session.setAttribute("sysPermissionList", sysPermissionList);
-            return "plan_scheduling/task_list";
-        }
-        return "plan_scheduling/task_" + name;
-    }
-
     @ResponseBody
     @RequestMapping(path = {"/list"
             , "/search_task_by_taskId"

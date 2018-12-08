@@ -47,7 +47,7 @@
     <!--datasource-->
     <bean id="datasource" class="com.alibaba.druid.pool.DruidDataSource">
         <property name="username" value="root"></property>
-        <property name="password" value="qwer1234"></property>
+        <property name="password" value="179354862"></property>
         <property name="url" value="jdbc:mysql://localhost:3306/production_erp_db?serverTimezone=GMT"/>
     </bean>
 
@@ -80,7 +80,5 @@
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
         <property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
     </bean>
-
-    <!--分页-->
 
 </beans>

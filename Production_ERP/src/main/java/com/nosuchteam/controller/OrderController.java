@@ -32,22 +32,6 @@ public class OrderController {
     @Autowired
     @Qualifier("orderService")
     OrderService orderService;
-    @Autowired
-    @Qualifier("customService")
-    CustomService customService;
-
-    @RequestMapping("/{name}")
-    public String forward(@PathVariable String name, HttpSession session) {
-        if ("find".equals(name)) {
-            ArrayList<String> sysPermissionList = new ArrayList<>();
-            sysPermissionList.add("order:add");
-            sysPermissionList.add("order:edit");
-            sysPermissionList.add("order:delete");
-            session.setAttribute("sysPermissionList", sysPermissionList);
-            return "plan_scheduling/order_list";
-        }
-        return "plan_scheduling/order_" + name;
-    }
 
     @ResponseBody
     @RequestMapping(path = {"/list", "/search_order_by_orderId"
