@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nosuchteam.mapper.EmployeeMapper">
-  <resultMap id="BaseResultMap" type="com.nosuchteam.bean.Employee">
+  <resultMap id="BaseResultMap" type="com.nosuchteam.bean.VO.EmployeeVO">
     <id column="emp_id" jdbcType="VARCHAR" property="empId" />
     <result column="emp_name" jdbcType="VARCHAR" property="empName" />
     <result column="sex" jdbcType="CHAR" property="sex" />
@@ -14,10 +14,11 @@
     <result column="major" jdbcType="VARCHAR" property="major" />
     <result column="graduate_school" jdbcType="VARCHAR" property="graduateSchool" />
     <result column="education_form" jdbcType="VARCHAR" property="educationForm" />
-    <result column="department_id" jdbcType="VARCHAR" property="departmentId" />
+    <association select="com.nosuchteam.mapper.DepartmentMapper.selectByPrimaryKey"
+                 column="department_id"  property="department" />
   </resultMap>
   <sql id="Base_Column_List">
-    emp_id, emp_name, sex, id_code, birthday, join_date, status, education, degree, major, 
+    emp_id, emp_name, sex, id_code, birthday, join_date, status, education, degree, major,
     graduate_school, education_form, department_id
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -185,4 +186,37 @@
       department_id = #{departmentId,jdbcType=VARCHAR}
     where emp_id = #{empId,jdbcType=VARCHAR}
   </update>
+  <select id="selectEmployeesBypage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from employee limit #{param1} offset #{param2}
+  </select>
+  <select id="selectCount" resultType="_int">
+    select count(*) from employee
+  </select>
+  <select id="selectAllEmployee" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from employee
+  </select>
+  <select id="searchEmployeeByName"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from employee
+    where emp_name like #{searchValue}
+  </select>
+  <select id="searchEmployeeById"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from employee
+    where emp_id like #{searchValue}
+  </select>
+  <select id="searchEmployeeByDepartmentName"  resultMap="BaseResultMap">
+    select
+    emp_id, emp_name, sex, id_code, birthday, join_date, status, education, degree, major,
+    graduate_school, education_form, d.department_id
+    from employee e left join department d on e.department_id=d.department_id
+    where d.department_name like #{searchValue}
+  </select>
+
 </mapper>

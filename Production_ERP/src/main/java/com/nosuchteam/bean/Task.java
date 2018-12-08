@@ -1,22 +1,39 @@
 package com.nosuchteam.bean;
 
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
+
 public class Task {
+    @Pattern(regexp = "[0-9a-zA-Z]+")
+    @Length(min = 3,max = 8)
     private String taskId;
 
+    private Manufacture manufacture;
     private String manufactureSn;
 
+    private Work work;
     private String workId;
 
+    @Min(0)
     private Integer taskQuantity;
 
+    @Min(0)
     private Long workingHours;
 
-    public String getTaskId() {
-        return taskId;
-    }
-
-    public void setTaskId(String taskId) {
-        this.taskId = taskId == null ? null : taskId.trim();
+    @Override
+    public String toString() {
+        return "Task{" +
+                "taskId='" + taskId + '\'' +
+                ", manufacture=" + manufacture +
+                ", manufactureSn='" + manufactureSn + '\'' +
+                ", work=" + work +
+                ", workId='" + workId + '\'' +
+                ", taskQuantity=" + taskQuantity +
+                ", workingHours=" + workingHours +
+                '}';
     }
 
     public String getManufactureSn() {
@@ -24,7 +41,7 @@ public class Task {
     }
 
     public void setManufactureSn(String manufactureSn) {
-        this.manufactureSn = manufactureSn == null ? null : manufactureSn.trim();
+        this.manufactureSn = manufactureSn;
     }
 
     public String getWorkId() {
@@ -32,7 +49,31 @@ public class Task {
     }
 
     public void setWorkId(String workId) {
-        this.workId = workId == null ? null : workId.trim();
+        this.workId = workId;
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
+
+    public Manufacture getManufacture() {
+        return manufacture;
+    }
+
+    public void setManufacture(Manufacture manufacture) {
+        this.manufacture = manufacture;
+    }
+
+    public Work getWork() {
+        return work;
+    }
+
+    public void setWork(Work work) {
+        this.work = work;
     }
 
     public Integer getTaskQuantity() {

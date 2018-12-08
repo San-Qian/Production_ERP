@@ -1,25 +1,49 @@
 package com.nosuchteam.bean;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.*;
+
 public class Custom {
+    @Pattern(regexp = "[0-9a-zA-Z]+", message = "请输入数字或英文字母的组合")
+    @Length(min = 3,max = 8,message = "请输入3-8位合法编号")
     private String customId;
-
+    @NotNull
     private String customName;
-
     private String fullName;
 
     private String address;
-
+    @Pattern(regexp = "((\\d{3,4}-)?\\d{7,8})?",message = "请输入正确的传真号码")
     private String fax;
 
+    @Email(message = "请输入正确的邮箱格式")
     private String email;
 
     private String ownerName;
-
+    @Pattern(regexp = "[+]?(\\d){1,3}[ ]?([-]?((\\d)|[ ]){1,12})+",message = "请输入正确的手机号码")
     private String ownerTel;
-
+    @Min(1)
+    @Max(2)
     private Integer status;
 
     private String note;
+
+    @Override
+    public String toString() {
+        return "Custom{" +
+                "customId='" + customId + '\'' +
+                ", customName='" + customName + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", address='" + address + '\'' +
+                ", fax='" + fax + '\'' +
+                ", email='" + email + '\'' +
+                ", ownerName='" + ownerName + '\'' +
+                ", ownerTel='" + ownerTel + '\'' +
+                ", status=" + status +
+                ", note='" + note + '\'' +
+                '}';
+    }
 
     public String getCustomId() {
         return customId;

@@ -523,6 +523,7 @@ function initOrderEditFileUpload(){
 //删除文件并删除文件在页面的显示
 function removeFile(i){
 	var fileName = $('#file'+i).attr("href");
+	fileName = fileName.substring(fileName.lastIndexOf("=") + 1);
 	$.ajax({
         cache: false,
         url: "file/delete",
@@ -536,10 +537,8 @@ function removeFile(i){
             	$('#delFile'+i).remove();        
                 var urls = $('#orderEditFile').val().split(",");  //将删除的文件url从urls中移除
                 var deletedUrls = [];
-                tempDelFileName = fileName.substring(0,fileName.lastIndexOf("/"));
-                delFileName = tempDelFileName.substring(tempDelFileName.lastIndexOf("/"))+fileName.substring(fileName.lastIndexOf("/"));
                 for(var k in urls){
-            		if(urls[k] != delFileName){
+            		if(urls[k] != fileName){
             			deletedUrls.push(urls[k]);
             		}
             	}

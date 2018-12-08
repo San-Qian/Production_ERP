@@ -22,17 +22,13 @@
 
 <!-- North Title -->
 <div class="divNorth" style="height:100px;" data-options="region:'north'">
-    <table id="_TableHeader" width="100%" border="0" cellpadding="0"
-           cellspacing="0" class="bluebg">
+    <table id="_TableHeader" width="100%" border="0" cellpadding="0" cellspacing="0" class="bluebg">
         <tbody>
         <tr>
             <td valign="top">
                 <div style="position:relative;">
                     <div style="text-align:right;font-size:15px;margin:2px 0 0 0;">
-							<span style="display:inline-block;font-size:20px;color:#c1dff7;margin:0 0 8px 0;">
-								大型生产管理中间件
-							</span><br/>
-
+							<span style="display:inline-block;font-size:20px;color:#c1dff7;margin:0 0 8px 0;">大型生产管理中间件</span><br/>
                         <span style="color:#c1dff7;">${activeUser.rolename}:</span>
                         <span style="color:#c1dff7;">
                             ${activeUser.username}
@@ -115,7 +111,6 @@
     </div>
 
     <div title="物料监控" data-options="selected:true" style="padding:10px">
-
         <ul id="materialMonitor" class="easyui-tree" data-options="animate:true,lines:true">
             <li><span>物料监控 </span>
                 <ul>

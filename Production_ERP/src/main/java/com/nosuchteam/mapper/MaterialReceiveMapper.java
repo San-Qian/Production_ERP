@@ -2,6 +2,8 @@ package com.nosuchteam.mapper;
 
 import com.nosuchteam.bean.MaterialReceive;
 
+import java.util.List;
+
 public interface MaterialReceiveMapper {
     int deleteByPrimaryKey(String receiveId);
 
@@ -14,4 +16,12 @@ public interface MaterialReceiveMapper {
     int updateByPrimaryKeySelective(MaterialReceive record);
 
     int updateByPrimaryKey(MaterialReceive record);
+
+    List<MaterialReceive> findAllMaterialReceive();
+
+    List<MaterialReceive> selectByReceiveId(String searchValue);
+
+    List<MaterialReceive> selectByMaterialId(String searchValue);
+
+    int updateNote(String receiveId, String note);
 }

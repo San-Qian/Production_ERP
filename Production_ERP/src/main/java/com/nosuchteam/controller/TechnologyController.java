@@ -3,7 +3,6 @@ package com.nosuchteam.controller;
 import com.github.pagehelper.PageInfo;
 import com.nosuchteam.bean.Technology;
 import com.nosuchteam.service.TechnologyService;
-import org.mybatis.generator.codegen.mybatis3.model.PrimaryKeyGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
