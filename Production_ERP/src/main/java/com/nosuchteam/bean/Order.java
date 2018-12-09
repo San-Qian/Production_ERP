@@ -1,13 +1,16 @@
 package com.nosuchteam.bean;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.Future;
-import javax.validation.constraints.Past;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
 public class Order {
+    @Pattern(regexp = "[0-9a-zA-Z]+", message = "请输入数字或英文字母的组合")
+    @Length(min = 3,max = 8,message = "请输入3-8位合法编号")
     private String orderId;
 
     private Custom custom;
@@ -26,16 +29,20 @@ public class Order {
 
     private String note;
 
+    @Min(value = 0,message = "请输入正确的订购数量")
     private Integer quantity;
 
     private BigDecimal unitPrice;
 
+    @Pattern(regexp = "[\u4e00-\u9fa5a-zA-Z]+",message = "请输入正确的单位")
     private String unit;
 
     private String image;
 
     private String file;
 
+    @Min(value = 1,message = "状态异常")
+    @Max(value = 4,message = "状态异常")
     private Integer status;
 
 

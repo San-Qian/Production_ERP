@@ -166,13 +166,13 @@
     SELECT <include refid="Base_Column_List" />
     FROM <include refid="tableName" />
    <include refid="conditions" />
-    <if test="limit != null &amp; limit >= 1">
-       LIMIT #{limit}
-    </if>
-    <if test="offset != null &amp; offset >= 0">
-       OFFSET #{offset}
-    </if>
-  </select>
+  <if test="limit != null &amp; limit >= 1">
+    LIMIT #{limit}
+  </if>
+  <if test="offset != null &amp; offset >= 0">
+    OFFSET #{offset}
+  </if>
+</select>
   <select id="count" resultType="_int">
     SELECT COUNT(*)
     FROM <include refid="tableName" />

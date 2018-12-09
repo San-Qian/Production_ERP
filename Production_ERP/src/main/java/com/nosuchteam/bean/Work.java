@@ -1,10 +1,14 @@
 package com.nosuchteam.bean;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
 
 public class Work {
+    @Pattern(regexp = "[0-9a-zA-Z]+", message = "请输入数字或英文字母的组合")
+    @Length(min = 3,max = 8,message = "请输入3-8位合法编号")
     private String workId;
-    @Min(0)
     private String processNumber;
 
     private Product product;
@@ -16,6 +20,7 @@ public class Work {
     private Device device;
     private String deviceId;
 
+    @Min(value = 0,message = "请输入正确的班产定额")
     private Integer rating;
 
     @Override

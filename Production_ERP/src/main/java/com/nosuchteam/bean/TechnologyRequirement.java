@@ -1,5 +1,7 @@
 package com.nosuchteam.bean;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class TechnologyRequirement {
@@ -9,9 +11,31 @@ public class TechnologyRequirement {
 
     private String requirement;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addTime;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date reviseTime;
+
+    private Technology technology;
+
+    private String technologyName;
+
+    public Technology getTechnology() {
+        return technology;
+    }
+
+    public void setTechnology(Technology technology) {
+        this.technology = technology;
+    }
+
+    public String getTechnologyName() {
+        return technologyName;
+    }
+
+    public void setTechnologyName(String technologyName) {
+        this.technologyName = technologyName;
+    }
 
     public String getTechnologyRequirementId() {
         return technologyRequirementId;
@@ -51,5 +75,18 @@ public class TechnologyRequirement {
 
     public void setReviseTime(Date reviseTime) {
         this.reviseTime = reviseTime;
+    }
+
+    @Override
+    public String toString() {
+        return "TechnologyRequirement{" +
+                "technologyRequirementId='" + technologyRequirementId + '\'' +
+                ", technologyId='" + technologyId + '\'' +
+                ", requirement='" + requirement + '\'' +
+                ", addTime=" + addTime +
+                ", reviseTime=" + reviseTime +
+                ", technology=" + technology +
+                ", technologyName='" + technologyName + '\'' +
+                '}';
     }
 }

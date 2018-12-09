@@ -20,31 +20,56 @@
     where receive_id = #{receiveId,jdbcType=VARCHAR}
   </select>
 
-  <select id="selectByReceiveId" parameterType="java.lang.String" resultMap="BaseResultMap">
-    SELECT <include refid="Base_Column_List" />
-    from material_receive
-    WHERE receive_id LIKE #{receiveId,jdbcType=VARCHAR}
+  <select id="selectByReceiveId" parameterType="java.lang.String" resultMap="Map1">
+    SELECT receive.receive_id,receive.amount,receive.receive_date,receive.sender,receive.receiver,receive.note,
+    material.material_id
+    from material_receive receive
+    LEFT JOIN material ON receive.material_id=material.material_id
+    WHERE receive.receive_id LIKE #{receiveId,jdbcType=VARCHAR}
   </select>
 
-  <select id="selectByMaterialId" parameterType="java.lang.String" resultMap="BaseResultMap">
-    SELECT <include refid="Base_Column_List" />
-    from material_receive
-    WHERE material_id LIKE #{materialId,jdbcType=VARCHAR}
+  <select id="selectByMaterialId" parameterType="java.lang.String" resultMap="Map1">
+    SELECT receive.receive_id,receive.amount,receive.receive_date,receive.sender,receive.receiver,receive.note,
+    material.material_id
+    from material_receive `receive`
+    LEFT JOIN material ON receive.material_id=material.material_id
+    WHERE receive.material_id LIKE #{materialId,jdbcType=VARCHAR}
   </select>
 
-  <select id="findAllMaterialReceive" resultMap="BaseResultMap">
-    SELECT <include refid="Base_Column_List"/> FROM material_receive
+  <resultMap id="Map1" type="com.nosuchteam.bean.MaterialReceive" extends="BaseResultMap">
+    <id column="receive_id" jdbcType="VARCHAR" property="receiveId" />
+    <result column="amount" jdbcType="INTEGER" property="amount" />
+    <result column="receive_date" jdbcType="TIMESTAMP" property="receiveDate" />
+    <result column="sender" jdbcType="VARCHAR" property="sender" />
+    <result column="receiver" jdbcType="VARCHAR" property="receiver" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+      <association property="material" javaType="com.nosuchteam.bean.Material">
+        <result column="material_id" property="materialId"></result>
+      </association>
+  </resultMap>
+  <select id="findAllMaterialReceive" resultMap="Map1">
+    SELECT receive.receive_id,receive.amount,receive.receive_date,receive.sender,receive.receiver,receive.note,
+    material.material_id
+     FROM material_receive `receive`
+     LEFT JOIN material ON receive.material_id=material.material_id
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from material_receive
     where material_id = #{receiveId,jdbcType=VARCHAR}
   </delete>
+
+  <update id="updateNote" >
+    update material_receive set note=#{param2} where receive_id =#{param1}
+  </update>
+
   <insert id="insert" parameterType="com.nosuchteam.bean.MaterialReceive">
     insert into material_receive (receive_id, material_id, amount, receive_date, sender, receiver, note)
     values (#{receiveId,jdbcType=VARCHAR}, #{materialId,jdbcType=VARCHAR}, #{amount,jdbcType=INTEGER}, 
       #{receiveDate,jdbcType=TIMESTAMP}, #{sender,jdbcType=VARCHAR}, #{receiver,jdbcType=VARCHAR}, 
       #{note,jdbcType=VARCHAR})
   </insert>
+
   <insert id="insertSelective" parameterType="com.nosuchteam.bean.MaterialReceive">
     insert into material_receive
     <trim prefix="(" suffix=")" suffixOverrides=",">

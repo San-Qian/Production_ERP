@@ -1,5 +1,7 @@
 package com.nosuchteam.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.nosuchteam.bean.Material;
 import com.nosuchteam.bean.MaterialReceive;
 import com.nosuchteam.mapper.MaterialMapper;
@@ -20,9 +22,11 @@ public class MaterialReceiveServiceImpl implements MaterialReceiveService {
     MaterialMapper materialMapper;
 
     @Override
-    public List<MaterialReceive> findAllMaterialReceive() {
+    public PageInfo<MaterialReceive> findAllMaterialReceive(Integer page,Integer rows) {
+        PageHelper.startPage(page,rows);
         List<MaterialReceive> materialReceives = receiveMapper.findAllMaterialReceive();
-        return materialReceives;
+        PageInfo<MaterialReceive> pageInfo = new PageInfo<>(materialReceives);
+        return pageInfo;
     }
 
     @Override
@@ -34,33 +38,62 @@ public class MaterialReceiveServiceImpl implements MaterialReceiveService {
     @Override
     public boolean insert(MaterialReceive materialReceive) {
         int insert = receiveMapper.insert(materialReceive);
+        if (insert == 1) {
+            materialMapper.increaseRemanining(materialReceive.getMaterialId(), materialReceive.getAmount());
+        }
         return insert == 1;
     }
 
     @Override
     public boolean update(MaterialReceive materialReceive) {
+        //拿到之前的amount
+        MaterialReceive receive = receiveMapper.selectByPrimaryKey(materialReceive.getReceiveId());
+        Integer amount = receive.getAmount();
+        int finalNum = materialReceive.getAmount() - amount;
+        materialMapper.updateRemaining(materialReceive.getMaterialId(), finalNum);
+
         int update = receiveMapper.updateByPrimaryKeySelective(materialReceive);
+
         return update == 1;
     }
 
     @Override
     public boolean delectById(String id) {
+        //删除之前拿到amount
+        MaterialReceive receive = receiveMapper.selectByPrimaryKey(id);
+        Integer amount = receive.getAmount();
+        String materialId = receive.getMaterialId();
+        materialMapper.decreaseRemanining(materialId,amount);
+//        //拿到剩余数量
+//        String materialId = receive.getMaterialId();
+//        Material material = materialMapper.selectByPrimaryKey(materialId);
+//        material.getRemaining();
         int delete = receiveMapper.deleteByPrimaryKey(id);
         return delete == 1;
     }
 
     @Override
-    public List<MaterialReceive> searchByReceiveId(String searchValue) {
+    public PageInfo<MaterialReceive> searchByReceiveId(String searchValue,Integer page,Integer rows) {
         searchValue = "%" + searchValue + "%";
+        PageHelper.startPage(page,rows);
         List<MaterialReceive> receives = receiveMapper.selectByReceiveId(searchValue);
-        return receives;
+        PageInfo<MaterialReceive> pageInfo = new PageInfo<>(receives);
+        return pageInfo;
     }
 
     @Override
-    public List<MaterialReceive> serachByMaterialId(String searchValue) {
+    public PageInfo<MaterialReceive> serachByMaterialId(String searchValue,Integer page,Integer rows) {
         searchValue = "%" + searchValue + "%";
+        PageHelper.startPage(page,rows);
         List<MaterialReceive> receives = receiveMapper.selectByMaterialId(searchValue);
-        return receives;
+        PageInfo<MaterialReceive> pageInfo = new PageInfo<>(receives);
+        return pageInfo;
 
+    }
+
+    @Override
+    public boolean updateNote(String receiveId, String note) {
+        int update = receiveMapper.updateNote(receiveId, note);
+        return update == 1;
     }
 }
