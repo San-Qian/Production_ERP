@@ -2,7 +2,7 @@ package com.nosuchteam.service;
 
 import com.nosuchteam.bean.SysUser;
 
-public interface UserService {
+public interface SysUserService {
     boolean deleteById(String id);
 
     boolean insert(SysUser record);
@@ -14,4 +14,6 @@ public interface UserService {
     boolean updateByIdSelective(SysUser record);
 
     boolean updateById(SysUser record);
+
+    SysUser login(SysUser sysUser);
 }
