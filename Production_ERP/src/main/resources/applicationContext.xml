@@ -48,14 +48,33 @@
     <bean id="datasource" class="com.alibaba.druid.pool.DruidDataSource">
         <property name="username" value="root"></property>
         <property name="password" value="123456"></property>
-        <property name="url" value="jdbc:mysql://localhost:3306/production_erp_db?serverTimezone=GMT"/>
-     </bean>
+        <property name="url" value="jdbc:mysql://localhost:3306/production_ssm_db?serverTimezone=GMT"/>
+        <property name="filters" value="stat"/>
+    </bean>
 
     <!--SqlSession工厂-->
     <bean id="sqlSessionFactory"  class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="datasource"></property>
         <property name="configLocation" value="classpath:mybatis.xml"></property>
+        <property name="mapperLocations" >
+            <array>
+                <value>classpath:com/nosuchteam/mapper/*.xml</value>
+            </array>
+        </property>
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <value>
+                            helperDialect=mysql
+                        </value>
+                    </property>
+                </bean>
+
+            </array>
+        </property>
     </bean>
+
     <!--扫描mybatis的xml映射文件-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
@@ -64,6 +83,7 @@
 
     <!--事务处理器-->
     <tx:annotation-driven transaction-manager="txManager" ></tx:annotation-driven>
+
     <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="datasource"></property>
     </bean>
