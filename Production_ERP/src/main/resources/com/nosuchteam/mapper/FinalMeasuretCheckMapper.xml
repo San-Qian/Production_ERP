@@ -125,4 +125,36 @@
       note = #{note,jdbcType=VARCHAR}
     where f_measure_check_id = #{fMeasureCheckId,jdbcType=VARCHAR}
   </update>
+
+  <!--回显-->
+  <resultMap id="map" type="FinalMeasuretCheckVo">
+    <id column="f_measure_check_id" jdbcType="VARCHAR" property="fMeasureCheckId" />
+    <result column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="check_item" jdbcType="VARCHAR" property="checkItem" />
+    <result column="cdate" jdbcType="TIMESTAMP" property="cdate" />
+    <result column="measure_data" jdbcType="VARCHAR" property="measureData" />
+    <result column="emp_Name" jdbcType="VARCHAR" property="empName" />
+    <result column="result" jdbcType="VARCHAR" property="result" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+  </resultMap>
+  <select id="findAllFinalMeasuretCheck" resultMap="map">
+    select  f_measure_check_id, order_id, check_item, cdate, measure_data, e.emp_name, result, note
+    from final_measuret_check f
+    left join employee e on e.emp_id = f.emp_id
+  </select>
+
+
+  <select id="searchFinalMeasuretCheckByCheckId" resultMap="map">
+    select f_measure_check_id, order_id, check_item, cdate, measure_data, e.emp_name, result, note
+    from final_measuret_check f
+    left join employee e on e.emp_id = f.emp_id
+    where f.f_measure_check_id like #{checkId}
+  </select>
+
+  <select id="searchFinalMeasuretCheckByOrderId" resultMap="map">
+    select f_measure_check_id, order_id, check_item, cdate, measure_data, e.emp_name, result, note
+    from final_measuret_check f
+    left join employee e on e.emp_id = f.emp_id
+    where f.order_id like #{orderId}
+  </select>
 </mapper>

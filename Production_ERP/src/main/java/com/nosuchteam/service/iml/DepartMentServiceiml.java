@@ -3,7 +3,6 @@ package com.nosuchteam.service.iml;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.nosuchteam.bean.Department;
-import com.nosuchteam.bean.VO.EmployeeVO;
 import com.nosuchteam.mapper.DepartmentMapper;
 import com.nosuchteam.service.DepartMentService;
 import org.springframework.beans.factory.annotation.Autowired;
