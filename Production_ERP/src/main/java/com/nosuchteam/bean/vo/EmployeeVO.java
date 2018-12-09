@@ -1,4 +1,4 @@
-package com.nosuchteam.bean.VO;
+package com.nosuchteam.bean.vo;
 
 import com.nosuchteam.bean.Department;
 

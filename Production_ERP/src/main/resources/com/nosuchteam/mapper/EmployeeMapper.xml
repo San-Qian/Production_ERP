@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nosuchteam.mapper.EmployeeMapper">
-  <resultMap id="BaseResultMap" type="com.nosuchteam.bean.VO.EmployeeVO">
+  <resultMap id="BaseResultMap" type="com.nosuchteam.bean.vo.EmployeeVO">
     <id column="emp_id" jdbcType="VARCHAR" property="empId" />
     <result column="emp_name" jdbcType="VARCHAR" property="empName" />
     <result column="sex" jdbcType="CHAR" property="sex" />

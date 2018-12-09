@@ -3,16 +3,18 @@ package com.nosuchteam.service.iml;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.nosuchteam.bean.Department;
-import com.nosuchteam.bean.VO.EmployeeVO;
 import com.nosuchteam.mapper.DepartmentMapper;
 import com.nosuchteam.service.DepartMentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
 @Service("departmentService")
 public class DepartMentServiceiml implements DepartMentService {
     @Autowired
@@ -75,8 +77,8 @@ public class DepartMentServiceiml implements DepartMentService {
     }
 
     @Override
-    public Map<String,Object> selectOnePage(String page, String rows) {
-        PageHelper.startPage(Integer.parseInt(page),Integer.parseInt(rows));
+    public Map<String,Object> selectOnePage(Integer page, Integer rows) {
+        PageHelper.startPage(page,rows);
         List<Department> departments = mapper.selectAllDepartMent();
         PageInfo<Department> pageInfo=new PageInfo<>(departments);
         Map<String,Object> map=new HashMap<>();
@@ -86,8 +88,8 @@ public class DepartMentServiceiml implements DepartMentService {
     }
 
     @Override
-    public Map searchDepartmentByName(String searchValue, String page, String rows) {
-        PageHelper.startPage(Integer.parseInt(page),Integer.parseInt(rows));
+    public Map searchDepartmentByName(String searchValue, Integer page, Integer rows) {
+        PageHelper.startPage(page,rows);
         searchValue="%"+searchValue+"%";
         List<Department> employees=mapper.searchDepartmentByName(searchValue);
         PageInfo<Department> pageInfo=new PageInfo<>(employees);
@@ -98,8 +100,8 @@ public class DepartMentServiceiml implements DepartMentService {
     }
 
     @Override
-    public Map searchDepartmentById(String searchValue, String page, String rows) {
-        PageHelper.startPage(Integer.parseInt(page),Integer.parseInt(rows));
+    public Map searchDepartmentById(String searchValue, Integer page, Integer rows) {
+        PageHelper.startPage(page,rows);
         searchValue="%"+searchValue+"%";
         List<Department> employees=mapper.searchDepartmentById(searchValue);
         PageInfo<Department> pageInfo=new PageInfo<>(employees);
