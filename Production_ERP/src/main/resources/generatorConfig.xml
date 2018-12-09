@@ -11,9 +11,9 @@
         </commentGenerator>
         <!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/production_erp_db?serverTimezone=GMT"
+                        connectionURL="jdbc:mysql://localhost:3306/production_ssm_db?serverTimezone=GMT"
                         userId="root"
-                        password="root">
+                        password="123456">
         </jdbcConnection>
         <!--
             for oracle
@@ -79,164 +79,159 @@
                    selectByExampleQueryId="false" ></table>-->
 
                <!-- 指定数据库表，要生成哪些表，就写哪些表，要和数据库中对应，不能写错！ -->
-               <table  tableName="custom"
-                       enableUpdateByExample="false"
-                       enableDeleteByExample="false"
-                       enableSelectByExample="false"
-                       enableCountByExample="false"><!--控制是否用上注解 前4个-->
-                       <!--enableCountByExample="false"
-                       enableUpdateByExample="false"
-                       enableDeleteByExample="false"
-                       enableSelectByExample="false"
-                       enableInsert="false"
-                       enableDeleteByPrimaryKey="false"
-                       enableSelectByPrimaryKey="false"
-                       selectByExampleQueryId="false"-->
-               </table>
-        <table  tableName="c_order"
-                enableUpdateByExample="false"
-                enableDeleteByExample="false"
-                enableSelectByExample="false"
-                enableCountByExample="false">
-        </table>
-        <table  tableName="department"
-                enableUpdateByExample="false"
-                enableDeleteByExample="false"
-                enableSelectByExample="false"
-                enableCountByExample="false">
-        </table>
-        <table  tableName="device"
-                enableUpdateByExample="false"
-                enableDeleteByExample="false"
-                enableSelectByExample="false"
-                enableCountByExample="false">
-        </table>
-        <table  tableName="device_check"
-                enableUpdateByExample="false"
-                enableDeleteByExample="false"
-                enableSelectByExample="false"
-                enableCountByExample="false">
-        </table>
-        <table  tableName="device_fault"
-                enableUpdateByExample="false"
-                enableDeleteByExample="false"
-                enableSelectByExample="false"
-                enableCountByExample="false">
-        </table>
-        <table  tableName="device_maintain"
-                enableUpdateByExample="false"
-                enableDeleteByExample="false"
-                enableSelectByExample="false"
-                enableCountByExample="false">
-        </table>
-        <table  tableName="device_type"
-                enableUpdateByExample="false"
-                enableDeleteByExample="false"
-                enableSelectByExample="false"
-                enableCountByExample="false">
-        </table>
-        <table  tableName="employee"
-                enableUpdateByExample="false"
-                enableDeleteByExample="false"
-                enableSelectByExample="false"
-                enableCountByExample="false">
-        </table>
-        <table  tableName="final_count_check"
-                enableUpdateByExample="false"
-                enableDeleteByExample="false"
-                enableSelectByExample="false"
-                enableCountByExample="false">
-        </table>
-        <table  tableName="final_measuret_check"
-                enableUpdateByExample="false"
-                enableDeleteByExample="false"
-                enableSelectByExample="false"
-                enableCountByExample="false">
-        </table>
-        <table  tableName="manufacture"
-                enableUpdateByExample="false"
-                enableDeleteByExample="false"
-                enableSelectByExample="false"
-                enableCountByExample="false">
-        </table>
-        <table  tableName="material"
-                enableUpdateByExample="false"
-                enableDeleteByExample="false"
-                enableSelectByExample="false"
-                enableCountByExample="false">
-        </table>
-        <table  tableName="material_consume"
-                enableUpdateByExample="false"
-                enableDeleteByExample="false"
-                enableSelectByExample="false"
-                enableCountByExample="false">
-        </table>
-        <table  tableName="work"
-                enableUpdateByExample="false"
-                enableDeleteByExample="false"
-                enableSelectByExample="false"
-                enableCountByExample="false"
-        ></table>
-        <table  tableName="unqualify_apply"
-                enableUpdateByExample="false"
-                enableDeleteByExample="false"
-                enableSelectByExample="false"
-                enableCountByExample="false"
-        ></table>
-        <table  tableName="technology_requirement"
-                enableUpdateByExample="false"
-                enableDeleteByExample="false"
-                enableSelectByExample="false"
-                enableCountByExample="false"
-        ></table>
-        <table  tableName="technology_plan"
-                enableUpdateByExample="false"
-                enableDeleteByExample="false"
-                enableSelectByExample="false"
-                enableCountByExample="false"
-        ></table>
-        <table  tableName="technology"
-                enableUpdateByExample="false"
-                enableDeleteByExample="false"
-                enableSelectByExample="false"
-                enableCountByExample="false"
-        ></table>
-        <table  tableName="task"
-                enableUpdateByExample="false"
-                enableDeleteByExample="false"
-                enableSelectByExample="false"
-                enableCountByExample="false"
-        ></table>
-        <table  tableName="product"
-                enableUpdateByExample="false"
-                enableDeleteByExample="false"
-                enableSelectByExample="false"
-                enableCountByExample="false"
-        ></table>
-        <table  tableName="process_measure_check"
-                enableUpdateByExample="false"
-                enableDeleteByExample="false"
-                enableSelectByExample="false"
-                enableCountByExample="false"
-        ></table>
-        <table  tableName="process_count_check"
-                enableUpdateByExample="false"
-                enableDeleteByExample="false"
-                enableSelectByExample="false"
-                enableCountByExample="false"
-        ></table>
-        <table  tableName="process"
-                enableUpdateByExample="false"
-                enableDeleteByExample="false"
-                enableSelectByExample="false"
-                enableCountByExample="false"
-        ></table>
-        <table  tableName="material_receive"
-                enableUpdateByExample="false"
-                enableDeleteByExample="false"
-                enableSelectByExample="false"
-                enableCountByExample="false"
-        ></table>
+               <!--<table  tableName="custom"-->
+                       <!--enableUpdateByExample="false"-->
+                       <!--enableDeleteByExample="false"-->
+                       <!--enableSelectByExample="false"-->
+                       <!--enableCountByExample="false">&lt;!&ndash;控制是否用上注解 前4个&ndash;&gt;-->
+                       <!--&lt;!&ndash;enableCountByExample="false"-->
+                       <!--enableUpdateByExample="false"-->
+                       <!--enableDeleteByExample="false"-->
+                       <!--enableSelectByExample="false"-->
+                       <!--enableInsert="false"-->
+                       <!--enableDeleteByPrimaryKey="false"-->
+                       <!--enableSelectByPrimaryKey="false"-->
+                       <!--selectByExampleQueryId="false"&ndash;&gt;-->
+               <!--</table>-->
+        <!--<table  tableName="c_order"-->
+                <!--enableUpdateByExample="false"-->
+                <!--enableDeleteByExample="false"-->
+                <!--enableSelectByExample="false"-->
+                <!--enableCountByExample="false">-->
+        <!--</table>-->
+        <!--<table  tableName="department"-->
+                <!--enableUpdateByExample="false"-->
+                <!--enableDeleteByExample="false"-->
+                <!--enableSelectByExample="false"-->
+                <!--enableCountByExample="false">-->
+        <!--</table>-->
+        <!--<table  tableName="device"-->
+                <!--enableUpdateByExample="false"-->
+                <!--enableDeleteByExample="false"-->
+                <!--enableSelectByExample="false"-->
+                <!--enableCountByExample="false">-->
+        <!--</table>-->
+        <!--<table  tableName="device_check"-->
+                <!--enableUpdateByExample="false"-->
+                <!--enableDeleteByExample="false"-->
+                <!--enableSelectByExample="false"-->
+                <!--enableCountByExample="false">-->
+        <!--</table>-->
+        <!--<table  tableName="device_fault"-->
+                <!--enableUpdateByExample="false"-->
+                <!--enableDeleteByExample="false"-->
+                <!--enableSelectByExample="false"-->
+                <!--enableCountByExample="false">-->
+        <!--</table>-->
+        <!--<table  tableName="device_maintain"-->
+                <!--enableUpdateByExample="false"-->
+                <!--enableDeleteByExample="false"-->
+                <!--enableSelectByExample="false"-->
+                <!--enableCountByExample="false">-->
+        <!--</table>-->
+        <!--<table  tableName="device_type"-->
+                <!--enableUpdateByExample="false"-->
+                <!--enableDeleteByExample="false"-->
+                <!--enableSelectByExample="false"-->
+                <!--enableCountByExample="false">-->
+        <!--</table>-->
+        <!--<table  tableName="employee"-->
+                <!--enableUpdateByExample="false"-->
+                <!--enableDeleteByExample="false"-->
+                <!--enableSelectByExample="false"-->
+                <!--enableCountByExample="false">-->
+        <!--</table>-->
+        <!--<table  tableName="final_count_check"-->
+                <!--enableUpdateByExample="false"-->
+                <!--enableDeleteByExample="false"-->
+                <!--enableSelectByExample="false"-->
+                <!--enableCountByExample="false">-->
+        <!--</table>-->
+        <!--<table  tableName="final_measuret_check"-->
+                <!--enableUpdateByExample="false"-->
+                <!--enableDeleteByExample="false"-->
+                <!--enableSelectByExample="false"-->
+                <!--enableCountByExample="false">-->
+        <!--</table>-->
+        <!--<table  tableName="manufacture"-->
+                <!--enableUpdateByExample="false"-->
+                <!--enableDeleteByExample="false"-->
+                <!--enableSelectByExample="false"-->
+                <!--enableCountByExample="false">-->
+        <!--</table>-->
+        <!--<table  tableName="material"-->
+                <!--enableUpdateByExample="false"-->
+                <!--enableDeleteByExample="false"-->
+                <!--enableSelectByExample="false"-->
+                <!--enableCountByExample="false">-->
+        <!--</table>-->
+        <!--<table  tableName="material_consume"-->
+                <!--enableUpdateByExample="false"-->
+                <!--enableDeleteByExample="false"-->
+                <!--enableSelectByExample="false"-->
+                <!--enableCountByExample="false">-->
+        <!--</table>-->
+        <!--<table  tableName="work"-->
+                <!--enableUpdateByExample="false"-->
+                <!--enableDeleteByExample="false"-->
+                <!--enableSelectByExample="false"-->
+                <!--enableCountByExample="false"-->
+        <!--&gt;</table>-->
+        <!--<table  tableName="unqualify_apply"-->
+                <!--enableUpdateByExample="false"-->
+                <!--enableDeleteByExample="false"-->
+                <!--enableSelectByExample="false"-->
+                <!--enableCountByExample="false"-->
+        <!--&gt;</table>-->
+        <!--<table  tableName="technology_requirement"-->
+                <!--enableUpdateByExample="false"-->
+                <!--enableDeleteByExample="false"-->
+                <!--enableSelectByExample="false"-->
+                <!--enableCountByExample="false"-->
+        <!--&gt;</table>-->
+        <!--<table  tableName="technology_plan"-->
+                <!--enableUpdateByExample="false"-->
+                <!--enableDeleteByExample="false"-->
+                <!--enableSelectByExample="false"-->
+                <!--enableCountByExample="false"-->
+        <!--&gt;</table>-->
+        <!--<table  tableName="technology"-->
+                <!--enableUpdateByExample="false"-->
+                <!--enableDeleteByExample="false"-->
+                <!--enableSelectByExample="false"-->
+                <!--enableCountByExample="false"-->
+        <!--&gt;</table>-->
+        <!--<table  tableName="task"-->
+                <!--enableUpdateByExample="false"-->
+                <!--enableDeleteByExample="false"-->
+                <!--enableSelectByExample="false"-->
+                <!--enableCountByExample="false"-->
+        <!--&gt;</table>-->
+
+        <!--<table  tableName="process_measure_check"-->
+                <!--enableUpdateByExample="false"-->
+                <!--enableDeleteByExample="false"-->
+                <!--enableSelectByExample="false"-->
+                <!--enableCountByExample="false"-->
+        <!--&gt;</table>-->
+        <!--<table  tableName="process_count_check"-->
+                <!--enableUpdateByExample="false"-->
+                <!--enableDeleteByExample="false"-->
+                <!--enableSelectByExample="false"-->
+                <!--enableCountByExample="false"-->
+        <!--&gt;</table>-->
+        <!--<table  tableName="process"-->
+                <!--enableUpdateByExample="false"-->
+                <!--enableDeleteByExample="false"-->
+                <!--enableSelectByExample="false"-->
+                <!--enableCountByExample="false"-->
+        <!--&gt;</table>-->
+        <!--<table  tableName="material_receive"-->
+                <!--enableUpdateByExample="false"-->
+                <!--enableDeleteByExample="false"-->
+                <!--enableSelectByExample="false"-->
+                <!--enableCountByExample="false"-->
+        <!--&gt;</table>-->
         <table  tableName="sys_user"
                 enableUpdateByExample="false"
                 enableDeleteByExample="false"
@@ -251,5 +246,7 @@
                 <table schema="" tableName="">
                    <columnOverride column="" javaType="" />
                </table> -->
+        <table schema="production_ssm_db"
+               tableName="product"></table>
     </context>
 </generatorConfiguration>

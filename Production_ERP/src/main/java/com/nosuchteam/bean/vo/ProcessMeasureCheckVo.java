@@ -19,22 +19,30 @@ public class ProcessMeasureCheckVo {
 
     private String empName;
 
+    private String empId;
+
     private String result;
 
     private String note;
 
-    @Override
-    public String toString() {
-        return "ProcessMeasureCheckVo{" +
-                "pMeasureCheckId='" + pMeasureCheckId + '\'' +
-                ", processId='" + processId + '\'' +
-                ", checkItem='" + checkItem + '\'' +
-                ", cdate=" + cdate +
-                ", measureData='" + measureData + '\'' +
-                ", empName='" + empName + '\'' +
-                ", result='" + result + '\'' +
-                ", note='" + note + '\'' +
-                '}';
+    public String getEmpId() {
+        return empId;
+    }
+
+    public void setEmpId(String empId) {
+        this.empId = empId;
+    }
+
+    public ProcessMeasureCheckVo(String pMeasureCheckId, String processId, String checkItem, Date cdate, String measureData, String empName, String empId, String result, String note) {
+        this.pMeasureCheckId = pMeasureCheckId;
+        this.processId = processId;
+        this.checkItem = checkItem;
+        this.cdate = cdate;
+        this.measureData = measureData;
+        this.empName = empName;
+        this.empId = empId;
+        this.result = result;
+        this.note = note;
     }
 
     public String getpMeasureCheckId() {

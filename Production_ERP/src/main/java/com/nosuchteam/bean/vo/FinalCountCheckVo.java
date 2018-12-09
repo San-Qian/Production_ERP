@@ -29,26 +29,38 @@ public class FinalCountCheckVo extends FinalCountCheck {
 
     private String empName;
 
+    private String empId;
+
     private String result;
 
     private String note;
 
+
+
+    public FinalCountCheckVo(String fCountCheckId, String orderId, String checkItem, Integer sample, Integer checkNumber, Integer unqualify, BigDecimal qualify, Date cdate, String measureData, String empName, String empId, String result, String note) {
+        this.fCountCheckId = fCountCheckId;
+        this.orderId = orderId;
+        this.checkItem = checkItem;
+        this.sample = sample;
+        this.checkNumber = checkNumber;
+        this.unqualify = unqualify;
+        this.qualify = qualify;
+        this.cdate = cdate;
+        this.measureData = measureData;
+        this.empName = empName;
+        this.empId = empId;
+        this.result = result;
+        this.note = note;
+    }
+
     @Override
-    public String toString() {
-        return "FinalCountCheckVo{" +
-                "fCountCheckId='" + fCountCheckId + '\'' +
-                ", orderId='" + orderId + '\'' +
-                ", checkItem='" + checkItem + '\'' +
-                ", sample=" + sample +
-                ", checkNumber=" + checkNumber +
-                ", unqualify=" + unqualify +
-                ", qualify=" + qualify +
-                ", cdate=" + cdate +
-                ", measureData='" + measureData + '\'' +
-                ", empName='" + empName + '\'' +
-                ", result='" + result + '\'' +
-                ", note='" + note + '\'' +
-                '}';
+    public String getEmpId() {
+        return empId;
+    }
+
+    @Override
+    public void setEmpId(String empId) {
+        this.empId = empId;
     }
 
     @Override

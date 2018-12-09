@@ -20,22 +20,32 @@ public class FinalMeasuretCheckVo extends FinalMeasuretCheck {
 
     private String empName;
 
+    private String empId;
+
     private String result;
 
     private String note;
 
     @Override
-    public String toString() {
-        return "FinalMeasuretCheckVo{" +
-                "fMeasureCheckId='" + fMeasureCheckId + '\'' +
-                ", orderId='" + orderId + '\'' +
-                ", checkItem='" + checkItem + '\'' +
-                ", cdate=" + cdate +
-                ", measureData='" + measureData + '\'' +
-                ", empName='" + empName + '\'' +
-                ", result='" + result + '\'' +
-                ", note='" + note + '\'' +
-                '}';
+    public String getEmpId() {
+        return empId;
+    }
+
+    @Override
+    public void setEmpId(String empId) {
+        this.empId = empId;
+    }
+
+    public FinalMeasuretCheckVo(String fMeasureCheckId, String orderId, String checkItem, Date cdate, String measureData, String empName, String empId, String result, String note) {
+        this.fMeasureCheckId = fMeasureCheckId;
+        this.orderId = orderId;
+        this.checkItem = checkItem;
+        this.cdate = cdate;
+        this.measureData = measureData;
+        this.empName = empName;
+        this.empId = empId;
+        this.result = result;
+        this.note = note;
     }
 
     @Override

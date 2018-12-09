@@ -197,6 +197,7 @@
         <result column="cdate" jdbcType="TIMESTAMP" property="cdate"/>
         <result column="measure_data" jdbcType="VARCHAR" property="measureData"/>
         <result column="emp_name" jdbcType="VARCHAR" property="empName"/>
+        <result column="emp_id" jdbcType="VARCHAR" property="empId"/>
         <result column="result" jdbcType="VARCHAR" property="result"/>
         <result column="note" jdbcType="VARCHAR" property="note"/>
     </resultMap>
@@ -212,7 +213,8 @@
         measure_data,
         emp_name,
         result,
-        note
+        note,
+        p.emp_id
     from process_count_check p
     left join employee e on e.emp_id = p.emp_id
   </select>
@@ -229,7 +231,8 @@
         measure_data,
         emp_name,
         result,
-        note
+        note,
+        p.emp_id
     from process_count_check p
     left join employee e on e.emp_id = p.emp_id
     where p.p_count_check_id like #{checkId}
