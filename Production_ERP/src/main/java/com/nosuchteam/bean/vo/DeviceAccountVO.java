@@ -1,39 +1,59 @@
-package com.nosuchteam.bean;
+package com.nosuchteam.bean.vo;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
-public class Device {
+/**
+ * @author: SanQian
+ * @create: 2018-12-06 17:36
+ */
+public class DeviceAccountVO {
+
     private String deviceId;
-
     private String deviceName;
-
     private String deviceTypeId;
-
     private String deviceStatusId;
-
     private String deviceStatus;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date devicePurchaseDate;
-
-    private BigDecimal devicePurchasePrice;
+    private String devicePurchasePrice;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date deviceManufactureDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date deviceServiceLife;
-
     private String deviceKeeperId;
-
     private String note;
+    private String deviceIdd;
+    private String deviceTypeName;
+    private String deviceKeeper;
+
+    @Override
+    public String toString() {
+        return "DeviceAccountVO{" +
+                "deviceId='" + deviceId + '\'' +
+                ", deviceName='" + deviceName + '\'' +
+                ", deviceTypeId='" + deviceTypeId + '\'' +
+                ", deviceStatusId='" + deviceStatusId + '\'' +
+                ", deviceStatus='" + deviceStatus + '\'' +
+                ", devicePurchaseDate=" + devicePurchaseDate +
+                ", devicePurchasePrice='" + devicePurchasePrice + '\'' +
+                ", deviceManufactureDate=" + deviceManufactureDate +
+                ", deviceServiceLife=" + deviceServiceLife +
+                ", deviceKeeperId='" + deviceKeeperId + '\'' +
+                ", note='" + note + '\'' +
+                ", deviceIdd='" + deviceIdd + '\'' +
+                ", deviceTypeName='" + deviceTypeName + '\'' +
+                ", deviceKeeper='" + deviceKeeper + '\'' +
+                '}';
+    }
 
     public String getDeviceId() {
         return deviceId;
     }
 
     public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId == null ? null : deviceId.trim();
+        this.deviceId = deviceId;
     }
 
     public String getDeviceName() {
@@ -41,7 +61,7 @@ public class Device {
     }
 
     public void setDeviceName(String deviceName) {
-        this.deviceName = deviceName == null ? null : deviceName.trim();
+        this.deviceName = deviceName;
     }
 
     public String getDeviceTypeId() {
@@ -49,7 +69,7 @@ public class Device {
     }
 
     public void setDeviceTypeId(String deviceTypeId) {
-        this.deviceTypeId = deviceTypeId == null ? null : deviceTypeId.trim();
+        this.deviceTypeId = deviceTypeId;
     }
 
     public String getDeviceStatusId() {
@@ -57,7 +77,7 @@ public class Device {
     }
 
     public void setDeviceStatusId(String deviceStatusId) {
-        this.deviceStatusId = deviceStatusId == null ? null : deviceStatusId.trim();
+        this.deviceStatusId = deviceStatusId;
     }
 
     public String getDeviceStatus() {
@@ -65,7 +85,7 @@ public class Device {
     }
 
     public void setDeviceStatus(String deviceStatus) {
-        this.deviceStatus = deviceStatus == null ? null : deviceStatus.trim();
+        this.deviceStatus = deviceStatus;
     }
 
     public Date getDevicePurchaseDate() {
@@ -76,11 +96,11 @@ public class Device {
         this.devicePurchaseDate = devicePurchaseDate;
     }
 
-    public BigDecimal getDevicePurchasePrice() {
+    public String getDevicePurchasePrice() {
         return devicePurchasePrice;
     }
 
-    public void setDevicePurchasePrice(BigDecimal devicePurchasePrice) {
+    public void setDevicePurchasePrice(String devicePurchasePrice) {
         this.devicePurchasePrice = devicePurchasePrice;
     }
 
@@ -105,7 +125,7 @@ public class Device {
     }
 
     public void setDeviceKeeperId(String deviceKeeperId) {
-        this.deviceKeeperId = deviceKeeperId == null ? null : deviceKeeperId.trim();
+        this.deviceKeeperId = deviceKeeperId;
     }
 
     public String getNote() {
@@ -113,6 +133,30 @@ public class Device {
     }
 
     public void setNote(String note) {
-        this.note = note == null ? null : note.trim();
+        this.note = note;
+    }
+
+    public String getDeviceIdd() {
+        return deviceIdd;
+    }
+
+    public void setDeviceIdd(String deviceIdd) {
+        this.deviceIdd = deviceIdd;
+    }
+
+    public String getDeviceTypeName() {
+        return deviceTypeName;
+    }
+
+    public void setDeviceTypeName(String deviceTypeName) {
+        this.deviceTypeName = deviceTypeName;
+    }
+
+    public String getDeviceKeeper() {
+        return deviceKeeper;
+    }
+
+    public void setDeviceKeeper(String deviceKeeper) {
+        this.deviceKeeper = deviceKeeper;
     }
 }

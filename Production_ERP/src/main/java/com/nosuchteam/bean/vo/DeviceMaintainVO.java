@@ -1,11 +1,15 @@
-package com.nosuchteam.bean;
+package com.nosuchteam.bean.vo;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class DeviceMaintain {
+/**
+ * @author: SanQian
+ * @create: 2018-12-09 13:24
+ */
+public class DeviceMaintainVO {
     private String deviceMaintainId;
 
     private String deviceFaultId;
@@ -19,13 +23,14 @@ public class DeviceMaintain {
     private BigDecimal deviceMaintainCost;
 
     private String note;
+    private String deviceMaintainEmp;
 
     public String getDeviceMaintainId() {
         return deviceMaintainId;
     }
 
     public void setDeviceMaintainId(String deviceMaintainId) {
-        this.deviceMaintainId = deviceMaintainId == null ? null : deviceMaintainId.trim();
+        this.deviceMaintainId = deviceMaintainId;
     }
 
     public String getDeviceFaultId() {
@@ -33,7 +38,7 @@ public class DeviceMaintain {
     }
 
     public void setDeviceFaultId(String deviceFaultId) {
-        this.deviceFaultId = deviceFaultId == null ? null : deviceFaultId.trim();
+        this.deviceFaultId = deviceFaultId;
     }
 
     public String getDeviceMaintainEmpId() {
@@ -41,7 +46,7 @@ public class DeviceMaintain {
     }
 
     public void setDeviceMaintainEmpId(String deviceMaintainEmpId) {
-        this.deviceMaintainEmpId = deviceMaintainEmpId == null ? null : deviceMaintainEmpId.trim();
+        this.deviceMaintainEmpId = deviceMaintainEmpId;
     }
 
     public Date getDeviceMaintainDate() {
@@ -57,7 +62,7 @@ public class DeviceMaintain {
     }
 
     public void setDeviceMaintainResult(String deviceMaintainResult) {
-        this.deviceMaintainResult = deviceMaintainResult == null ? null : deviceMaintainResult.trim();
+        this.deviceMaintainResult = deviceMaintainResult;
     }
 
     public BigDecimal getDeviceMaintainCost() {
@@ -73,12 +78,20 @@ public class DeviceMaintain {
     }
 
     public void setNote(String note) {
-        this.note = note == null ? null : note.trim();
+        this.note = note;
+    }
+
+    public String getDeviceMaintainEmp() {
+        return deviceMaintainEmp;
+    }
+
+    public void setDeviceMaintainEmp(String deviceMaintainEmp) {
+        this.deviceMaintainEmp = deviceMaintainEmp;
     }
 
     @Override
     public String toString() {
-        return "DeviceMaintain{" +
+        return "DeviceMaintainVO{" +
                 "deviceMaintainId='" + deviceMaintainId + '\'' +
                 ", deviceFaultId='" + deviceFaultId + '\'' +
                 ", deviceMaintainEmpId='" + deviceMaintainEmpId + '\'' +
@@ -86,6 +99,7 @@ public class DeviceMaintain {
                 ", deviceMaintainResult='" + deviceMaintainResult + '\'' +
                 ", deviceMaintainCost=" + deviceMaintainCost +
                 ", note='" + note + '\'' +
+                ", deviceMaintainEmp='" + deviceMaintainEmp + '\'' +
                 '}';
     }
 }

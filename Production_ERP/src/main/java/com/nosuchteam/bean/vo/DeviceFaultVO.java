@@ -1,10 +1,14 @@
-package com.nosuchteam.bean;
+package com.nosuchteam.bean.vo;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-public class DeviceFault {
+/**
+ * @author: SanQian
+ * @create: 2018-12-09 12:40
+ */
+public class DeviceFaultVO {
     private String deviceFaultId;
 
     private String deviceId;
@@ -14,15 +18,15 @@ public class DeviceFault {
     private String deviceFaultDetail;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date deviceFaultDate;
-
     private String deviceFaultMaintenance;
+    private String deviceName;
 
     public String getDeviceFaultId() {
         return deviceFaultId;
     }
 
     public void setDeviceFaultId(String deviceFaultId) {
-        this.deviceFaultId = deviceFaultId == null ? null : deviceFaultId.trim();
+        this.deviceFaultId = deviceFaultId;
     }
 
     public String getDeviceId() {
@@ -30,7 +34,7 @@ public class DeviceFault {
     }
 
     public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId == null ? null : deviceId.trim();
+        this.deviceId = deviceId;
     }
 
     public String getDeviceFaultCause() {
@@ -38,7 +42,7 @@ public class DeviceFault {
     }
 
     public void setDeviceFaultCause(String deviceFaultCause) {
-        this.deviceFaultCause = deviceFaultCause == null ? null : deviceFaultCause.trim();
+        this.deviceFaultCause = deviceFaultCause;
     }
 
     public String getDeviceFaultDetail() {
@@ -46,7 +50,7 @@ public class DeviceFault {
     }
 
     public void setDeviceFaultDetail(String deviceFaultDetail) {
-        this.deviceFaultDetail = deviceFaultDetail == null ? null : deviceFaultDetail.trim();
+        this.deviceFaultDetail = deviceFaultDetail;
     }
 
     public Date getDeviceFaultDate() {
@@ -62,18 +66,27 @@ public class DeviceFault {
     }
 
     public void setDeviceFaultMaintenance(String deviceFaultMaintenance) {
-        this.deviceFaultMaintenance = deviceFaultMaintenance == null ? null : deviceFaultMaintenance.trim();
+        this.deviceFaultMaintenance = deviceFaultMaintenance;
+    }
+
+    public String getDeviceName() {
+        return deviceName;
+    }
+
+    public void setDeviceName(String deviceName) {
+        this.deviceName = deviceName;
     }
 
     @Override
     public String toString() {
-        return "DeviceFault{" +
+        return "DeviceFaultVO{" +
                 "deviceFaultId='" + deviceFaultId + '\'' +
                 ", deviceId='" + deviceId + '\'' +
                 ", deviceFaultCause='" + deviceFaultCause + '\'' +
                 ", deviceFaultDetail='" + deviceFaultDetail + '\'' +
                 ", deviceFaultDate=" + deviceFaultDate +
                 ", deviceFaultMaintenance='" + deviceFaultMaintenance + '\'' +
+                ", deviceName=" + deviceName +
                 '}';
     }
 }

@@ -24,9 +24,11 @@ public interface EmployeeMapper {
 
     List<EmployeeVO> selectAllEmployee();
 
-    List<EmployeeVO>  searchEmployeeByName(String searchValue);
-    List<EmployeeVO>  searchEmployeeById(String searchValue);
-    List<EmployeeVO>  searchEmployeeByDepartmentName(String searchValue);
+    List<EmployeeVO> searchEmployeeByName(String searchValue);
 
+    List<EmployeeVO> searchEmployeeById(String searchValue);
+
+    List<EmployeeVO> searchEmployeeByDepartmentName(String searchValue);
+    String selectEmpNameByPrimaryKey(String id);
 
 }

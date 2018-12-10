@@ -1,10 +1,14 @@
-package com.nosuchteam.bean;
+package com.nosuchteam.bean.vo;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-public class DeviceCheck {
+/**
+ * @author: SanQian
+ * @create: 2018-12-09 10:58
+ */
+public class DeviceCheckVO {
     private String deviceCheckId;
 
     private String deviceId;
@@ -16,13 +20,15 @@ public class DeviceCheck {
     private String deviceCheckResult;
 
     private String deviceCheckFaultId;
+    private String deviceName;
+    private String deviceCheckEmp;
 
     public String getDeviceCheckId() {
         return deviceCheckId;
     }
 
     public void setDeviceCheckId(String deviceCheckId) {
-        this.deviceCheckId = deviceCheckId == null ? null : deviceCheckId.trim();
+        this.deviceCheckId = deviceCheckId;
     }
 
     public String getDeviceId() {
@@ -30,7 +36,7 @@ public class DeviceCheck {
     }
 
     public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId == null ? null : deviceId.trim();
+        this.deviceId = deviceId;
     }
 
     public String getDeviceCheckEmpId() {
@@ -38,7 +44,7 @@ public class DeviceCheck {
     }
 
     public void setDeviceCheckEmpId(String deviceCheckEmpId) {
-        this.deviceCheckEmpId = deviceCheckEmpId == null ? null : deviceCheckEmpId.trim();
+        this.deviceCheckEmpId = deviceCheckEmpId;
     }
 
     public Date getDeviceCheckDate() {
@@ -54,7 +60,7 @@ public class DeviceCheck {
     }
 
     public void setDeviceCheckResult(String deviceCheckResult) {
-        this.deviceCheckResult = deviceCheckResult == null ? null : deviceCheckResult.trim();
+        this.deviceCheckResult = deviceCheckResult;
     }
 
     public String getDeviceCheckFaultId() {
@@ -62,18 +68,36 @@ public class DeviceCheck {
     }
 
     public void setDeviceCheckFaultId(String deviceCheckFaultId) {
-        this.deviceCheckFaultId = deviceCheckFaultId == null ? null : deviceCheckFaultId.trim();
+        this.deviceCheckFaultId = deviceCheckFaultId;
+    }
+
+    public String getDeviceName() {
+        return deviceName;
+    }
+
+    public void setDeviceName(String deviceName) {
+        this.deviceName = deviceName;
+    }
+
+    public String getDeviceCheckEmp() {
+        return deviceCheckEmp;
+    }
+
+    public void setDeviceCheckEmp(String deviceCheckEmp) {
+        this.deviceCheckEmp = deviceCheckEmp;
     }
 
     @Override
     public String toString() {
-        return "DeviceCheck{" +
+        return "DeviceCheckVO{" +
                 "deviceCheckId='" + deviceCheckId + '\'' +
                 ", deviceId='" + deviceId + '\'' +
                 ", deviceCheckEmpId='" + deviceCheckEmpId + '\'' +
                 ", deviceCheckDate=" + deviceCheckDate +
                 ", deviceCheckResult='" + deviceCheckResult + '\'' +
                 ", deviceCheckFaultId='" + deviceCheckFaultId + '\'' +
+                ", deviceName='" + deviceName + '\'' +
+                ", deviceCheckEmp='" + deviceCheckEmp + '\'' +
                 '}';
     }
 }
