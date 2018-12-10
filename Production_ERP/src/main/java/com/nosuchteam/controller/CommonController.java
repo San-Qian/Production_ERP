@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -68,7 +67,6 @@ public class CommonController {
 
     /**
      * 上传文件操作
-     *
      * @param operation 获取客户请求对文件的操作
      * @param fileName  操作的文件名
      * @param file      上传的文件
@@ -128,6 +126,4 @@ public class CommonController {
         is.close();
         os.close();
     }
-
-
 }
