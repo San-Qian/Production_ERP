@@ -45,8 +45,9 @@
 	        <tr>
 	            <td>保修期:</td>
 	            <td>
-	            	<input class="easyui-datebox" name="deviceTypeWarranty" value="date.format('yyyy-MM-dd hh:mm:ss')"/>
-	            </td>
+					<input class="easyui-datetimebox" name="deviceTypeWarranty"
+						   value="date.format('yyyy-MM-dd hh:mm:ss')"/>
+				</td>
 	        </tr>
 	    </table>
 	    <input type="hidden" name="deviceTypeParams"/>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nosuchteam.mapper.EmployeeMapper">
-  <resultMap id="BaseResultMap" type="com.nosuchteam.bean.VO.EmployeeVO">
+  <resultMap id="BaseResultMap" type="com.nosuchteam.bean.vo.EmployeeVO">
     <id column="emp_id" jdbcType="VARCHAR" property="empId" />
     <result column="emp_name" jdbcType="VARCHAR" property="empName" />
     <result column="sex" jdbcType="CHAR" property="sex" />
@@ -191,7 +191,7 @@
     <include refid="Base_Column_List" />
     from employee limit #{param1} offset #{param2}
   </select>
-  <select id="selectCount" resultType="_int">
+  <select id="selectCount" resultType="int">
     select count(*) from employee
   </select>
   <select id="selectAllEmployee" resultMap="BaseResultMap">
@@ -217,6 +217,13 @@
     graduate_school, education_form, d.department_id
     from employee e left join department d on e.department_id=d.department_id
     where d.department_name like #{searchValue}
+  </select>
+
+  <select id="selectEmpNameByPrimaryKey"  resultType="string">
+    select
+    emp_name
+    from employee
+    where emp_id = #{searchValue}
   </select>
 
 </mapper>

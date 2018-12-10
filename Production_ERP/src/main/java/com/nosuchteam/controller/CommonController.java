@@ -61,7 +61,7 @@ public class CommonController {
 
     @RequestMapping("/{module}/get/{id}")
     public String get(@PathVariable String module, @PathVariable String id) {
-        String byId = module == "manufacture" ? "manufactureSn" : module + "Id";
+        String byId = "manufacture".equals(module) ? "manufactureSn" : module + "Id";
         return "forward:/" + module + "/search_" + module + "_by_" + byId + "?getData=Object&searchValue=" + id;
     }
 
@@ -105,25 +105,47 @@ public class CommonController {
     }
 
     @RequestMapping("/file/download")
-    public void download(String fileName, HttpServletResponse response, HttpServletRequest request) throws IOException {
+    public void download(String fileName, HttpServletResponse response, HttpServletRequest request) throws Exception {
         //获取文件路径
         String filePath = request.getServletContext().getRealPath("/WEB-INF") + "/" + fileName;
         //创建输入流
-        InputStream is = new FileInputStream(filePath);
+        InputStream is = null;
         //创建输出流
-        ServletOutputStream os = response.getOutputStream();
+        ServletOutputStream os = null;
+        try {
 
-        byte[] bytes = new byte[1024 * 10];
-        int len;
-        //设置报文头以及传输类型
-        response.setContentType("application/octet-stream");
-        response.setHeader("Content-disposition", "attachment; filename="
-                + URLEncoder.encode(fileName, "UTF-8"));
-        //开始下载
-        while ((len = is.read(bytes)) != -1) {
-            os.write(bytes, 0, len);
+            is = new FileInputStream(filePath);
+            os = response.getOutputStream();
+
+            //设置报文头以及传输类型
+            response.setContentType("application/octet-stream");
+            response.setHeader("Content-disposition", "attachment; filename="
+                    + URLEncoder.encode(fileName, "UTF-8"));
+            byte[] bytes = new byte[1024*200];
+            int len;
+            //开始下载
+            while ((len = is.read(bytes)) != -1) {
+                os.write(bytes, 0, len);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+           throw new Exception("文件下载失败");
+        }finally {
+            try {
+                if(is != null){
+                    is.close();
+                }
+                if(os != null){
+                    os.close();
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
-        is.close();
-        os.close();
+
+
+
+
+
     }
 }

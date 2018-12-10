@@ -1,27 +1,29 @@
 package com.nosuchteam.service;
 
 import com.nosuchteam.bean.Employee;
+import com.nosuchteam.bean.vo.EmployeeVO;
 
 import java.util.List;
 import java.util.Map;
 
 public interface EmployeeService {
-    boolean deleteByEmpid(String[] empId);
+    boolean deleteByEmpid(String[] empId) throws Exception;
 
-    boolean insert(Employee record);
+    boolean insert(Employee record) throws Exception;
 
-    boolean insertSelective(Employee record);
+    boolean insertSelective(Employee record) throws Exception;
 
-    Employee selectByEmpid(String empId);
+    EmployeeVO selectByEmpid(String empId);
 
-    boolean updateByEmpidSelective(Employee record);
+    boolean updateByEmpidSelective(Employee record) throws Exception;
 
-    boolean updateByEmpid(Employee record);
+    boolean updateByEmpid(Employee record) throws Exception;
 
-    Map selectEmployeeByPage(String page, String rows);
+    Map selectEmployeeByPage(Integer page, Integer rows);
 
-    Map searchEmployeeByName(String searchValue,String page,String rows);
-    Map searchEmployeeById(String searchValue,String page,String rows);
-    Map searchEmployeeByDepartmentName(String searchValue,String page,String rows);
+    Map searchEmployeeByName(String searchValue,Integer page,Integer rows);
+    Map searchEmployeeById(String searchValue,Integer page,Integer rows);
+    Map searchEmployeeByDepartmentName(String searchValue,Integer page,Integer rows);
 
+    List<EmployeeVO> selectAll();
 }

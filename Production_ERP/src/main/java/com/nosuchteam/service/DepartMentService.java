@@ -21,9 +21,9 @@ public interface DepartMentService {
 
     List<Department> selectAll();
 
-    Map selectOnePage(String page, String rows);
+    Map selectOnePage(Integer page, Integer rows);
 
-    Map searchDepartmentByName(String searchValue, String page, String rows);
+    Map searchDepartmentByName(String searchValue, Integer page, Integer rows);
 
-    Map searchDepartmentById(String searchValue, String page, String rows);
+    Map searchDepartmentById(String searchValue, Integer page, Integer rows);
 }

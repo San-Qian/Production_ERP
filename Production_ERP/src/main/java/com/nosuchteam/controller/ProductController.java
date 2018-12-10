@@ -126,4 +126,14 @@ public class ProductController {
         return null;
     }
 
+    //点击产品回显
+    @ResponseBody
+    @RequestMapping("/get/{id}")
+    public Product listProducts(@PathVariable String id){
+        Product product = productService.selectById(id);
+        return product;
+    }
+
+
+
 }

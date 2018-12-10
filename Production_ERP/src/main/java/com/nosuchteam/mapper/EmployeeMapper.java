@@ -1,10 +1,9 @@
 package com.nosuchteam.mapper;
 
 import com.nosuchteam.bean.Employee;
-import com.nosuchteam.bean.VO.EmployeeVO;
+import com.nosuchteam.bean.vo.EmployeeVO;
 
 import java.util.List;
-import java.util.Map;
 
 public interface EmployeeMapper {
     int deleteByPrimaryKey(String empId);
@@ -13,7 +12,7 @@ public interface EmployeeMapper {
 
     int insertSelective(Employee record);
 
-    Employee selectByPrimaryKey(String empId);
+    EmployeeVO selectByPrimaryKey(String empId);
 
     int updateByPrimaryKeySelective(Employee record);
 
@@ -25,9 +24,11 @@ public interface EmployeeMapper {
 
     List<EmployeeVO> selectAllEmployee();
 
-    List<EmployeeVO>  searchEmployeeByName(String searchValue);
-    List<EmployeeVO>  searchEmployeeById(String searchValue);
-    List<EmployeeVO>  searchEmployeeByDepartmentName(String searchValue);
+    List<EmployeeVO> searchEmployeeByName(String searchValue);
 
+    List<EmployeeVO> searchEmployeeById(String searchValue);
+
+    List<EmployeeVO> searchEmployeeByDepartmentName(String searchValue);
+    String selectEmpNameByPrimaryKey(String id);
 
 }

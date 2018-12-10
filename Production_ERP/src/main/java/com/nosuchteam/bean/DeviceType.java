@@ -1,5 +1,7 @@
 package com.nosuchteam.bean;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class DeviceType {
@@ -17,6 +19,7 @@ public class DeviceType {
 
     private Integer deviceTypeQuantity;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date deviceTypeWarranty;
 
     public String getDeviceTypeId() {
@@ -81,5 +84,19 @@ public class DeviceType {
 
     public void setDeviceTypeWarranty(Date deviceTypeWarranty) {
         this.deviceTypeWarranty = deviceTypeWarranty;
+    }
+
+    @Override
+    public String toString() {
+        return "DeviceType{" +
+                "deviceTypeId='" + deviceTypeId + '\'' +
+                ", deviceTypeName='" + deviceTypeName + '\'' +
+                ", deviceTypeModel='" + deviceTypeModel + '\'' +
+                ", deviceTypeSpec='" + deviceTypeSpec + '\'' +
+                ", deviceTypeSupplier='" + deviceTypeSupplier + '\'' +
+                ", deviceTypeProducer='" + deviceTypeProducer + '\'' +
+                ", deviceTypeQuantity=" + deviceTypeQuantity +
+                ", deviceTypeWarranty=" + deviceTypeWarranty +
+                '}';
     }
 }
