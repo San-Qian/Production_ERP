@@ -191,7 +191,7 @@
     <include refid="Base_Column_List" />
     from employee limit #{param1} offset #{param2}
   </select>
-  <select id="selectCount" resultType="_int">
+  <select id="selectCount" resultType="int">
     select count(*) from employee
   </select>
   <select id="selectAllEmployee" resultMap="BaseResultMap">
@@ -217,6 +217,13 @@
     graduate_school, education_form, d.department_id
     from employee e left join department d on e.department_id=d.department_id
     where d.department_name like #{searchValue}
+  </select>
+
+  <select id="selectEmpNameByPrimaryKey"  resultType="string">
+    select
+    emp_name
+    from employee
+    where emp_id = #{searchValue}
   </select>
 
 </mapper>

@@ -41,7 +41,7 @@ public class DeviceListServiceImpl implements DeviceListService {
 
     @Override
     public int insertDeviceList(Device device) {
-        int update = deviceMapper.updateByPrimaryKeySelective(device);
+        int update = deviceMapper.insertSelective(device);
         return update;
     }
 

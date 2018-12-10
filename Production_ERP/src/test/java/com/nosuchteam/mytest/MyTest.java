@@ -2,6 +2,7 @@ package com.nosuchteam.mytest;
 
 import com.nosuchteam.bean.DeviceCheck;
 import com.nosuchteam.bean.DeviceType;
+import com.nosuchteam.bean.vo.DeviceAccountVO;
 import com.nosuchteam.mapper.DeviceMapper;
 import com.nosuchteam.mapper.DeviceTypeMapper;
 import com.nosuchteam.service.deviceService.DeviceCheckService;
@@ -60,8 +61,9 @@ public class MyTest {
     }
     @Test
     public void TestDeviceTypeMapper() {
-        List<DeviceType> deviceTypeList = deviceTypeMapper.searchDeviceTypeByDeviceTypeId("01");
-        System.out.println(deviceTypeList);
+       // List<DeviceType> deviceTypeList = deviceTypeMapper.searchDeviceTypeByDeviceTypeId("01");
+        List<DeviceAccountVO> allDeviceList = deviceMapper.findAllDeviceList();
+        System.out.println(allDeviceList);
     }
     @Autowired
     DeviceCheckService deviceCheckService;

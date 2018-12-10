@@ -23,7 +23,7 @@ public class DeviceCheckServiceImpl implements DeviceCheckService {
     DeviceCheckMapper deviceCheckMapper;
 
     public int insertDeviceCheck(DeviceCheck deviceCheck) {
-        int insert = deviceCheckMapper.insert(deviceCheck);
+        int insert = deviceCheckMapper.insertSelective(deviceCheck);
         return insert;
     }
 

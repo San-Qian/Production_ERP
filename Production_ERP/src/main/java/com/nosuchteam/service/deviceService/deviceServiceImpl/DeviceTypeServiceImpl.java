@@ -23,7 +23,7 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
 
 
     public int insertDeviceType(DeviceType deviceType) {
-        int insert = deviceTypeMapper.insert(deviceType);
+        int insert = deviceTypeMapper.insertSelective(deviceType);
         return insert;
     }
 

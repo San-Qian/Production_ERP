@@ -179,7 +179,6 @@
     <result column="device_service_life" jdbcType="TIMESTAMP" property="deviceServiceLife" />
     <result column="device_keeper_id" jdbcType="VARCHAR" property="deviceKeeperId" />
     <result column="note" jdbcType="VARCHAR" property="note" />
-
     <association property="deviceKeeper" select="com.nosuchteam.mapper.EmployeeMapper.selectEmpNameByPrimaryKey"
                  column="device_keeper_id" fetchType="eager">
     </association>

@@ -23,7 +23,7 @@ public class DeviceFaultServiceImpl implements DeviceFaultService {
     DeviceFaultMapper deviceFaultMapper;
 
     public int insertDeviceFault(DeviceFault deviceFault) {
-        int insert = deviceFaultMapper.insert(deviceFault);
+        int insert = deviceFaultMapper.insertSelective(deviceFault);
         return insert;
     }
 

@@ -23,7 +23,7 @@ public class DeviceMaintainServiceImpl implements DeviceMaintainService {
     DeviceMaintainMapper deviceMaintainMapper;
 
     public int insertDeviceMaintain(DeviceMaintain deviceMaintain) {
-        int insert = deviceMaintainMapper.insert(deviceMaintain);
+        int insert = deviceMaintainMapper.insertSelective(deviceMaintain);
         return insert;
     }
 
