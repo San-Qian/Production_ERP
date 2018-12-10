@@ -24,15 +24,35 @@
     from material
     where material_id LIKE #{materialId,jdbcType=VARCHAR}
   </select>
+
     <select id="selectByType" resultMap="BaseResultMap">
         SELECT <include refid="Base_Column_List"/> FROM material
-        WHERE material_type = #{materialType,jdbcType=VARCHAR}
+        WHERE material_type LIKE #{materialType,jdbcType=VARCHAR}
     </select>
   <delete id="deleteById" parameterType="java.lang.String">
     delete from material
     where material_id = #{materialId,jdbcType=VARCHAR}
   </delete>
 
+    <update id="updateNote">
+        update material set note=#{param2} where material_id =#{param1}
+    </update>
+
+    <update id="increaseRemanining">
+        UPDATE material SET remaining=remaining+#{param2} WHERE material_id =#{param1}
+    </update>
+
+    <update id="decreaseRemanining">
+        UPDATE material SET remaining=remaining-#{param2} WHERE material_id =#{param1}
+    </update>
+
+    <update id="updateRemaining">
+        UPDATE material SET remaining=remaining+#{param2} WHERE material_id =#{param1}
+    </update>
+
+    <update id="updateRemaining2">
+        UPDATE material SET remaining=remaining-#{param2} WHERE material_id =#{param1}
+    </update>
 
   <insert id="insert" parameterType="com.nosuchteam.bean.Material">
     insert into material (material_id, material_type, status, remaining, note)

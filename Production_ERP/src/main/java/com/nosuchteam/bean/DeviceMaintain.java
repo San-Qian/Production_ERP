@@ -1,5 +1,7 @@
 package com.nosuchteam.bean;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -9,7 +11,7 @@ public class DeviceMaintain {
     private String deviceFaultId;
 
     private String deviceMaintainEmpId;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date deviceMaintainDate;
 
     private String deviceMaintainResult;
@@ -72,5 +74,18 @@ public class DeviceMaintain {
 
     public void setNote(String note) {
         this.note = note == null ? null : note.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "DeviceMaintain{" +
+                "deviceMaintainId='" + deviceMaintainId + '\'' +
+                ", deviceFaultId='" + deviceFaultId + '\'' +
+                ", deviceMaintainEmpId='" + deviceMaintainEmpId + '\'' +
+                ", deviceMaintainDate=" + deviceMaintainDate +
+                ", deviceMaintainResult='" + deviceMaintainResult + '\'' +
+                ", deviceMaintainCost=" + deviceMaintainCost +
+                ", note='" + note + '\'' +
+                '}';
     }
 }

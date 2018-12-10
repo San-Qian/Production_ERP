@@ -10,6 +10,19 @@
     <result column="device_maintain_cost" jdbcType="DECIMAL" property="deviceMaintainCost" />
     <result column="note" jdbcType="VARCHAR" property="note" />
   </resultMap>
+
+  <resultMap id="DeviceMaintainMap" type="com.nosuchteam.bean.vo.DeviceMaintainVO">
+    <id column="device_maintain_id" jdbcType="VARCHAR" property="deviceMaintainId" />
+    <result column="device_fault_id" jdbcType="VARCHAR" property="deviceFaultId" />
+    <result column="device_maintain_emp_id" jdbcType="VARCHAR" property="deviceMaintainEmpId" />
+    <result column="device_maintain_date" jdbcType="TIMESTAMP" property="deviceMaintainDate" />
+    <result column="device_maintain_result" jdbcType="VARCHAR" property="deviceMaintainResult" />
+    <result column="device_maintain_cost" jdbcType="DECIMAL" property="deviceMaintainCost" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+    <association property="deviceMaintainEmp" select="com.nosuchteam.mapper.EmployeeMapper.selectEmpNameByPrimaryKey"
+                 column="device_maintain_emp_id" fetchType="eager">
+    </association>
+  </resultMap>
   <sql id="Base_Column_List">
     device_maintain_id, device_fault_id, device_maintain_emp_id, device_maintain_date, 
     device_maintain_result, device_maintain_cost, note
@@ -19,6 +32,28 @@
     <include refid="Base_Column_List" />
     from device_maintain
     where device_maintain_id = #{deviceMaintainId,jdbcType=VARCHAR}
+  </select>
+  <select id="searchDeviceMaintainByDeviceMaintainId" resultMap="DeviceMaintainMap">
+    select
+    <include refid="Base_Column_List" />
+    from device_maintain where `device_maintain_id` like #{param1}
+  </select>
+  <select id="searchDeviceMaintainByDeviceFaultId" resultMap="DeviceMaintainMap">
+    select
+    <include refid="Base_Column_List" />
+    from device_maintain where `device_fault_id` like #{param1}
+  </select>
+
+
+  <select id="findAllDeviceMaintainVO" resultMap="DeviceMaintainMap">
+    select
+    <include refid="Base_Column_List" />
+    from device_maintain
+  </select>
+  <select id="findAllDeviceMaintain" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from device_maintain
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from device_maintain

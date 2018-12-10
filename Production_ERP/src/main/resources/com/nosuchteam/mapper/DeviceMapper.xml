@@ -19,6 +19,7 @@
     device_purchase_price, device_manufacture_date, device_service_life, device_keeper_id, 
     note
   </sql>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -164,4 +165,163 @@
       note = #{note,jdbcType=VARCHAR}
     where device_id = #{deviceId,jdbcType=VARCHAR}
   </update>
+
+
+  <resultMap id="DeviceAccountVOMap" type="com.nosuchteam.bean.vo.DeviceAccountVO">
+    <id column="device_id" jdbcType="VARCHAR" property="deviceId" />
+    <result column="device_name" jdbcType="VARCHAR" property="deviceName" />
+    <result column="device_type_id" jdbcType="VARCHAR" property="deviceTypeId" />
+    <result column="device_status_id" jdbcType="VARCHAR" property="deviceStatusId" />
+    <result column="device_status" jdbcType="VARCHAR" property="deviceStatus" />
+    <result column="device_purchase_date" jdbcType="TIMESTAMP" property="devicePurchaseDate" />
+    <result column="device_purchase_price" jdbcType="DECIMAL" property="devicePurchasePrice" />
+    <result column="device_manufacture_date" jdbcType="TIMESTAMP" property="deviceManufactureDate" />
+    <result column="device_service_life" jdbcType="TIMESTAMP" property="deviceServiceLife" />
+    <result column="device_keeper_id" jdbcType="VARCHAR" property="deviceKeeperId" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+
+    <association property="deviceKeeper" select="com.nosuchteam.mapper.EmployeeMapper.selectEmpNameByPrimaryKey"
+                 column="device_keeper_id" fetchType="eager">
+    </association>
+    <association property="deviceTypeName" select="com.nosuchteam.mapper.DeviceTypeMapper.selectDeviceTypeNameByPrimaryKey"
+                 column="device_type_id" fetchType="eager">
+    </association>
+  </resultMap>
+
+
+  <select id="findAllDevice" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from `device`
+  </select>
+  <select id="findAllDeviceList" resultMap="DeviceAccountVOMap">
+    select
+    <include refid="Base_Column_List" />
+    from `device`
+  </select>
+
+
+
+  <select id="searchDeviceByDeviceId" resultMap="DeviceAccountVOMap">
+    select
+    <include refid="Base_Column_List" />
+    from `device`
+    where`device_id` like #{param1}
+  </select>
+  <select id="searchDeviceByDeviceName" resultMap="DeviceAccountVOMap">
+    select
+    <include refid="Base_Column_List" />
+    from `device`
+    where`device_Name` like #{param1}
+
+  </select>
+  <!--<select id="searchDeviceByDeviceTypeName" resultMap="DeviceAccountVOMap">
+    select
+    <include refid="Base_Column_List" />
+    from `device`
+    where`device_Type_Name` like #{param1}
+  </select>-->
+  <select id="searchDeviceByDeviceTypeName" resultMap="DeviceAccountVOMap">
+    SELECT *
+FROM ((`device` LEFT JOIN `device_type` ON device.device_type_id = device_type.device_type_id)
+LEFT JOIN employee ON device.device_keeper_id = employee.emp_id)
+WHERE `device_type`.device_type_name like #{param1}
+  </select>
+  <select id="selectDeviceNameByPrimaryKey" resultType="java.lang.String">
+    select device_name from `device` where `device_id`=#{param1}
+  </select>
+  <!--<insert id="insertDeviceAccountVOSelective" parameterType="com.nosuchteam.bean.vo.DeviceAccountVO">
+    insert into device
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="deviceId != null">
+        device_id,
+      </if>
+      <if test="deviceName != null">
+        device_name,
+      </if>
+      <if test="deviceTypeId != null">
+        device_type_id,
+      </if>
+      <if test="deviceStatusId != null">
+        device_status_id,
+      </if>
+      <if test="deviceStatus != null">
+        device_status,
+      </if>
+      <if test="devicePurchaseDate != null">
+        device_purchase_date,
+      </if>
+      <if test="devicePurchasePrice != null">
+        device_purchase_price,
+      </if>
+      <if test="deviceManufactureDate != null">
+        device_manufacture_date,
+      </if>
+      <if test="deviceServiceLife != null">
+        device_service_life,
+      </if>
+      <if test="deviceKeeperId != null">
+        device_keeper_id,
+      </if>
+      <if test="note != null">
+        note,
+      </if>
+      <if test="deviceIdd != null">
+        deviceIdd,
+      </if>
+      <if test="deviceType != null">
+        deviceType,
+      </if>
+      <if test="deviceKeeper != null">
+        deviceKeeper,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceName != null">
+        #{deviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceTypeId != null">
+        #{deviceTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceStatusId != null">
+        #{deviceStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceStatus != null">
+        #{deviceStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="devicePurchaseDate != null">
+        #{devicePurchaseDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="devicePurchasePrice != null">
+        #{devicePurchasePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="deviceManufactureDate != null">
+        #{deviceManufactureDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deviceServiceLife != null">
+        #{deviceServiceLife,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deviceKeeperId != null">
+        #{deviceKeeperId,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null">
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceIdd != null">
+        #{deviceIdd,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceType != null">
+        #{deviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceKeeper != null">
+        #{deviceKeeper,jdbcType=VARCHAR},
+      </if>
+
+    </trim>
+  </insert>-->
+
+
 </mapper>

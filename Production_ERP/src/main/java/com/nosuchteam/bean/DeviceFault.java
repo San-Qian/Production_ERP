@@ -1,5 +1,7 @@
 package com.nosuchteam.bean;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class DeviceFault {
@@ -10,7 +12,7 @@ public class DeviceFault {
     private String deviceFaultCause;
 
     private String deviceFaultDetail;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date deviceFaultDate;
 
     private String deviceFaultMaintenance;
@@ -61,5 +63,17 @@ public class DeviceFault {
 
     public void setDeviceFaultMaintenance(String deviceFaultMaintenance) {
         this.deviceFaultMaintenance = deviceFaultMaintenance == null ? null : deviceFaultMaintenance.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "DeviceFault{" +
+                "deviceFaultId='" + deviceFaultId + '\'' +
+                ", deviceId='" + deviceId + '\'' +
+                ", deviceFaultCause='" + deviceFaultCause + '\'' +
+                ", deviceFaultDetail='" + deviceFaultDetail + '\'' +
+                ", deviceFaultDate=" + deviceFaultDate +
+                ", deviceFaultMaintenance='" + deviceFaultMaintenance + '\'' +
+                '}';
     }
 }

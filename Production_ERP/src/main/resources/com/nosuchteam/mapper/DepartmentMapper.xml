@@ -68,8 +68,20 @@
       note = #{note,jdbcType=VARCHAR}
     where department_id = #{departmentId,jdbcType=VARCHAR}
   </update>
-  <select id="selectAll" resultMap="BaseResultMap">
+  <select id="selectAllDepartMent" resultMap="BaseResultMap">
     select <include refid="Base_Column_List" />
+     from department
+  </select>
+  <select id="searchDepartmentByName"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
     from department
+    where department_name like #{searchValue}
+  </select>
+  <select id="searchDepartmentById"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from department
+    where department_id like #{searchValue}
   </select>
 </mapper>

@@ -1,131 +1,220 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nosuchteam.mapper.TechnologyPlanMapper">
-  <resultMap id="BaseResultMap" type="com.nosuchteam.bean.TechnologyPlan">
-    <id column="technology_plan_id" jdbcType="VARCHAR" property="technologyPlanId" />
-    <result column="technology_id" jdbcType="VARCHAR" property="technologyId" />
-    <result column="batch_amount" jdbcType="INTEGER" property="batchAmount" />
-    <result column="start_plan" jdbcType="TIMESTAMP" property="startPlan" />
-    <result column="end_plan" jdbcType="TIMESTAMP" property="endPlan" />
-    <result column="commit_plan" jdbcType="TIMESTAMP" property="commitPlan" />
-    <result column="technology_plan_start" jdbcType="TIMESTAMP" property="technologyPlanStart" />
-    <result column="technology_plan_end" jdbcType="TIMESTAMP" property="technologyPlanEnd" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    technology_plan_id, technology_id, batch_amount, start_plan, end_plan, commit_plan, 
-    technology_plan_start, technology_plan_end
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from technology_plan
-    where technology_plan_id = #{technologyPlanId,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from technology_plan
-    where technology_plan_id = #{technologyPlanId,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="com.nosuchteam.bean.TechnologyPlan">
-    insert into technology_plan (technology_plan_id, technology_id, batch_amount, 
-      start_plan, end_plan, commit_plan, 
-      technology_plan_start, technology_plan_end
-      )
-    values (#{technologyPlanId,jdbcType=VARCHAR}, #{technologyId,jdbcType=VARCHAR}, #{batchAmount,jdbcType=INTEGER}, 
-      #{startPlan,jdbcType=TIMESTAMP}, #{endPlan,jdbcType=TIMESTAMP}, #{commitPlan,jdbcType=TIMESTAMP}, 
-      #{technologyPlanStart,jdbcType=TIMESTAMP}, #{technologyPlanEnd,jdbcType=TIMESTAMP}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.nosuchteam.bean.TechnologyPlan">
-    insert into technology_plan
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="technologyPlanId != null">
+    <resultMap id="BaseResultMap" type="com.nosuchteam.bean.TechnologyPlan">
+        <id column="technology_plan_id" jdbcType="VARCHAR" property="technologyPlanId"/>
+        <result column="technology_id" jdbcType="VARCHAR" property="technologyId"/>
+
+        <result column="batch_amount" jdbcType="INTEGER" property="batchAmount"/>
+        <result column="start_plan" jdbcType="TIMESTAMP" property="startPlan"/>
+        <result column="end_plan" jdbcType="TIMESTAMP" property="endPlan"/>
+        <result column="commit_plan" jdbcType="TIMESTAMP" property="commitPlan"/>
+        <result column="technology_plan_start" jdbcType="TIMESTAMP" property="technologyPlanStart"/>
+        <result column="technology_plan_end" jdbcType="TIMESTAMP" property="technologyPlanEnd"/>
+    </resultMap>
+
+    <resultMap id="DoubleResultMap" type="com.nosuchteam.bean.TechnologyPlan">
+        <result column="technology_name" jdbcType="VARCHAR" property="technologyName"/>
+        <result column="technology_plan_id" jdbcType="VARCHAR" property="technologyPlanId"/>
+        <result column="technology_id" jdbcType="VARCHAR" property="technologyId"/>
+        <result column="batch_amount" jdbcType="INTEGER" property="batchAmount"/>
+        <result column="start_plan" jdbcType="TIMESTAMP" property="startPlan"/>
+        <result column="end_plan" jdbcType="TIMESTAMP" property="endPlan"/>
+        <result column="commit_plan" jdbcType="TIMESTAMP" property="commitPlan"/>
+        <result column="technology_plan_start" jdbcType="TIMESTAMP" property="technologyPlanStart"/>
+        <result column="technology_plan_end" jdbcType="TIMESTAMP" property="technologyPlanEnd"/>
+
+        <association property="technology" javaType="technology">
+            <result column="technology_id" jdbcType="VARCHAR" property="technologyId"/>
+            <result column="technology_name" jdbcType="VARCHAR" property="technologyName"/>
+            <result column="price" jdbcType="DECIMAL" property="price"/>
+            <result column="vital_process_period" jdbcType="VARCHAR" property="vitalProcessPeriod"/>
+            <result column="standard_capacity" jdbcType="INTEGER" property="standardCapacity"/>
+            <result column="overtime_standard_capacity" jdbcType="INTEGER" property="overtimeStandardCapacity"/>
+            <result column="overtime_overfulfil_capacity" jdbcType="INTEGER" property="overtimeOverfulfilCapacity"/>
+            <result column="double_capacity" jdbcType="INTEGER" property="doubleCapacity"/>
+            <result column="overfulfil_capacity" jdbcType="INTEGER" property="overfulfilCapacity"/>
+
+        </association>
+    </resultMap>
+
+    <sql id="Base_Column_List">
         technology_plan_id,
-      </if>
-      <if test="technologyId != null">
         technology_id,
-      </if>
-      <if test="batchAmount != null">
         batch_amount,
-      </if>
-      <if test="startPlan != null">
         start_plan,
-      </if>
-      <if test="endPlan != null">
         end_plan,
-      </if>
-      <if test="commitPlan != null">
         commit_plan,
-      </if>
-      <if test="technologyPlanStart != null">
         technology_plan_start,
-      </if>
-      <if test="technologyPlanEnd != null">
-        technology_plan_end,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="technologyPlanId != null">
-        #{technologyPlanId,jdbcType=VARCHAR},
-      </if>
-      <if test="technologyId != null">
-        #{technologyId,jdbcType=VARCHAR},
-      </if>
-      <if test="batchAmount != null">
-        #{batchAmount,jdbcType=INTEGER},
-      </if>
-      <if test="startPlan != null">
-        #{startPlan,jdbcType=TIMESTAMP},
-      </if>
-      <if test="endPlan != null">
-        #{endPlan,jdbcType=TIMESTAMP},
-      </if>
-      <if test="commitPlan != null">
-        #{commitPlan,jdbcType=TIMESTAMP},
-      </if>
-      <if test="technologyPlanStart != null">
-        #{technologyPlanStart,jdbcType=TIMESTAMP},
-      </if>
-      <if test="technologyPlanEnd != null">
-        #{technologyPlanEnd,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.nosuchteam.bean.TechnologyPlan">
-    update technology_plan
-    <set>
-      <if test="technologyId != null">
-        technology_id = #{technologyId,jdbcType=VARCHAR},
-      </if>
-      <if test="batchAmount != null">
-        batch_amount = #{batchAmount,jdbcType=INTEGER},
-      </if>
-      <if test="startPlan != null">
-        start_plan = #{startPlan,jdbcType=TIMESTAMP},
-      </if>
-      <if test="endPlan != null">
-        end_plan = #{endPlan,jdbcType=TIMESTAMP},
-      </if>
-      <if test="commitPlan != null">
-        commit_plan = #{commitPlan,jdbcType=TIMESTAMP},
-      </if>
-      <if test="technologyPlanStart != null">
-        technology_plan_start = #{technologyPlanStart,jdbcType=TIMESTAMP},
-      </if>
-      <if test="technologyPlanEnd != null">
-        technology_plan_end = #{technologyPlanEnd,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where technology_plan_id = #{technologyPlanId,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.nosuchteam.bean.TechnologyPlan">
-    update technology_plan
-    set technology_id = #{technologyId,jdbcType=VARCHAR},
-      batch_amount = #{batchAmount,jdbcType=INTEGER},
-      start_plan = #{startPlan,jdbcType=TIMESTAMP},
-      end_plan = #{endPlan,jdbcType=TIMESTAMP},
-      commit_plan = #{commitPlan,jdbcType=TIMESTAMP},
-      technology_plan_start = #{technologyPlanStart,jdbcType=TIMESTAMP},
-      technology_plan_end = #{technologyPlanEnd,jdbcType=TIMESTAMP}
-    where technology_plan_id = #{technologyPlanId,jdbcType=VARCHAR}
-  </update>
+        technology_plan_end
+    </sql>
+
+    <sql id="Technology_Column_List">
+        t.technology_id,
+        t.technology_name,
+        t.price,
+        t.vital_process_period,
+        t.standard_capacity,
+        t.overtime_standard_capacity,
+        t.overtime_overfulfil_capacity,
+        t.double_capacity,
+        t.overfulfil_capacity
+    </sql>
+
+    <sql id="Technology_Plan_Column_List">
+        tp.technology_plan_id,
+        tp.technology_id,
+        tp.batch_amount,
+        tp.start_plan,
+        tp.end_plan,
+        tp.commit_plan,
+        tp.technology_plan_start,
+        tp.technology_plan_end
+    </sql>
+
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from technology_plan
+        where technology_plan_id = #{technologyPlanId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="select" resultMap="DoubleResultMap">
+        select
+        <include refid="Technology_Plan_Column_List"/>,
+        <include refid="Technology_Column_List"/>
+        from technology_plan tp
+        left join technology t
+        on tp.technology_id = t.technology_id
+    </select>
+
+    <select id="selectByAmbiguousPrimaryKey" parameterType="java.lang.String" resultMap="DoubleResultMap">
+        select
+        <include refid="Technology_Plan_Column_List"/>,
+        <include refid="Technology_Column_List"/>
+        from technology_plan tp
+        left join technology t
+        on tp.technology_id = t.technology_id
+        where tp.technology_plan_id like #{technologyPlanId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByAmbiguousName" parameterType="java.lang.String" resultMap="DoubleResultMap">
+        select
+        <include refid="Technology_Plan_Column_List"/>,
+        <include refid="Technology_Column_List"/>
+        from technology_plan tp
+        left join technology t
+        on tp.technology_id = t.technology_id
+        where t.technology_name like #{technologyName,jdbcType=VARCHAR}
+    </select>
+
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from technology_plan
+        where technology_plan_id = #{technologyPlanId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.nosuchteam.bean.TechnologyPlan">
+        insert into technology_plan (technology_plan_id, technology_id, batch_amount,
+                                     start_plan, end_plan, commit_plan,
+                                     technology_plan_start, technology_plan_end)
+        values (#{technologyPlanId,jdbcType=VARCHAR}, #{technologyId,jdbcType=VARCHAR}, #{batchAmount,jdbcType=INTEGER},
+                #{startPlan,jdbcType=TIMESTAMP}, #{endPlan,jdbcType=TIMESTAMP}, #{commitPlan,jdbcType=TIMESTAMP},
+                #{technologyPlanStart,jdbcType=TIMESTAMP}, #{technologyPlanEnd,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.nosuchteam.bean.TechnologyPlan">
+        insert into technology_plan
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="technologyPlanId != null">
+                technology_plan_id,
+            </if>
+            <if test="technologyId != null">
+                technology_id,
+            </if>
+            <if test="batchAmount != null">
+                batch_amount,
+            </if>
+            <if test="startPlan != null">
+                start_plan,
+            </if>
+            <if test="endPlan != null">
+                end_plan,
+            </if>
+            <if test="commitPlan != null">
+                commit_plan,
+            </if>
+            <if test="technologyPlanStart != null">
+                technology_plan_start,
+            </if>
+            <if test="technologyPlanEnd != null">
+                technology_plan_end,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="technologyPlanId != null">
+                #{technologyPlanId,jdbcType=VARCHAR},
+            </if>
+            <if test="technologyId != null">
+                #{technologyId,jdbcType=VARCHAR},
+            </if>
+            <if test="batchAmount != null">
+                #{batchAmount,jdbcType=INTEGER},
+            </if>
+            <if test="startPlan != null">
+                #{startPlan,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endPlan != null">
+                #{endPlan,jdbcType=TIMESTAMP},
+            </if>
+            <if test="commitPlan != null">
+                #{commitPlan,jdbcType=TIMESTAMP},
+            </if>
+            <if test="technologyPlanStart != null">
+                #{technologyPlanStart,jdbcType=TIMESTAMP},
+            </if>
+            <if test="technologyPlanEnd != null">
+                #{technologyPlanEnd,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.nosuchteam.bean.TechnologyPlan">
+        update technology_plan
+        <set>
+            <if test="technologyId != null">
+                technology_id = #{technologyId,jdbcType=VARCHAR},
+            </if>
+            <if test="batchAmount != null">
+                batch_amount = #{batchAmount,jdbcType=INTEGER},
+            </if>
+            <if test="startPlan != null">
+                start_plan = #{startPlan,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endPlan != null">
+                end_plan = #{endPlan,jdbcType=TIMESTAMP},
+            </if>
+            <if test="commitPlan != null">
+                commit_plan = #{commitPlan,jdbcType=TIMESTAMP},
+            </if>
+            <if test="technologyPlanStart != null">
+                technology_plan_start = #{technologyPlanStart,jdbcType=TIMESTAMP},
+            </if>
+            <if test="technologyPlanEnd != null">
+                technology_plan_end = #{technologyPlanEnd,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where technology_plan_id = #{technologyPlanId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.nosuchteam.bean.TechnologyPlan">
+        update technology_plan
+        set technology_id         = #{technologyId,jdbcType=VARCHAR},
+            batch_amount          = #{batchAmount,jdbcType=INTEGER},
+            start_plan            = #{startPlan,jdbcType=TIMESTAMP},
+            end_plan              = #{endPlan,jdbcType=TIMESTAMP},
+            commit_plan           = #{commitPlan,jdbcType=TIMESTAMP},
+            technology_plan_start = #{technologyPlanStart,jdbcType=TIMESTAMP},
+            technology_plan_end   = #{technologyPlanEnd,jdbcType=TIMESTAMP}
+        where technology_plan_id = #{technologyPlanId,jdbcType=VARCHAR}
+    </update>
 </mapper>

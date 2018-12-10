@@ -1,5 +1,7 @@
 package com.nosuchteam.bean;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -13,13 +15,13 @@ public class Device {
     private String deviceStatusId;
 
     private String deviceStatus;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date devicePurchaseDate;
 
     private BigDecimal devicePurchasePrice;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date deviceManufactureDate;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date deviceServiceLife;
 
     private String deviceKeeperId;

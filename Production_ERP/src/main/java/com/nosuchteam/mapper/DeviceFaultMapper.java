@@ -1,6 +1,9 @@
 package com.nosuchteam.mapper;
 
 import com.nosuchteam.bean.DeviceFault;
+import com.nosuchteam.bean.vo.DeviceFaultVO;
+
+import java.util.List;
 
 public interface DeviceFaultMapper {
     int deleteByPrimaryKey(String deviceFaultId);
@@ -14,4 +17,13 @@ public interface DeviceFaultMapper {
     int updateByPrimaryKeySelective(DeviceFault record);
 
     int updateByPrimaryKey(DeviceFault record);
+
+    List<DeviceFaultVO> searchDeviceFaultByDeviceFaultId(String searchValue);
+
+    List<DeviceFaultVO> searchDeviceFaultByDeviceName(String searchValue);
+
+    List<DeviceFault> findAllDeviceFault();
+
+    List<DeviceFaultVO> findAllDeviceFaultVO();
+
 }

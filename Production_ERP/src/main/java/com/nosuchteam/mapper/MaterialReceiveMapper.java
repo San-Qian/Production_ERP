@@ -22,4 +22,6 @@ public interface MaterialReceiveMapper {
     List<MaterialReceive> selectByReceiveId(String searchValue);
 
     List<MaterialReceive> selectByMaterialId(String searchValue);
+
+    int updateNote(String receiveId, String note);
 }

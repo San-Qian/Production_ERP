@@ -1,29 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nosuchteam.mapper.DeviceCheckMapper">
-  <resultMap id="BaseResultMap" type="com.nosuchteam.bean.DeviceCheck">
-    <id column="device_check_id" jdbcType="VARCHAR" property="deviceCheckId" />
-    <result column="device_id" jdbcType="VARCHAR" property="deviceId" />
-    <result column="device_check_emp_id" jdbcType="VARCHAR" property="deviceCheckEmpId" />
-    <result column="device_check_date" jdbcType="TIMESTAMP" property="deviceCheckDate" />
-    <result column="device_check_result" jdbcType="VARCHAR" property="deviceCheckResult" />
-    <result column="device_check_fault_id" jdbcType="VARCHAR" property="deviceCheckFaultId" />
-  </resultMap>
-  <sql id="Base_Column_List">
+    <resultMap id="BaseResultMap" type="com.nosuchteam.bean.DeviceCheck">
+        <id column="device_check_id" jdbcType="VARCHAR" property="deviceCheckId"/>
+        <result column="device_id" jdbcType="VARCHAR" property="deviceId"/>
+        <result column="device_check_emp_id" jdbcType="VARCHAR" property="deviceCheckEmpId"/>
+        <result column="device_check_date" jdbcType="TIMESTAMP" property="deviceCheckDate"/>
+        <result column="device_check_result" jdbcType="VARCHAR" property="deviceCheckResult"/>
+        <result column="device_check_fault_id" jdbcType="VARCHAR" property="deviceCheckFaultId"/>
+    </resultMap>
+
+    <resultMap id="DeviceCheckVOMap" type="com.nosuchteam.bean.vo.DeviceCheckVO">
+        <id column="device_check_id" jdbcType="VARCHAR" property="deviceCheckId"/>
+        <result column="device_id" jdbcType="VARCHAR" property="deviceId"/>
+        <result column="device_check_emp_id" jdbcType="VARCHAR" property="deviceCheckEmpId"/>
+        <result column="device_check_date" jdbcType="TIMESTAMP" property="deviceCheckDate"/>
+        <result column="device_check_result" jdbcType="VARCHAR" property="deviceCheckResult"/>
+        <result column="device_check_fault_id" jdbcType="VARCHAR" property="deviceCheckFaultId"/>
+        <!--<result column="device_check_fault_id" jdbcType="VARCHAR" property="deviceName" />
+        <result column="device_check_fault_id" jdbcType="VARCHAR" property="deviceCheckEmp" />-->
+        <association property="deviceCheckEmp" select="com.nosuchteam.mapper.EmployeeMapper.selectEmpNameByPrimaryKey"
+                     column="device_check_emp_id" fetchType="eager">
+        </association>
+        <association property="deviceName" select="com.nosuchteam.mapper.DeviceMapper.selectDeviceNameByPrimaryKey"
+                     column="device_id" fetchType="eager">
+        </association>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
     device_check_id, device_id, device_check_emp_id, device_check_date, device_check_result, 
     device_check_fault_id
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from device_check
-    where device_check_id = #{deviceCheckId,jdbcType=VARCHAR}
+
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from device_check
+        where device_check_id = #{deviceCheckId,jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="findAllDeviceCheck" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from device_check
+    </select>
+    <select id="findAllDeviceCheckVO" resultMap="DeviceCheckVOMap">
+        select
+        <include refid="Base_Column_List"/>
+        from device_check
+    </select>
+    <select id="searchDeviceCheckByDeviceCheckId" resultMap="DeviceCheckVOMap">
+        select
+        <include refid="Base_Column_List"/>
+        from device_check
+        where `device_check_id` like #{param1}
+
+    </select>
+    <select id="searchDeviceCheckByDeviceName" resultMap="DeviceCheckVOMap">
+    SELECT *
+FROM ((`device_check` LEFT JOIN `device` ON device_check.device_id= device.device_id)
+LEFT JOIN employee ON device_check.device_check_emp_id = employee.emp_id)
+WHERE `device`.device_name like #{param1}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from device_check
     where device_check_id = #{deviceCheckId,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.nosuchteam.bean.DeviceCheck">
+    <insert id="insert" parameterType="com.nosuchteam.bean.DeviceCheck">
     insert into device_check (device_check_id, device_id, device_check_emp_id, 
       device_check_date, device_check_result, device_check_fault_id
       )
@@ -31,71 +79,71 @@
       #{deviceCheckDate,jdbcType=TIMESTAMP}, #{deviceCheckResult,jdbcType=VARCHAR}, #{deviceCheckFaultId,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.nosuchteam.bean.DeviceCheck">
-    insert into device_check
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="deviceCheckId != null">
-        device_check_id,
-      </if>
-      <if test="deviceId != null">
-        device_id,
-      </if>
-      <if test="deviceCheckEmpId != null">
-        device_check_emp_id,
-      </if>
-      <if test="deviceCheckDate != null">
-        device_check_date,
-      </if>
-      <if test="deviceCheckResult != null">
-        device_check_result,
-      </if>
-      <if test="deviceCheckFaultId != null">
-        device_check_fault_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="deviceCheckId != null">
-        #{deviceCheckId,jdbcType=VARCHAR},
-      </if>
-      <if test="deviceId != null">
-        #{deviceId,jdbcType=VARCHAR},
-      </if>
-      <if test="deviceCheckEmpId != null">
-        #{deviceCheckEmpId,jdbcType=VARCHAR},
-      </if>
-      <if test="deviceCheckDate != null">
-        #{deviceCheckDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="deviceCheckResult != null">
-        #{deviceCheckResult,jdbcType=VARCHAR},
-      </if>
-      <if test="deviceCheckFaultId != null">
-        #{deviceCheckFaultId,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.nosuchteam.bean.DeviceCheck">
-    update device_check
-    <set>
-      <if test="deviceId != null">
-        device_id = #{deviceId,jdbcType=VARCHAR},
-      </if>
-      <if test="deviceCheckEmpId != null">
-        device_check_emp_id = #{deviceCheckEmpId,jdbcType=VARCHAR},
-      </if>
-      <if test="deviceCheckDate != null">
-        device_check_date = #{deviceCheckDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="deviceCheckResult != null">
-        device_check_result = #{deviceCheckResult,jdbcType=VARCHAR},
-      </if>
-      <if test="deviceCheckFaultId != null">
-        device_check_fault_id = #{deviceCheckFaultId,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where device_check_id = #{deviceCheckId,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.nosuchteam.bean.DeviceCheck">
+    <insert id="insertSelective" parameterType="com.nosuchteam.bean.DeviceCheck">
+        insert into device_check
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deviceCheckId != null">
+                device_check_id,
+            </if>
+            <if test="deviceId != null">
+                device_id,
+            </if>
+            <if test="deviceCheckEmpId != null">
+                device_check_emp_id,
+            </if>
+            <if test="deviceCheckDate != null">
+                device_check_date,
+            </if>
+            <if test="deviceCheckResult != null">
+                device_check_result,
+            </if>
+            <if test="deviceCheckFaultId != null">
+                device_check_fault_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deviceCheckId != null">
+                #{deviceCheckId,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceId != null">
+                #{deviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceCheckEmpId != null">
+                #{deviceCheckEmpId,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceCheckDate != null">
+                #{deviceCheckDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deviceCheckResult != null">
+                #{deviceCheckResult,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceCheckFaultId != null">
+                #{deviceCheckFaultId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.nosuchteam.bean.DeviceCheck">
+        update device_check
+        <set>
+            <if test="deviceId != null">
+                device_id = #{deviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceCheckEmpId != null">
+                device_check_emp_id = #{deviceCheckEmpId,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceCheckDate != null">
+                device_check_date = #{deviceCheckDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deviceCheckResult != null">
+                device_check_result = #{deviceCheckResult,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceCheckFaultId != null">
+                device_check_fault_id = #{deviceCheckFaultId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where device_check_id = #{deviceCheckId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.nosuchteam.bean.DeviceCheck">
     update device_check
     set device_id = #{deviceId,jdbcType=VARCHAR},
       device_check_emp_id = #{deviceCheckEmpId,jdbcType=VARCHAR},

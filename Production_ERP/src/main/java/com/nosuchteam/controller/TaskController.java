@@ -6,13 +6,16 @@ import com.nosuchteam.util.commons.Data;
 import com.nosuchteam.util.commons.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.ArrayList;
 
 /**
@@ -27,29 +30,16 @@ public class TaskController {
     @Qualifier("taskService")
     TaskService taskService;
 
-    @RequestMapping("/{name}")
-    public String forward(@PathVariable String name, HttpSession session) {
-        if ("find".equals(name)) {
-            ArrayList<String> sysPermissionList = new ArrayList<>();
-            sysPermissionList.add("task:add");
-            sysPermissionList.add("task:edit");
-            sysPermissionList.add("task:delete");
-            session.setAttribute("sysPermissionList", sysPermissionList);
-            return "plan_scheduling/task_list";
-        }
-        return "plan_scheduling/task_" + name;
-    }
-
     @ResponseBody
     @RequestMapping(path = {"/list"
             , "/search_task_by_taskId"
             , "/search_task_by_taskWorkId"
             , "/search_task_by_taskManufactureSn"})
-    public Object list(Task task, Integer page, HttpServletRequest request,String getData,
-                     String searchValue, Integer rows) throws Exception {
+    public Object list(Task task, Integer page, HttpServletRequest request, String getData,
+                       String searchValue, Integer rows) throws Exception {
         String requestURI = request.getRequestURI();
         if (searchValue != null && !searchValue.isEmpty()) {
-            switch (requestURI.substring(requestURI.lastIndexOf("task") + "task".length())){
+            switch (requestURI.substring(requestURI.lastIndexOf("task") + "task".length())) {
                 case "Id":
                     task.setTaskId(searchValue);
                     break;
@@ -74,59 +64,49 @@ public class TaskController {
     }
 
     @ResponseBody
-    @RequestMapping({"/add_judge", "/insert"})
-    public Data add(Task task, HttpServletRequest request) {
-        if (request.getRequestURI().endsWith("insert")) {
-            try {
-                taskService.save(task);
-                return new Data(200, "OK", null);
-            }  catch (Exception e) {
-                e.printStackTrace();
-                return new Data(500, "操作失败", null);
+    @RequestMapping({"/insert"})
+    public Data add(@Valid Task task, BindingResult bindingResult) {
+        try {
+            if (bindingResult.hasErrors()) {
+                return new Data(500, bindingResult.getAllErrors().get(0).getDefaultMessage(), null);
             }
+            taskService.save(task);
+            return new Data(200, "OK", null);
+        } catch (DuplicateKeyException de) {
+            de.printStackTrace();
+            return new Data(500, "该编号已存在", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Data(500, "操作失败", null);
         }
-        //....
-        return check(request.getSession());
     }
 
     @ResponseBody
-    @RequestMapping(path = {"/edit_judge", "/update_all", "/update_note"})
-    public Data edit(Task task, HttpServletRequest request) {
-        String requestURI = request.getRequestURI();
-        if (requestURI.endsWith("update_all")
-                && task.getTaskId() != null) {
-            try {
-                taskService.update(task);
-                return new Data(200, "OK", null);
-            }  catch (Exception e) {
-                e.printStackTrace();
-                return new Data(500, "操作失败", null);
+    @RequestMapping(path = {"/update_all", "/update_note"})
+    public Data edit(@Valid Task task,BindingResult bindingResult, HttpServletRequest request) {
+        try {
+            if(bindingResult.hasErrors()){
+                if(bindingResult.hasFieldErrors("taskId") || request.getRequestURI().endsWith("/update_all")){
+                    return new Data(500, bindingResult.getAllErrors().get(0).getDefaultMessage(), null);
+                }
             }
+            taskService.update(task);
+            return new Data(200, "OK", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Data(500, "操作失败", null);
         }
-        //....
-        return check(request.getSession());
     }
 
     @ResponseBody
-    @RequestMapping({"/delete", "/delete_judge", "/delete_batch"})
-    public Data delete(String[] ids, HttpServletRequest request) {
-        if (request.getRequestURI().endsWith("delete_batch") && ids != null && ids.length != 0) {
-            try {
-                taskService.delete(ids);
-                return new Data(200, "OK", null);
-            }  catch (Exception e) {
-                e.printStackTrace();
-                return new Data(500, "操作失败", null);
-            }
+    @RequestMapping({"/delete", "/delete_batch"})
+    public Data delete(String[] ids) {
+        try {
+            taskService.delete(ids);
+            return new Data(200, "OK", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Data(500, "操作失败", null);
         }
-        //....
-        return check(request.getSession());
-    }
-
-    private Data check(HttpSession session){
-        /*if (session == null || session.getAttribute("user") == null){
-            return new Data(500, "请先登录", null);
-        }*/
-        return null;
     }
 }
