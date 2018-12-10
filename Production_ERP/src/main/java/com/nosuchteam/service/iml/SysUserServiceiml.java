@@ -2,12 +2,12 @@ package com.nosuchteam.service.iml;
 
 import com.nosuchteam.bean.SysUser;
 import com.nosuchteam.mapper.SysUserMapper;
-import com.nosuchteam.service.UserService;
+import com.nosuchteam.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service("UserService")
-public class UserServiceiml implements UserService {
+@Service("SysUserService")
+public class SysUserServiceiml implements SysUserService {
     @Autowired
     SysUserMapper mapper;
 
@@ -36,7 +36,7 @@ public class UserServiceiml implements UserService {
     }
 
     public SysUser selectById(String id) {
-        return null;
+        return mapper.selectByPrimaryKey(id);
     }
 
     public boolean updateByIdSelective(SysUser record) {
@@ -52,5 +52,14 @@ public class UserServiceiml implements UserService {
             return true;
         }
         return false ;
+    }
+    //可能返回null
+    @Override
+    public SysUser login(SysUser sysUser) {
+        SysUser user=mapper.login(sysUser);
+        if(user!=null){
+            return user;
+        }
+        return null;
     }
 }
