@@ -1,5 +1,6 @@
 package com.nosuchteam.controller;
 
+import com.nosuchteam.bean.Department;
 import com.nosuchteam.bean.Employee;
 import com.nosuchteam.service.EmployeeService;
 import com.nosuchteam.service.iml.EmployeeServiceiml;
@@ -15,10 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/employee")
@@ -59,7 +57,6 @@ public class EmployeeController {
         }
         return null;
     }
-
     @RequestMapping("/add_judge")
     @ResponseBody
     public String add_judge(){
