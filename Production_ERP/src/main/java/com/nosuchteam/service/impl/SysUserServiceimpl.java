@@ -1,4 +1,4 @@
-package com.nosuchteam.service.iml;
+package com.nosuchteam.service.impl;
 
 import com.nosuchteam.bean.SysUser;
 import com.nosuchteam.mapper.SysUserMapper;
@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("SysUserService")
-public class SysUserServiceiml implements SysUserService {
+public class SysUserServiceimpl implements SysUserService {
     @Autowired
     SysUserMapper mapper;
 

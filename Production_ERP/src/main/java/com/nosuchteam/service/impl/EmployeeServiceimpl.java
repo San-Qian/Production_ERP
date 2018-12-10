@@ -1,4 +1,4 @@
-package com.nosuchteam.service.iml;
+package com.nosuchteam.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
 @Service("EmployeeService")
-public class EmployeeServiceiml implements EmployeeService {
+public class EmployeeServiceimpl implements EmployeeService {
     @Autowired
     EmployeeMapper mapper;
 

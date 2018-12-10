@@ -1,4 +1,4 @@
-package com.nosuchteam.service.iml;
+package com.nosuchteam.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
 @Service("departmentService")
-public class DepartMentServiceiml implements DepartMentService {
+public class DepartMentServiceimpl implements DepartMentService {
     @Autowired
     DepartmentMapper mapper;
     @Override
