@@ -47,8 +47,8 @@
     <!--datasource-->
     <bean id="datasource" class="com.alibaba.druid.pool.DruidDataSource">
         <property name="username" value="root"></property>
-        <property name="password" value="123456"></property>
-        <property name="url" value="jdbc:mysql://localhost:3306/production_ssm_db?serverTimezone=GMT"/>
+        <property name="password" value="wanyiqian"></property>
+        <property name="url" value="jdbc:mysql://localhost:3306/production_erp_db?serverTimezone=GMT"/>
         <property name="filters" value="stat"/>
     </bean>
 
@@ -70,7 +70,6 @@
                         </value>
                     </property>
                 </bean>
-
             </array>
         </property>
     </bean>

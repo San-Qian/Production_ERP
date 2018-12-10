@@ -50,8 +50,8 @@ public class EmployeeServiceiml implements EmployeeService {
     }
 
     @Override
-    public Employee selectByEmpid(String empId) {
-        return null;
+    public EmployeeVO selectByEmpid(String empId) {
+        return mapper.selectByPrimaryKey(empId);
     }
 
     @Override
@@ -113,5 +113,10 @@ public class EmployeeServiceiml implements EmployeeService {
         map.put("total",pageInfo.getTotal());
         map.put("rows",pageInfo.getList());
         return map;
+    }
+
+    @Override
+    public List<EmployeeVO> selectAll() {
+        return mapper.selectAllEmployee();
     }
 }

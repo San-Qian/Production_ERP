@@ -1,6 +1,7 @@
 package com.nosuchteam.service;
 
 import com.nosuchteam.bean.Employee;
+import com.nosuchteam.bean.vo.EmployeeVO;
 
 import java.util.List;
 import java.util.Map;
@@ -12,7 +13,7 @@ public interface EmployeeService {
 
     boolean insertSelective(Employee record) throws Exception;
 
-    Employee selectByEmpid(String empId);
+    EmployeeVO selectByEmpid(String empId);
 
     boolean updateByEmpidSelective(Employee record) throws Exception;
 
@@ -24,4 +25,5 @@ public interface EmployeeService {
     Map searchEmployeeById(String searchValue,Integer page,Integer rows);
     Map searchEmployeeByDepartmentName(String searchValue,Integer page,Integer rows);
 
+    List<EmployeeVO> selectAll();
 }

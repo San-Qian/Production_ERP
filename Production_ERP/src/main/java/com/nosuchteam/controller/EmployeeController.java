@@ -2,6 +2,7 @@ package com.nosuchteam.controller;
 
 import com.nosuchteam.bean.Department;
 import com.nosuchteam.bean.Employee;
+import com.nosuchteam.bean.vo.EmployeeVO;
 import com.nosuchteam.service.EmployeeService;
 import com.nosuchteam.service.iml.EmployeeServiceiml;
 import com.nosuchteam.util.commons.Data;
@@ -42,6 +43,20 @@ public class EmployeeController {
     public Map selectList(Integer page, Integer rows){
         Map map = service.selectEmployeeByPage(page, rows);
         return map;
+    }
+    @RequestMapping("/get_data")
+    @ResponseBody
+    public List<EmployeeVO> get_data(){
+        List<EmployeeVO> employeeVOS =  service.selectAll();
+        System.out.println(employeeVOS);
+        return employeeVOS;
+    }
+    @RequestMapping("/get/{id}")
+    @ResponseBody
+    public EmployeeVO get(@PathVariable String id){
+       EmployeeVO employee = service.selectByEmpid(id);
+
+        return employee;
     }
     //增加人员
     @RequestMapping(value = "/insert",method = {RequestMethod.POST})

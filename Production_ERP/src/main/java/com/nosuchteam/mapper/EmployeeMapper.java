@@ -12,7 +12,7 @@ public interface EmployeeMapper {
 
     int insertSelective(Employee record);
 
-    Employee selectByPrimaryKey(String empId);
+    EmployeeVO selectByPrimaryKey(String empId);
 
     int updateByPrimaryKeySelective(Employee record);
 
