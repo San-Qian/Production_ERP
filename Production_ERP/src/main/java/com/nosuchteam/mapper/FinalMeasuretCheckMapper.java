@@ -12,7 +12,7 @@ import java.util.List;
 public interface FinalMeasuretCheckMapper {
     int deleteByPrimaryKey(String fMeasureCheckId);
 
-    int insert(FinalMeasuretCheck record);
+    int insert(FinalMeasuretCheck record) throws Exception;
 
     int insertSelective(FinalMeasuretCheck record);
 

@@ -6,6 +6,7 @@ import com.nosuchteam.bean.ProcessCountCheck;
 import com.nosuchteam.bean.vo.ProcessCountCheckVo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @date 2018/12/8-11:00
@@ -16,7 +17,7 @@ public interface ProcessCountCheckService {
     PageInfo<ProcessCountCheckVo> findAllProcessCountCheckByPage(int page, int rows);
 
     //新增一个工序计数
-    int addProcessCountCheck(ProcessCountCheck processCountCheck);
+    Map addProcessCountCheck(ProcessCountCheck processCountCheck);
 
     //编辑一个工序计数
     int editProcessCountCheck(ProcessCountCheck processCountCheck);

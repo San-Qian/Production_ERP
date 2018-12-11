@@ -11,7 +11,7 @@ import java.util.List;
 public interface ProcessMeasureCheckMapper {
     int deleteByPrimaryKey(String pMeasureCheckId);
 
-    int insert(ProcessMeasureCheck record);
+    int insert(ProcessMeasureCheck record) throws Exception;
 
     int insertSelective(ProcessMeasureCheck record);
 

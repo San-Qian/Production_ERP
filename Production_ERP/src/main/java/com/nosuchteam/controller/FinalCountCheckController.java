@@ -44,7 +44,7 @@ public class FinalCountCheckController {
     }
 
 
-    @RequestMapping({"/add_judge","/edit_judge","delete_judge"})
+    @RequestMapping({"/add_judge", "/edit_judge", "delete_judge"})
     @ResponseBody
     public Map show() {
         //HashMap hashMap = new HashMap();
@@ -56,20 +56,20 @@ public class FinalCountCheckController {
     //显示所有成品计数质检
     @ResponseBody
     @RequestMapping("/list")
-    public Map listfCountCheck(int rows,int page){
-        PageInfo<FinalCountCheckVo> allFinalCountCheck = finalCountCheckService.findAllFinalCountCheckByPage(page,rows);
+    public Map listfCountCheck(int rows, int page) {
+        PageInfo<FinalCountCheckVo> allFinalCountCheck = finalCountCheckService.findAllFinalCountCheckByPage(page, rows);
 
         HashMap<Object, Object> map = new HashMap();
 
-        map.put("total",allFinalCountCheck.getSize());
-        map.put("rows",allFinalCountCheck.getList());
+        map.put("total", allFinalCountCheck.getSize());
+        map.put("rows", allFinalCountCheck.getList());
 
         return map;
     }
 
     //显示增加页面
     @RequestMapping("/add")
-    public String show3(){
+    public String show3() {
 
         return "quality_monitoring/f_count_check_add";
 
@@ -77,7 +77,7 @@ public class FinalCountCheckController {
 
     //显示编辑页面
     @RequestMapping("/edit")
-    public String show4(){
+    public String show4() {
         return "quality_monitoring/f_count_check_edit";
     }
 
@@ -85,37 +85,25 @@ public class FinalCountCheckController {
     //新增一个成品计量
     @ResponseBody
     @RequestMapping("/insert")
-    public Map insertFinalCountCheck(FinalCountCheck finalCountCheck){
-
-        int i = finalCountCheckService.addFinalCountCheck(finalCountCheck);
-
-        HashMap hashMap = new HashMap();
-
-        hashMap.put("data",null);
-        hashMap.put("msg","OK");
-        hashMap.put("status",200);
-
-        if(i!=1){
-            return null;
-        }
-
-        return hashMap;
+    public Map insertFinalCountCheck(FinalCountCheck finalCountCheck) {
+        Map map = finalCountCheckService.addFinalCountCheck(finalCountCheck);
+        return map;
     }
 
     //编辑不合格产品
     @ResponseBody
     @RequestMapping("/update_all")
-    public Map updateFinalCountCheck(FinalCountCheck finalCountCheck){
+    public Map updateFinalCountCheck(FinalCountCheck finalCountCheck) {
 
         int i = finalCountCheckService.editFinalCountCheck(finalCountCheck);
 
         HashMap hashMap = new HashMap();
 
-        hashMap.put("data",null);
-        hashMap.put("msg","OK");
-        hashMap.put("status",200);
+        hashMap.put("data", null);
+        hashMap.put("msg", "OK");
+        hashMap.put("status", 200);
 
-        if(i!=1){
+        if (i != 1) {
             return null;
         }
 
@@ -126,26 +114,26 @@ public class FinalCountCheckController {
     //删除不合格产品
     @ResponseBody
     @RequestMapping("/delete_batch")
-    public Map deleteFinalCountChecks(String ids){
+    public Map deleteFinalCountChecks(String ids) {
 
         int i = 0;
 
         String[] split = ids.split(",");
 
-        for(String toDelete:split){
+        for (String toDelete : split) {
             i = finalCountCheckService.deleteFinalCountCheck(toDelete);
-            if(i!=1){
+            if (i != 1) {
                 break;
             }
         }
 
         HashMap hashMap = new HashMap();
 
-        hashMap.put("data",null);
-        hashMap.put("msg","OK");
-        hashMap.put("status",200);
+        hashMap.put("data", null);
+        hashMap.put("msg", "OK");
+        hashMap.put("status", 200);
 
-        if(i!=1){
+        if (i != 1) {
             return null;
         }
 
@@ -155,9 +143,9 @@ public class FinalCountCheckController {
     //搜索功能
     @ResponseBody
     @RequestMapping("/{name}")
-    public Map searchUnqualifyApplies(@PathVariable String name, String searchValue, int page, int rows){
+    public Map searchUnqualifyApplies(@PathVariable String name, String searchValue, int page, int rows) {
 
-        PageInfo<FinalCountCheckVo> FinalCountCheckById = finalCountCheckService.findFinalCountCheck (name,searchValue, page, rows);
+        PageInfo<FinalCountCheckVo> FinalCountCheckById = finalCountCheckService.findFinalCountCheck(name, searchValue, page, rows);
 
         HashMap<String, Object> map = new HashMap();
 
@@ -171,7 +159,7 @@ public class FinalCountCheckController {
     //修改备注
     @ResponseBody
     @RequestMapping("/update_note")
-    public Map updateNote(String fCountCheckId,String note){
+    public Map updateNote(String fCountCheckId, String note) {
 
         FinalCountCheck finalCountCheck = new FinalCountCheck();
         finalCountCheck.setfCountCheckId(fCountCheckId);
@@ -181,12 +169,12 @@ public class FinalCountCheckController {
 
         HashMap hashMap = new HashMap();
 
-        hashMap.put("data",null);
-        hashMap.put("msg","OK");
-        hashMap.put("status",200);
+        hashMap.put("data", null);
+        hashMap.put("msg", "OK");
+        hashMap.put("status", 200);
 
-        if(i!=1){
-            hashMap.put("msg","修改失败");
+        if (i != 1) {
+            hashMap.put("msg", "修改失败");
             return hashMap;
         }
 

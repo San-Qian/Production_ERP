@@ -84,20 +84,8 @@ public class FinalMeasureCheckController {
     @ResponseBody
     @RequestMapping("/insert")
     public Map insertMeasureCheck(FinalMeasuretCheck finalMeasuretCheck){
-
-        int i = finalMeasureCheckService.addFinalMeasureCheck(finalMeasuretCheck);
-
-        HashMap hashMap = new HashMap();
-
-        hashMap.put("data",null);
-        hashMap.put("msg","OK");
-        hashMap.put("status",200);
-
-        if(i!=1){
-            return null;
-        }
-
-        return hashMap;
+        Map map = finalMeasureCheckService.addFinalMeasureCheck(finalMeasuretCheck);
+        return map;
     }
 
     //编辑不合格产品

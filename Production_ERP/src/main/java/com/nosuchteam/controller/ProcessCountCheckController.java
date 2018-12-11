@@ -85,19 +85,10 @@ public class ProcessCountCheckController {
     @RequestMapping("/insert")
     public Map insertProcessCountCheck(ProcessCountCheck processCountCheck){
 
-        int i = processCountCheckService.addProcessCountCheck(processCountCheck);
+        Map map = processCountCheckService.addProcessCountCheck(processCountCheck);
 
-        HashMap hashMap = new HashMap();
 
-        hashMap.put("data",null);
-        hashMap.put("msg","OK");
-        hashMap.put("status",200);
-
-        if(i!=1){
-            return null;
-        }
-
-        return hashMap;
+        return map;
     }
 
     //编辑不合格产品

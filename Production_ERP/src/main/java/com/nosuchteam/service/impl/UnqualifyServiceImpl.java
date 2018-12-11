@@ -7,9 +7,14 @@ import com.nosuchteam.bean.vo.UnqualifyApplyVo;
 import com.nosuchteam.mapper.UnqualifyApplyMapper;
 import com.nosuchteam.service.UnqualifyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+import org.springframework.test.context.jdbc.Sql;
 
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @date 2018/12/6-10:23
@@ -33,8 +38,25 @@ public class UnqualifyServiceImpl implements UnqualifyService {
     }
 
     //新增一个不合格产品
-    public int addUnqualifyApply(UnqualifyApply unqualifyApply) {
-        return unqualifyApplyMapper.insert(unqualifyApply);
+    public Map addUnqualifyApply(UnqualifyApply unqualifyApply){
+
+        HashMap hashMap = new HashMap();
+
+        try {
+            unqualifyApplyMapper.insert(unqualifyApply);
+
+            hashMap.put("data", null);
+            hashMap.put("msg", "OK");
+            hashMap.put("status", 200);
+        }  catch (DuplicateKeyException e) {
+            hashMap.put("msg", "编号已存在");
+            hashMap.put("status", 0);
+        } catch (Exception e) {
+            hashMap.put("msg", "新增失败");
+            hashMap.put("status", 0);
+        }
+
+        return hashMap;
     }
 
     //编辑一个不合格产品

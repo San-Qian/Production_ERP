@@ -9,9 +9,12 @@ import com.nosuchteam.bean.vo.UnqualifyApplyVo;
 import com.nosuchteam.mapper.FinalMeasuretCheckMapper;
 import com.nosuchteam.service.FinalMeasureCheckService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @date 2018/12/8-10:57
@@ -35,8 +38,26 @@ public class FinalMeasureCheckServiceImpl implements FinalMeasureCheckService {
     }
 
     //新增一个成品计量
-    public int addFinalMeasureCheck(FinalMeasuretCheck finalMeasuretCheck) {
-        return finalMeasuretCheckMapper.insert(finalMeasuretCheck);
+    public Map addFinalMeasureCheck(FinalMeasuretCheck finalMeasuretCheck) {
+
+        HashMap hashMap = new HashMap();
+
+        try {
+            finalMeasuretCheckMapper.insert(finalMeasuretCheck);
+            hashMap.put("data", null);
+            hashMap.put("msg", "OK");
+            hashMap.put("status", 200);
+
+        } catch (
+                DuplicateKeyException e) {
+            hashMap.put("msg", "编号已存在");
+            hashMap.put("status", 0);
+        } catch (Exception e) {
+            hashMap.put("msg", "新增失败");
+            hashMap.put("status", 0);
+        }
+
+        return hashMap;
     }
 
     //编辑一个成品计量

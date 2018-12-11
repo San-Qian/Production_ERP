@@ -11,7 +11,7 @@ import java.util.List;
 public interface FinalCountCheckMapper {
     int deleteByPrimaryKey(String fCountCheckId);
 
-    int insert(FinalCountCheck record);
+    int insert(FinalCountCheck record) throws Exception;
 
     int insertSelective(FinalCountCheck record);
 

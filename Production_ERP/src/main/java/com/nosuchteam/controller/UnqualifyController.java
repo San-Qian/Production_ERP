@@ -5,6 +5,7 @@ import com.nosuchteam.bean.UnqualifyApply;
 import com.nosuchteam.bean.vo.UnqualifyApplyVo;
 import com.nosuchteam.service.UnqualifyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +40,7 @@ public class UnqualifyController {
         return "quality_monitoring/unqualify_list";
     }
 
-    @RequestMapping({"/add_judge","/edit_judge","delete_judge"})
+    @RequestMapping({"/add_judge", "/edit_judge", "delete_judge"})
     @ResponseBody
     public Map show() {
         //HashMap hashMap = new HashMap();
@@ -64,7 +65,7 @@ public class UnqualifyController {
 
     //显示不合格页面
     @RequestMapping("/add")
-    public String show3(){
+    public String show3() {
 
         return "quality_monitoring/unqualify_add";
 
@@ -72,7 +73,7 @@ public class UnqualifyController {
 
     //显示编辑页面
     @RequestMapping("/edit")
-    public String show4(){
+    public String show4() {
         return "quality_monitoring/unqualify_edit";
     }
 
@@ -80,38 +81,29 @@ public class UnqualifyController {
     //新增一个不合格产品
     @ResponseBody
     @RequestMapping("/insert")
-    public Map insertUnqualifyApply(UnqualifyApply unqualifyApply){
+    public Map insertUnqualifyApply(UnqualifyApply unqualifyApply) {
 
-        int i = unqualifyService.addUnqualifyApply(unqualifyApply);
+        Map map = unqualifyService.addUnqualifyApply(unqualifyApply);
 
-        HashMap hashMap = new HashMap();
-
-        hashMap.put("data",null);
-        hashMap.put("msg","OK");
-        hashMap.put("status",200);
-
-        if(i!=1){
-            return null;
-        }
-
-        return hashMap;
+        return map;
     }
 
     //编辑不合格产品
     @ResponseBody
     @RequestMapping("/update_all")
-    public Map updateUnqualifyApply(UnqualifyApply unqualifyApply){
+    public Map updateUnqualifyApply(UnqualifyApply unqualifyApply) {
 
         int i = unqualifyService.editUnqualifyApply(unqualifyApply);
 
         HashMap hashMap = new HashMap();
 
-        hashMap.put("data",null);
-        hashMap.put("msg","OK");
-        hashMap.put("status",200);
+        hashMap.put("data", null);
+        hashMap.put("msg", "OK");
+        hashMap.put("status", 200);
 
-        if(i!=1){
-            return null;
+        if (i != 1) {
+            hashMap.put("msg", "编辑失败");
+            hashMap.put("status", 500);
         }
 
         return hashMap;
@@ -121,27 +113,28 @@ public class UnqualifyController {
     //删除不合格产品
     @ResponseBody
     @RequestMapping("/delete_batch")
-    public Map deleteUnqualifyApplys(String ids){
+    public Map deleteUnqualifyApplys(String ids) {
 
         int i = 0;
 
         String[] split = ids.split(",");
 
-        for(String toDelete:split){
+        for (String toDelete : split) {
             i = unqualifyService.deleteUnqualifyApply(toDelete);
-            if(i!=1){
+            if (i != 1) {
                 break;
             }
         }
 
         HashMap hashMap = new HashMap();
 
-        hashMap.put("data",null);
-        hashMap.put("msg","OK");
-        hashMap.put("status",200);
+        hashMap.put("data", null);
+        hashMap.put("msg", "OK");
+        hashMap.put("status", 200);
 
-        if(i!=1){
-            return null;
+        if (i != 1) {
+            hashMap.put("msg", "编辑失败");
+            hashMap.put("status", 500);
         }
 
         return hashMap;
@@ -150,9 +143,9 @@ public class UnqualifyController {
     //搜索功能
     @ResponseBody
     @RequestMapping("/{name}")
-    public Map searchUnqualifyApplies(@PathVariable String name, String searchValue, int page, int rows){
+    public Map searchUnqualifyApplies(@PathVariable String name, String searchValue, int page, int rows) {
 
-        PageInfo<UnqualifyApplyVo> unqualifyApplyById = unqualifyService.findUnqualifyApplyById (name,searchValue, page, rows);
+        PageInfo<UnqualifyApplyVo> unqualifyApplyById = unqualifyService.findUnqualifyApplyById(name, searchValue, page, rows);
 
         HashMap<String, Object> map = new HashMap();
 
@@ -166,7 +159,7 @@ public class UnqualifyController {
     //修改备注
     @ResponseBody
     @RequestMapping("/update_note")
-    public Map updateNote(String unqualifyApplyId,String note){
+    public Map updateNote(String unqualifyApplyId, String note) {
 
         UnqualifyApply unqualifyApply = new UnqualifyApply();
         unqualifyApply.setUnqualifyApplyId(unqualifyApplyId);
@@ -176,13 +169,13 @@ public class UnqualifyController {
 
         HashMap hashMap = new HashMap();
 
-        hashMap.put("data",null);
-        hashMap.put("msg","OK");
-        hashMap.put("status",200);
+        hashMap.put("data", null);
+        hashMap.put("msg", "OK");
+        hashMap.put("status", 200);
 
-        if(i!=1){
-            hashMap.put("msg","修改失败");
-            return hashMap;
+        if (i != 1) {
+            hashMap.put("msg", "修改失败");
+            hashMap.put("status", 500);
         }
 
         return hashMap;

@@ -9,9 +9,12 @@ import com.nosuchteam.bean.vo.ProcessMeasureCheckVo;
 import com.nosuchteam.mapper.ProcessMeasureCheckMapper;
 import com.nosuchteam.service.ProcessMeasureCheckService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @date 2018/12/8-11:03
@@ -36,8 +39,25 @@ public class ProcessMeasureCheckServiceImpl implements ProcessMeasureCheckServic
 
 
     //新增一个工序计量
-    public int addProcessMeasureCheck(ProcessMeasureCheck processMeasureCheck) {
-        return processMeasureCheckMapper.insert(processMeasureCheck);
+    public Map addProcessMeasureCheck(ProcessMeasureCheck processMeasureCheck) {
+        HashMap hashMap = new HashMap();
+        try {
+            processMeasureCheckMapper.insert(processMeasureCheck);
+
+            hashMap.put("data", null);
+            hashMap.put("msg", "OK");
+            hashMap.put("status", 200);
+
+        } catch (
+            DuplicateKeyException e) {
+            hashMap.put("msg", "编号已存在");
+            hashMap.put("status", 0);
+        } catch (Exception e) {
+            hashMap.put("msg", "新增失败");
+            hashMap.put("status", 0);
+        }
+
+        return hashMap;
     }
 
     //编辑一个工序计量

@@ -4,6 +4,8 @@ import com.github.pagehelper.PageInfo;
 import com.nosuchteam.bean.UnqualifyApply;
 import com.nosuchteam.bean.vo.UnqualifyApplyVo;
 
+import java.util.Map;
+
 /**
  * @date 2018/12/6-10:08
  */
@@ -15,7 +17,7 @@ public interface UnqualifyService {
     PageInfo<UnqualifyApplyVo> findUnqualifyApplys(int page, int rows);
 
     //新增一个不合格产品
-    int addUnqualifyApply(UnqualifyApply unqualifyApply);
+    Map addUnqualifyApply(UnqualifyApply unqualifyApply);
 
     //编辑一个不合格产品
     int editUnqualifyApply(UnqualifyApply unqualifyApply);

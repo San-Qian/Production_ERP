@@ -7,6 +7,7 @@ import com.nosuchteam.bean.vo.FinalMeasuretCheckVo;
 import com.nosuchteam.bean.vo.UnqualifyApplyVo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @date 2018/12/8-10:57
@@ -17,7 +18,7 @@ public interface FinalMeasureCheckService {
     PageInfo<FinalMeasuretCheckVo> findFinalMeasuretCheckByPage(int page,int rows);
 
     //新增一个成品计量
-    int addFinalMeasureCheck(FinalMeasuretCheck finalMeasuretCheck);
+    Map addFinalMeasureCheck(FinalMeasuretCheck finalMeasuretCheck);
 
     //编辑一个成品计量
     int editFinalMeasureCheck(FinalMeasuretCheck finalMeasuretCheck);

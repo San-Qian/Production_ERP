@@ -11,7 +11,7 @@ import java.util.List;
 public interface ProcessCountCheckMapper {
     int deleteByPrimaryKey(String pCountCheckId);
 
-    int insert(ProcessCountCheck record);
+    int insert(ProcessCountCheck record) throws Exception;
 
     int insertSelective(ProcessCountCheck record);
 

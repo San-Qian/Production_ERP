@@ -7,6 +7,7 @@ import com.nosuchteam.bean.vo.FinalCountCheckVo;
 import com.nosuchteam.bean.vo.FinalCountCheckVo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @date 2018/12/8-10:53
@@ -17,7 +18,7 @@ public interface FinalCountCheckService {
     PageInfo<FinalCountCheckVo> findAllFinalCountCheckByPage(int page,int rows);
 
     //新增一个成品计数
-    int addFinalCountCheck(FinalCountCheck finalCountCheck);
+    Map addFinalCountCheck(FinalCountCheck finalCountCheck);
 
     //编辑一个成品计数
     int editFinalCountCheck(FinalCountCheck finalCountCheck);

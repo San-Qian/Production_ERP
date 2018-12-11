@@ -7,6 +7,7 @@ import com.nosuchteam.bean.vo.ProcessMeasureCheckVo;
 import com.nosuchteam.bean.vo.ProcessMeasureCheckVo;
 import com.nosuchteam.service.ProcessMeasureCheckService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,7 +48,7 @@ public class ProcessMeasureController {
     @RequestMapping("/list")
     public Map listPMeasureCheck(int page, int rows) {
 
-        PageInfo<ProcessMeasureCheckVo> allProcessMeasureCheck = processMeasureCheckService.findAllProcessMeasureCheckByPage(page,rows);
+        PageInfo<ProcessMeasureCheckVo> allProcessMeasureCheck = processMeasureCheckService.findAllProcessMeasureCheckByPage(page, rows);
 
         HashMap<String, Object> map = new HashMap();
 
@@ -58,18 +59,18 @@ public class ProcessMeasureController {
 
     }
 
-    @RequestMapping({"/add_judge","/edit_judge","delete_judge"})
+    @RequestMapping({"/add_judge", "/edit_judge", "delete_judge"})
     @ResponseBody
     public Map show() {
         //HashMap hashMap = new HashMap();
 
         return null;
     }
-    
+
 
     //显示增加页面
     @RequestMapping("/add")
-    public String show3(){
+    public String show3() {
 
         return "quality_monitoring/p_measure_check_add";
 
@@ -77,7 +78,7 @@ public class ProcessMeasureController {
 
     //显示编辑页面
     @RequestMapping("/edit")
-    public String show4(){
+    public String show4() {
         return "quality_monitoring/p_measure_check_edit";
     }
 
@@ -85,37 +86,27 @@ public class ProcessMeasureController {
     //新增一个成品计量
     @ResponseBody
     @RequestMapping("/insert")
-    public Map insertProcessMeasureCheck(ProcessMeasureCheck processMeasureCheck){
+    public Map insertProcessMeasureCheck(ProcessMeasureCheck processMeasureCheck) {
 
-        int i = processMeasureCheckService.addProcessMeasureCheck(processMeasureCheck);
+        Map map = processMeasureCheckService.addProcessMeasureCheck(processMeasureCheck);
 
-        HashMap hashMap = new HashMap();
-
-        hashMap.put("data",null);
-        hashMap.put("msg","OK");
-        hashMap.put("status",200);
-
-        if(i!=1){
-            return null;
-        }
-
-        return hashMap;
+        return map;
     }
 
     //编辑不合格产品
     @ResponseBody
     @RequestMapping("/update_all")
-    public Map updateProcessMeasureCheck(ProcessMeasureCheck ProcessMeasureCheck){
+    public Map updateProcessMeasureCheck(ProcessMeasureCheck ProcessMeasureCheck) {
 
         int i = processMeasureCheckService.editProcessMeasureCheck(ProcessMeasureCheck);
 
         HashMap hashMap = new HashMap();
 
-        hashMap.put("data",null);
-        hashMap.put("msg","OK");
-        hashMap.put("status",200);
+        hashMap.put("data", null);
+        hashMap.put("msg", "OK");
+        hashMap.put("status", 200);
 
-        if(i!=1){
+        if (i != 1) {
             return null;
         }
 
@@ -126,26 +117,26 @@ public class ProcessMeasureController {
     //删除不合格产品
     @ResponseBody
     @RequestMapping("/delete_batch")
-    public Map deleteProcessMeasureChecks(String ids){
+    public Map deleteProcessMeasureChecks(String ids) {
 
         int i = 0;
 
         String[] split = ids.split(",");
 
-        for(String toDelete:split){
+        for (String toDelete : split) {
             i = processMeasureCheckService.deleteProcessMeasureCheck(toDelete);
-            if(i!=1){
+            if (i != 1) {
                 break;
             }
         }
 
         HashMap hashMap = new HashMap();
 
-        hashMap.put("data",null);
-        hashMap.put("msg","OK");
-        hashMap.put("status",200);
+        hashMap.put("data", null);
+        hashMap.put("msg", "OK");
+        hashMap.put("status", 200);
 
-        if(i!=1){
+        if (i != 1) {
             return null;
         }
 
@@ -155,9 +146,9 @@ public class ProcessMeasureController {
     //搜索功能
     @ResponseBody
     @RequestMapping("/{name}")
-    public Map searchUnqualifyApplies(@PathVariable String name, String searchValue, int page, int rows){
+    public Map searchUnqualifyApplies(@PathVariable String name, String searchValue, int page, int rows) {
 
-        PageInfo<ProcessMeasureCheckVo> ProcessMeasureCheckById = processMeasureCheckService.findProcessMeasureCheck (name,searchValue, page, rows);
+        PageInfo<ProcessMeasureCheckVo> ProcessMeasureCheckById = processMeasureCheckService.findProcessMeasureCheck(name, searchValue, page, rows);
 
         HashMap<String, Object> map = new HashMap();
 
@@ -171,7 +162,7 @@ public class ProcessMeasureController {
     //修改备注
     @ResponseBody
     @RequestMapping("/update_note")
-    public Map updateNote(String pMeasureCheckId,String note){
+    public Map updateNote(String pMeasureCheckId, String note) {
 
         ProcessMeasureCheck processMeasureCheck = new ProcessMeasureCheck();
         processMeasureCheck.setpMeasureCheckId(pMeasureCheckId);
@@ -181,12 +172,12 @@ public class ProcessMeasureController {
 
         HashMap hashMap = new HashMap();
 
-        hashMap.put("data",null);
-        hashMap.put("msg","OK");
-        hashMap.put("status",200);
+        hashMap.put("data", null);
+        hashMap.put("msg", "OK");
+        hashMap.put("status", 200);
 
-        if(i!=1){
-            hashMap.put("msg","修改失败");
+        if (i != 1) {
+            hashMap.put("msg", "修改失败");
             return hashMap;
         }
 

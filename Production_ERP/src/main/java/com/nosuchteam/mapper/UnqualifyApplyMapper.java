@@ -10,7 +10,7 @@ public interface UnqualifyApplyMapper {
     int deleteByPrimaryKey(String unqualifyApplyId);
 
     //添加不合格品
-    int insert(UnqualifyApply record);
+    int insert(UnqualifyApply record) throws Exception;
 
     int insertSelective(UnqualifyApply record);
 
