@@ -1,5 +1,7 @@
 package com.nosuchteam.bean;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class UnqualifyApply {
@@ -11,10 +13,12 @@ public class UnqualifyApply {
 
     private Integer unqualifyCount;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date assemblyDate;
 
     private String empId;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date applyDate;
 
     private String note;
